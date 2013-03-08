@@ -1,87 +1,375 @@
-<!doctype html>
-<!-- The Time Machine GitHub pages theme was designed and developed by Jon Rohan, on Feb 7, 2012. -->
-<!-- Follow him for fun. http://twitter.com/jonrohan. Tail his code on http://github.com/jonrohan -->
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Template &middot; Bootstrap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <link rel="stylesheet" href="stylesheets/stylesheet.css" media="screen"/>
-  <link rel="stylesheet" href="stylesheets/pygment_trac.css"/>
-  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-  <script type="text/javascript" src="javascripts/script.js"></script>
+    <!-- Le styles -->
+    <link href="./assets/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 20px;
+        padding-bottom: 60px;
+      }
 
-  <title>Salina</title>
-  <meta name="description" content="Mobile Application Feedback Solution">
+      /* Custom container */
+      .container {
+        margin: 0 auto;
+        max-width: 1000px;
+      }
+      .container > hr {
+        margin: 60px 0;
+      }
 
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+      /* Main marketing message and sign up button */
+      .jumbotron {
+        margin: 80px 0;
+        text-align: center;
+      }
+      .jumbotron h1 {
+        font-size: 100px;
+        line-height: 1;
+      }
+      .jumbotron .lead {
+        font-size: 24px;
+        line-height: 1.25;
+      }
+      .jumbotron .btn {
+        font-size: 21px;
+        padding: 14px 24px;
+      }
 
-</head>
+      /* Supporting marketing content */
+      .marketing {
+        margin: 60px 0;
+      }
+      .marketing p + h4 {
+        margin-top: 28px;
+      }
 
-<body>
 
-  <div class="wrapper">
-    <header>
-      <h1 class="title">Salina</h1>
-    </header>
-    <div id="container">
-      <p class="tagline">Mobile Application Feedback Solution</p>
-      <div id="main" role="main">
-        <div class="download-bar">
-        <div class="inner">
-          <a href="https://github.com/team-salina/salina/tarball/master" class="download-button tar"><span>Download</span></a>
-          <a href="https://github.com/team-salina/salina/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/team-salina/salina" class="code">View Salina on GitHub</a>
+      /* Customize the navbar links to be fill the entire space of the .navbar */
+      .navbar .navbar-inner {
+        padding: 0;
+      }
+      .navbar .nav {
+        margin: 0;
+        display: table;
+        width: 100%;
+      }
+      .navbar .nav li {
+        display: table-cell;
+        width: 1%;
+        float: none;
+      }
+      .navbar .nav li a {
+        font-weight: bold;
+        text-align: center;
+        border-left: 1px solid rgba(255,255,255,.75);
+        border-right: 1px solid rgba(0,0,0,.1);
+      }
+      .navbar .nav li:first-child a {
+        border-left: 0;
+        border-radius: 3px 0 0 3px;
+      }
+      .navbar .nav li:last-child a {
+        border-right: 0;
+        border-radius: 0 3px 3px 0;
+      }
+    </style>
+    <link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
+                                   <link rel="shortcut icon" href="./assets/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <div class="masthead">
+        <h3 class="muted">Mobile Application Feedback Solution</h3>
+        <div class="navbar">
+          <div class="navbar-inner">
+            <div class="container">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="test.html">만족도 통계</a></li>
+                <li><a href="#">커뮤니티 활성도</a></li>
+                <li><a href="#">에러로그</a></li>
+                <li><a href="#">사용자정보</a></li>
+                <li><a href="#">기타</a></li>
+              </ul>
+            </div>
+          </div>
+        </div><!-- /.navbar -->
+      </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <h1>Mobile CRM Solution</h1>
+        <p class="lead">모바일 앱 개발자들이 고객관리(CRM)을 보다 간편하고 편리하게 할수있도록 한다.</p>
+        <a class="btn btn-large btn-success" href="#">Get started today</a>
+      </div>
+
+      <hr>
+
+      <!-- Example row of columns -->
+      <div class="row-fluid">
+        <div class="span4">
+          <h2>만족도 통계</h2>
+         <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+         		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container1',
+                type: 'area'
+            },
+            title: {
+                text: '사용자 만족도'
+            },
+            subtitle: {
+                text: ' User:  남성과 여성 '
+            },
+            xAxis: {
+                labels: {
+                    formatter: function() {
+                        return this.value; // clean, unformatted number for year
+                    }
+                }
+            },
+            yAxis: {
+                title: {
+                    text: '사용자 만족'
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value / 1000 +'k';
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return this.series.name +' produced <b>'+
+                        Highcharts.numberFormat(this.y, 0) +'</b><br/>warheads in '+ this.x;
+                }
+            },
+            plotOptions: {
+                area: {
+                    pointStart: 1940,
+                    marker: {
+                        enabled: false,
+                        symbol: 'circle',
+                        radius: 2,
+                        states: {
+                            hover: {
+                                enabled: true
+                            }
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: '남',
+                data: [null, null, null, null, null, 6 , 11, 32, 110, 235, 369, 640,
+                    1005, 1436, 2063, 3057, 4618, 6444, 9822, 15468, 20434, 24126,
+                    27387, 29459, 31056, 31982, 32040, 31233, 29224, 27342, 26662,
+                    26956, 27912, 28999, 28965, 27826, 25579, 25722, 24826, 24605,
+                    24304, 23464, 23708, 24099, 24357, 24237, 24401, 24344, 23586,
+                    22380, 21004, 17287, 14747, 13076, 12555, 12144, 11009, 10950,
+                    10871, 10824, 10577, 10527, 10475, 10421, 10358, 10295, 10104 ]
+            }, {
+                name: '여',
+                data: [null, null, null, null, null, null, null , null , null ,null,
+                5, 25, 50, 120, 150, 200, 426, 660, 869, 1060, 1605, 2471, 3322,
+                4238, 5221, 6129, 7089, 8339, 9399, 10538, 11643, 13092, 14478,
+                15915, 17385, 19055, 21205, 23044, 25393, 27935, 30062, 32049,
+                33952, 35804, 37431, 39197, 45000, 43000, 41000, 39000, 37000,
+                35000, 33000, 31000, 29000, 27000, 25000, 24000, 23000, 22000,
+                21000, 20000, 19000, 18000, 18000, 17000, 16000]
+            }]
+        });
+    });
+    
+});
+		</script>
+		
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container1" style="min-width: 100px; height: 400px; margin: 0 auto"></div> 
         </div>
-        <span class="blc"></span><span class="trc"></span>
+        <div class="span4">
+          <h2>커뮤니티 활성도</h2>
+         <!-- <p><a class="btn" href="#">View details &raquo;</a></p> -->
+         	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container2',
+                type: 'area',
+                spacingBottom: 30
+            },
+            title: {
+                text: '커뮤니티 활성도 '
+            },
+            subtitle: {
+                text: ' Feedback : 사용법질문, 건의사항, 오류보고, 칭',
+                floating: true,
+                align: 'right',
+                verticalAlign: 'bottom',
+                y: 15
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 150,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF'
+            },
+            xAxis: {
+                categories: ['1/18', '1/19', '1/20', '1/21', '1/22', '1/23', '1/24', '1/25']
+            },
+            yAxis: {
+                title: {
+                    text: '활성수치 : Activity , Traffic '
+                },
+                labels: {
+                    formatter: function() {
+                        return this.value;
+                    }
+                }
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.x +': '+ this.y;
+                }
+            },
+            plotOptions: {
+                area: {
+                    fillOpacity: 0.5
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Session',
+                data: [0, 1, 4, 4, 5, 2, 3, 7]
+            }, {
+                name: 'Users',
+                data: [1, 0, 3, null, 3, 1, 2, 1]
+            }]
+        });
+    });
+    
+});
+		</script>
+		
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container2" style="min-width: 100px; height: 400px; margin: 0 auto"></div>
+       </div>
+        <div class="span4">
+          <h2>에러로그</h2>
+         <!--<p><a class="btn" href="#">View details &raquo;</a></p> -->
+         		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container3',
+                type: 'area'
+            },
+            title: {
+                text: '에러나 버그상태 점검 '
+            },
+            xAxis: {
+                categories: ['1/18', '1/19', '1/20', '1/21', '1/22']
+            },
+            tooltip: {
+                formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +'';
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Activity',
+                data: [5, 3, 4, 7, 2]
+            }, {
+                name: 'Server',
+                data: [2, -2, -3, 2, 1]
+            }, {
+                name: 'Connect',
+                data: [3, 4, 4, -2, 5]
+            }]
+        });
+    });
+    
+});
+		</script>
+
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="http://code.highcharts.com/modules/exporting.js"></script>
+
+<div id="container3" style="min-width: 100px; height: 400px; margin: 0 auto"></div>
+         
         </div>
-        <article class="markdown-body">
-          <h3>Welcome to GitHub Pages.</h3>
-
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-<h3>Designer Templates</h3>
-
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-        </article>
       </div>
-    </div>
-    <footer>
-      <div class="owner">
-      <p><a href="https://github.com/team-salina" class="avatar"><img src="https://secure.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/team-salina">team-salina</a> maintains <a href="https://github.com/team-salina/salina">Salina</a></p>
 
+      <hr>
 
+      <div class="footer">
+        <p>&copy; Company 2013 Software Maestro 3rd ' Mobile Application Feedback Solution '</p>
       </div>
-      <div class="creds">
-        <small>This page generated using <a href="https://pages.github.com/">GitHub Pages</a><br/>theme by <a href="http://twitter.com/jonrohan/">Jon Rohan</a></small>
-      </div>
-    </footer>
-  </div>
-  <div class="current-section">
-    <a href="#top">Scroll to top</a>
-    <a href="https://github.com/team-salina/salina/tarball/master" class="tar">tar</a><a href="https://github.com/team-salina/salina/zipball/master" class="zip">zip</a><a href="" class="code">source code</a>
-    <p class="name"></p>
-  </div>
 
-  
-</body>
+    </div> <!-- /container -->
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap-transition.js"></script>
+    <script src="./assets/js/bootstrap-alert.js"></script>
+    <script src="./assets/js/bootstrap-modal.js"></script>
+    <script src="./assets/js/bootstrap-dropdown.js"></script>
+    <script src="./assets/js/bootstrap-scrollspy.js"></script>
+    <script src="./assets/js/bootstrap-tab.js"></script>
+    <script src="./assets/js/bootstrap-tooltip.js"></script>
+    <script src="./assets/js/bootstrap-popover.js"></script>
+    <script src="./assets/js/bootstrap-button.js"></script>
+    <script src="./assets/js/bootstrap-collapse.js"></script>
+    <script src="./assets/js/bootstrap-carousel.js"></script>
+    <script src="./assets/js/bootstrap-typeahead.js"></script>
+
+  </body>
 </html>

@@ -4,11 +4,6 @@ from salinasolution.userinfo.models import User
 import json
 
 # Create your models here.
-
-
-
-    
-    
     
 class Session(models.Model):
     

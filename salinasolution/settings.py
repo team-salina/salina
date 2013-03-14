@@ -1,7 +1,7 @@
 # Django settings for salinasolution project.
 import os
 
-DEBUG = True
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -48,8 +48,8 @@ DATABASES = {
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
 DATABASE_OPTIONS = {'charset':'utf8',"init_command": "SET foreign_key_checks = 0;"}
-TIME_ZONE = 'Asia/Seoul'
 
+TIME_ZONE = 'Asia/Seoul'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html

@@ -56,10 +56,8 @@ def feedback(request):
         return_data = create_feedback(request)
     return HttpResponse(return_data)
     '''
-    app_list = 22
-    bug = 12
-    return render_to_response('index.html',{'app_list':app_list,
-                                            'bug':bug 
+   
+    return render_to_response('index.html',{
                                             
                                             
                                             },

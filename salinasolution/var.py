@@ -21,9 +21,6 @@ class Var:
                   (ANSWER, 'answer'),
                   )
     
-    
-    
-    
     # this variable for key_mapping
     USER_ID = "user_id"
     DEVICE_KEY = "device_key"
@@ -55,10 +52,6 @@ class Var:
     METHOD_NAME = "METHOD_NAME"
     LINE_NUMBER = "LINE_NUMBER"
     OCCUR_TIME = "OCCUR_TIME"
-    
-    
-    
-    
     
     # ETC
     INIT_SCORE = 0

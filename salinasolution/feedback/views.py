@@ -22,46 +22,25 @@ made by doo hyung
 #every python file has this TAG, this TAG means the path of salina framework
 TAG = "feedback.views"
 
-# create_feedback_for_test
-def create_feedback_for_test(request):
-    debug(TAG, "test_method")
-    #extract data from dictionary
-    user_id = request.GET[Var.USER_ID]
-    device_key = request.GET[Var.DEVICE_KEY]
-    category = request.GET[Var.CATEGORY]
-    app_id = request.GET[Var.APP_ID]
-    contents = request.GET[Var.CONTENTS]
-    debug(TAG, "before_test_method")
-    Feedback().auto_save_by_property(user_id, device_key, category, app_id, contents);
-    debug(TAG, "end_test_method")
-    #return json type feed
-    return serializers.serialize('json',[0])
-'''
 # create_feedback
-def create_feedback(request):
+def save_feedback(request):
     #convert json to python data
-    json_data = json.loads(request.raw_post_data)
-    feed_obj = pson.FeedbackObject().make_object(json_data)
-    feed = Feedback().auto_save_object(feed_obj)
+    dic = json.loads(request.raw_post_data)
+    feed =  pson.dic_to_obj(dic, Feedback())
+    feed.auto_save_by_object(feed)
     return serializers.serialize('json',[feed])
-'''
+
 #create suggestion feedback or vote suggestion
 def feedback(request):
-    '''
+    
     debug(TAG, "suggestion method start")
     return_data = None    
     #create suggestion feedback
     if request.method == 'POST':
         debug(TAG, "POST METHOD")
-        return_data = create_feedback(request)
+        return_data = save_feedback(request)
     return HttpResponse(return_data)
-    '''
-   
-    return render_to_response('index.html',{
-                                            
-                                            
-                                            },
-                              context_instance = RequestContext(request)
-                              )
+    
+  
     
 

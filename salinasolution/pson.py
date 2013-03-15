@@ -23,6 +23,7 @@ def save_control_logs(request):
 def save_list_with_obj(list, target_obj, saving_obj, saving_obj_name):
     
     for dic in list:
+        
         save_dic_with_obj(dic, target_obj, saving_obj, saving_obj_name)
               
     return list

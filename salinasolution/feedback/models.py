@@ -15,13 +15,15 @@ class Feedback(models.Model):
     category = models.IntegerField(default = 0,choices = Var.CATEGORIES)
     pub_date = models.DateTimeField(auto_now_add = True)
     contents = models.TextField()
+    solved_check = models.BooleanField(default = False)
+    reply_num = models.IntegerField(default = 0)
     
     def auto_save_by_property(self, user_id, device_key, app_id, category, contents):
         feed = Feedback(user = User().auto_save(user_id, device_key), category = category, contents = contents)
         feed.save()
         return feed
     
-    def auto_save_object(self, feed_obj):
+    def auto_save_by_object(self, feed_obj):
         feed = Feedback().auto_save_by_property(feed_obj.user_id, feed_obj.device_key, feed_obj.app_id, feed_obj.category, feed_obj.contents)
         feed.save()
         return feed
@@ -31,6 +33,7 @@ class Reply(models.Model):
     feedback = models.ForeignKey(Feedback)
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
+    adopted_check = models.BooleanField(default = False)
  
  #comment table must know who vote feedback or reply
 class FeedbackComment(models.Model):

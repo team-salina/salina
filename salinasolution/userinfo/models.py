@@ -4,9 +4,6 @@ from django.db.models.deletion import CASCADE
 from MySQLdb.constants.FLAG import UNIQUE_KEY
 
 # Create your models here.
-
-
-
 #this is for app
 class App(models.Model):
     

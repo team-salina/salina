@@ -8,6 +8,7 @@ import json
 class Session(models.Model):
     
     user = models.ForeignKey(User)
+    app_id = models.CharField(max_length = 50)
     activity_name = models.CharField(max_length=50)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -16,6 +17,7 @@ class Session(models.Model):
 class DeviceInfo(models.Model):
     
     user = models.ForeignKey(User)
+    app_id = models.CharField(max_length = 50)
     os_version = models.CharField(max_length=50)
     device_name = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
@@ -25,6 +27,7 @@ class DeviceInfo(models.Model):
 class Crash(models.Model):
     
     user = models.ForeignKey(User)
+    app_id = models.CharField(max_length = 50)
     exception_name = models.CharField(max_length=50)
     stacktrace = models.CharField(max_length=50)
     method_name = models.CharField(max_length=50)

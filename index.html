@@ -1,227 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<title>Template &middot; Bootstrap</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="">
-<meta name="author" content="">
+  <meta charset="utf-8">
+  <title>Bootstrap, from Twitter</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-<!-- Le styles -->
-<link href="./assets/css/bootstrap.css" rel="stylesheet">
-<style type="text/css">
-body {
-	padding-top: 20px;
-	padding-bottom: 60px;
-}
-
-/* Custom container */
-.container {
-	margin: 0 auto;
-	max-width: 1000px;
-}
-
-.container>hr {
-	margin: 60px 0;
-}
-
-/* Main marketing message and sign up button */
-.jumbotron {
-	margin: 80px 0;
-	text-align: center;
-}
-
-.jumbotron h1 {
-	font-size: 100px;
-	line-height: 1;
-}
-
-.jumbotron .lead {
-	font-size: 24px;
-	line-height: 1.25;
-}
-
-.jumbotron .btn {
-	font-size: 21px;
-	padding: 14px 24px;
-}
-
-/* Supporting marketing content */
-.marketing {
-	margin: 60px 0;
-}
-
-.marketing p+h4 {
-	margin-top: 28px;
-}
-
+  <!-- Le styles -->
+  <link href="./assets/css/bootstrap.css" rel="stylesheet">
+  <style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
 /* Featurettes
-    ------------------------- */
+------------------------- */
 .featurette-divider {
-	margin: 80px 0; /* Space out the Bootstrap <hr> more */
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
 }
 
 .featurette {
-	padding-top: 120px;
-	/* Vertically center images part 1: add padding above and below text. */
-	overflow: hidden;
-	/* Vertically center images part 2: clear their floats. */
+  padding-top: 120px;
+  /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden;
+  /* Vertically center images part 2: clear their floats. */
 }
 
 .featurette-image {
-	margin-top: -120px;
-	/* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+  margin-top: -120px;
+  /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
 }
 
 /* Give some space on the sides of the floated elements so text doesn't run right into it. */
 .featurette-image.pull-left {
-	margin-right: 40px;
+  margin-right: 40px;
 }
 
 .featurette-image.pull-right {
-	margin-left: 40px;
+  margin-left: 40px;
 }
 
 /* Thin out the marketing headings */
 .featurette-heading {
-	font-size: 50px;
-	font-weight: 300;
-	line-height: 1;
-	letter-spacing: -1px;
-}
-
-/* Customize the navbar links to be fill the entire space of the .navbar */
-.navbar .navbar-inner {
-	padding: 0;
-}
-
-.navbar .nav {
-	margin: 0;
-	display: table;
-	width: 100%;
-}
-
-.navbar .nav li {
-	display: table-cell;
-	width: 1%;
-	float: none;
-}
-
-.navbar .nav li a {
-	font-weight: bold;
-	text-align: center;
-	border-left: 1px solid rgba(255, 255, 255, .75);
-	border-right: 1px solid rgba(0, 0, 0, .1);
-}
-
-.navbar .nav li:first-child a {
-	border-left: 0;
-	border-radius: 3px 0 0 3px;
-}
-
-.navbar .nav li:last-child a {
-	border-right: 0;
-	border-radius: 0 3px 3px 0;
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
 }
 </style>
 <link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
 
 <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-<!--[if lt IE 9]>
-      <script src="../assets/js/html5shiv.js"></script>
-    <![endif]-->
+    <!--[if lt IE 9]>
+      <script src="./assets/js/html5shiv.js"></script>
+      <![endif]-->
 
-<!-- Fav and touch icons -->
-<link rel="apple-touch-icon-precomposed" sizes="144x144"
-	href="./assets/ico/apple-touch-icon-144-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="114x114"
-	href="./assets/ico/apple-touch-icon-114-precomposed.png">
-<link rel="apple-touch-icon-precomposed" sizes="72x72"
-	href="./assets/ico/apple-touch-icon-72-precomposed.png">
-<link rel="apple-touch-icon-precomposed"
-	href="./assets/ico/apple-touch-icon-57-precomposed.png">
-<link rel="shortcut icon" href="./assets/ico/favicon.png">
-</head>
+      <!-- Fav and touch icons -->
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
+      <link rel="shortcut icon" href="./assets/ico/favicon.png">
+    </head>
 
-<body>
+    <body>
 
-	<div class="container">
+      <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">Salina - Mobile Feedback Solution</a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="feedback.html">Feedback</a></li>
+                <li><a href="UsersSessions.html">Users & Sessions</a></li>
+                <li><a href="ErrorBugs.html">Error & Bugs</a></li>
+                <li><a href="CustomerSatisfation.html">Customer Satisfaction</a></li>
+                <!--<li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#">Action</a></li>
+                    <li><a href="#">Another action</a></li>
+                    <li><a href="#">Something else here</a></li>
+                    <li class="divider"></li>
+                    <li class="nav-header">Nav header</li>
+                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">One more separated link</a></li>
+                  </ul>
+                </li>-->
+              </ul>
+              <form class="navbar-form pull-right">
+                <input class="span2" type="text" placeholder="Email">
+                <input class="span2" type="password" placeholder="Password">
+                <button type="submit" class="btn">Sign in</button>
+              </form>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
 
-		<div class="masthead">
-			<h3 class="muted">Mobile Application Feedback Solution</h3>
-			<div class="navbar">
-				<div class="navbar-inner">
-					<div class="container">
-						<ul class="nav">
-							<li class="active"><a href="#">Home</a></li>
-							<li><a href="test.html">만족도 통계</a></li>
-							<li><a href="#">커뮤니티 활성도</a></li>
-							<li><a href="#">에러로그</a></li>
-							<li><a href="#">사용자정보</a></li>
-							<li><a href="#">기타</a></li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!-- /.navbar -->
-		</div>
+      <div class="container">
 
-		<!-- Jumbotron 
-		<div class="jumbotron">
-			<h1>Mobile CRM Solution</h1>
-			<p class="lead">모바일 앱 개발자들이 고객관리(CRM)을 보다 간편하고 편리하게 할수있도록 한다.</p>
-			<a class="btn btn-large btn-success" href="#">Get started today</a>
-		</div> -->
-		<hr class="featurette-divider">
-
-		<div class="featurette">
-			<script type="text/javascript"
-				src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-			<script type="text/javascript">
-$(function () {
-    var chart;
-    $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container',
+        <!-- Main hero unit for a primary marketing message or call to action -->
+        <div class="hero-unit">
+        <!-- <h1>Hello, world!</h1>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
+        <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p> -->
+        <script type="text/javascript"
+        src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <script type="text/javascript">
+        $(function () {
+          var chart;
+          $(document).ready(function() {
+            chart = new Highcharts.Chart({
+              chart: {
+                renderTo: 'container1',
                 type: 'bar'
-            },
-            title: {
-                text: 'Historic World Population by Region'
-            },
-            subtitle: {
-                text: 'Source: Wikipedia.org'
-            },
-            xAxis: {
-                categories: ['Africa', 'America', 'Asia', 'Europe', 'Oceania'],
+              },
+              title: {
+                text: ' Customer Feedback '
+              },
+              subtitle: {
+                text: 'Question, Problem, Suggestion, Praise'
+              },
+              xAxis: {
+                categories: ['Question', 'Problem', 'Suggestion', 'Praise'],
                 title: {
-                    text: null
+                  text: null
                 }
-            },
-            yAxis: {
+              },
+              yAxis: {
                 min: 0,
                 title: {
-                    text: 'Population (millions)',
-                    align: 'high'
+                  text: ' Count',
+                  align: 'high'
                 },
                 labels: {
-                    overflow: 'justify'
+                  overflow: 'justify'
                 }
-            },
-            tooltip: {
+              },
+              tooltip: {
                 formatter: function() {
-                    return ''+
-                        this.series.name +': '+ this.y +' millions';
+                  return ''+
+                  this.series.name +': '+ this.y +' millions';
                 }
-            },
-            plotOptions: {
+              },
+              plotOptions: {
                 bar: {
-                    dataLabels: {
-                        enabled: true
-                    }
+                  dataLabels: {
+                    enabled: true
+                  }
                 }
-            },
-            legend: {
+              },
+              legend: {
                 layout: 'vertical',
                 align: 'right',
                 verticalAlign: 'top',
@@ -231,390 +168,367 @@ $(function () {
                 borderWidth: 1,
                 backgroundColor: '#FFFFFF',
                 shadow: true
-            },
-            credits: {
+              },
+              credits: {
                 enabled: false
-            },
-            series: [{
-                name: 'Year 1800',
-                data: [107, 31, 635, 203, 2]
-            }, {
-                name: 'Year 1900',
-                data: [133, 156, 947, 408, 6]
-            }, {
-                name: 'Year 2008',
-                data: [973, 914, 4054, 732, 34]
-            }]
-        });
-    });
-    
+              },
+              series: [{
+                name: 'Adopted',
+                data: [107, 31, 635, 203]
+              }, {
+                name: 'Unadopted',
+                data: [133, 156, 947, 408]
+              }, {
+                name: 'New',
+                data: [973, 914, 4054, 732]
+              }]
+            });
 });
-		</script>
 
-			<script src="http://code.highcharts.com/highcharts.js"></script>
-			<script src="http://code.highcharts.com/modules/exporting.js"></script>
+});
+</script>
 
-			<div id="container"
-				style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<script src="./assets/js/highcharts.js"></script>
+<script src="./assets/js/modules/exporting.js"></script>
+
+<div id="container1"
+style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
 <h2 class="featurette-heading">
-					Feedback 측정 그래프 <br/><span class="muted">고객의 목소리 (질문,건의,문제,칭찬)</span>
-				</h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor
-					fringilla. Vestibulum id ligula porta felis euismod semper.
-					Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-					Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
-			<!-- START THE FEATURETTES -->
-			<hr class="featurette-divider">
+  Feedback 측정 그래프 <br/><span class="muted">고객의 목소리 (질문,건의,문제,칭찬)</span>
+</h2>
+<p class="lead">Donec ullamcorper nulla non metus auctor
+  fringilla. Vestibulum id ligula porta felis euismod semper.
+  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+  Fusce dapibus, tellus ac cursus commodo.</p>
 
-			<div class="featurette">
-				<!-- <img class="featurette-image pull-right"
-				src="./assets/img/examples/browser-icon-chrome.png">-->
-				<script type="text/javascript"
-					src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-				<script type="text/javascript">
-$(function () {
+</div>
+<hr class="featurette-divider">
+
+<div class="featurette">
+  <script type="text/javascript"
+  src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(function () {
     var chart;
     $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container1',
-                type: 'line'
+      chart = new Highcharts.Chart({
+        chart: {
+          renderTo: 'container2',
+          type: 'line'
+        },
+        title: {
+          text: 'Users & Sessions'
+        },
+        subtitle: {
+          text: ''
+        },
+        xAxis: {
+          categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: {
+          title: {
+            text: ''
+          }
+        },
+        tooltip: {
+          enabled: false,
+          formatter: function() {
+            return '<b>'+ this.series.name +'</b><br/>'+
+            this.x +': '+ this.y +'°C';
+          }
+        },
+        plotOptions: {
+          line: {
+            dataLabels: {
+              enabled: true
             },
-            title: {
-                text: 'Monthly Average Temperature'
-            },
-            subtitle: {
-                text: 'Source: WorldClimate.com'
-            },
-            xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-            },
-            yAxis: {
-                title: {
-                    text: 'Temperature (°C)'
-                }
-            },
-            tooltip: {
-                enabled: false,
-                formatter: function() {
-                    return '<b>'+ this.series.name +'</b><br/>'+
-                        this.x +': '+ this.y +'°C';
-                }
-            },
-            plotOptions: {
-                line: {
-                    dataLabels: {
-                        enabled: true
-                    },
-                    enableMouseTracking: false
-                }
-            },
-            series: [{
-                name: 'Tokyo',
-                data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
-            }, {
-                name: 'London',
-                data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
-            }]
-        });
-    });
-    
+            enableMouseTracking: false
+          }
+        },
+        series: [{
+          name: 'Sessions',
+          data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+        }, {
+          name: 'Users',
+          data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+        }]
+      });
 });
-		</script>
 
-				<script src="http://code.highcharts.com/highcharts.js"></script>
-				<script src="http://code.highcharts.com/modules/exporting.js"></script>
-
-				<div id="container1"
-					style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-				<h2 class="featurette-heading">
-					Users & Sessions 측정 그래프 <br/><span class="muted">유저수와 세션 측정</span>
-				</h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor
-					fringilla. Vestibulum id ligula porta felis euismod semper.
-					Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-					Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
-
-			<hr class="featurette-divider">
-
-
-			<div class="featurette">
-				<!--  <img class="featurette-image pull-left"
-					src="./assets/img/examples/browser-icon-firefox.png"> -->
-					
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script type="text/javascript">
-$(function () {
-    var chart;
-    $(document).ready(function() {
-    	
-    	// Radialize the colors
-		Highcharts.getOptions().colors = $.map(Highcharts.getOptions().colors, function(color) {
-		    return {
-		        radialGradient: { cx: 0.5, cy: 0.3, r: 0.7 },
-		        stops: [
-		            [0, color],
-		            [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-		        ]
-		    };
-		});
-		
-		// Build the chart
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container2',
-                plotBackgroundColor: null,
-                plotBorderWidth: null,
-                plotShadow: false
-            },
-            title: {
-                text: 'Browser market shares at a specific website, 2010'
-            },
-            tooltip: {
-        	    pointFormat: '{series.name}: <b>{point.percentage}%</b>',
-            	percentageDecimals: 1
-            },
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        formatter: function() {
-                            return '<b>'+ this.point.name +'</b>: '+ this.percentage +' %';
-                        }
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: 'Browser share',
-                data: [
-                    ['Firefox',   45.0],
-                    ['IE',       26.8],
-                    {
-                        name: 'Chrome',
-                        y: 12.8,
-                        sliced: true,
-                        selected: true
-                    },
-                    ['Safari',    8.5],
-                    ['Opera',     6.2],
-                    ['Others',   0.7]
-                ]
-            }]
-        });
-    });
-    
 });
-		</script>
+</script>
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="./assets/js/highcharts.js"></script>
+<script src="./assets/js/modules/exporting.js"></script>
 
-<div id="container2" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-					
-				<h2 class="featurette-heading">
-					Error & Bug 측정 그래프  <br/><span class="muted">앱의 오류 및 버그 종류별 </span>
-				</h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor
-					fringilla. Vestibulum id ligula porta felis euismod semper.
-					Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-					Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
+<div id="container2"
+style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<h2 class="featurette-heading">
+  Users & Sessions 측정 그래프 <br/><span class="muted">유저수와 세션 측정</span>
+</h2>
+<p class="lead">Donec ullamcorper nulla non metus auctor
+  fringilla. Vestibulum id ligula porta felis euismod semper.
+  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+  Fusce dapibus, tellus ac cursus commodo.</p>
+</div>
 
-			<hr class="featurette-divider">
-
-			<div class="featurette">
-			<!--	<img class="featurette-image pull-right"
-					src="./assets/img/examples/browser-icon-safari.png"> -->
-					<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script type="text/javascript">
+<hr class="featurette-divider">
+<div class="featurette">
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript">
 $(function () {
     var chart;
     $(document).ready(function() {
-    
-        var colors = Highcharts.getOptions().colors,
-            categories = ['MSIE', 'Firefox', 'Chrome', 'Safari', 'Opera'],
-            name = 'Browser brands',
-            data = [{
-                    y: 55.11,
-                    color: colors[0],
-                    drilldown: {
-                        name: 'MSIE versions',
-                        categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
-                        data: [10.85, 7.35, 33.06, 2.81],
-                        color: colors[0]
-                    }
-                }, {
-                    y: 21.63,
-                    color: colors[1],
-                    drilldown: {
-                        name: 'Firefox versions',
-                        categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
-                        data: [0.20, 0.83, 1.58, 13.12, 5.43],
-                        color: colors[1]
-                    }
-                }, {
-                    y: 11.94,
-                    color: colors[2],
-                    drilldown: {
-                        name: 'Chrome versions',
-                        categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
-                            'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
-                        data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
-                        color: colors[2]
-                    }
-                }, {
-                    y: 7.15,
-                    color: colors[3],
-                    drilldown: {
-                        name: 'Safari versions',
-                        categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
-                            'Safari 3.1', 'Safari 4.1'],
-                        data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
-                        color: colors[3]
-                    }
-                }, {
-                    y: 2.14,
-                    color: colors[4],
-                    drilldown: {
-                        name: 'Opera versions',
-                        categories: ['Opera 9.x', 'Opera 10.x', 'Opera 11.x'],
-                        data: [ 0.12, 0.37, 1.65],
-                        color: colors[4]
-                    }
-                }];
-    
-        function setChart(name, categories, data, color) {
-			chart.xAxis[0].setCategories(categories, false);
-			chart.series[0].remove(false);
-			chart.addSeries({
-				name: name,
-				data: data,
-				color: color || 'white'
-			}, false);
-			chart.redraw();
-        }
-    
         chart = new Highcharts.Chart({
             chart: {
                 renderTo: 'container3',
                 type: 'column'
             },
             title: {
-                text: 'Browser market share, April, 2011'
-            },
-            subtitle: {
-                text: 'Click the columns to view versions. Click again to view brands.'
+                text: 'Error & Bugs'
             },
             xAxis: {
-                categories: categories
+                categories: ['Ginger Bread', 'Ice cream Sandwich', 'Jelly Bean', 'Froyo']
             },
             yAxis: {
+                min: 0,
                 title: {
-                    text: 'Total percent market share'
-                }
-            },
-            plotOptions: {
-                column: {
-                    cursor: 'pointer',
-                    point: {
-                        events: {
-                            click: function() {
-                                var drilldown = this.drilldown;
-                                if (drilldown) { // drill down
-                                    setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
-                                } else { // restore
-                                    setChart(name, categories, data);
-                                }
-                            }
-                        }
-                    },
-                    dataLabels: {
-                        enabled: true,
-                        color: colors[0],
-                        style: {
-                            fontWeight: 'bold'
-                        },
-                        formatter: function() {
-                            return this.y +'%';
-                        }
-                    }
+                    text: 'Error Rate'
                 }
             },
             tooltip: {
                 formatter: function() {
-                    var point = this.point,
-                        s = this.x +':<b>'+ this.y +'% market share</b><br/>';
-                    if (point.drilldown) {
-                        s += 'Click to view '+ point.category +' versions';
-                    } else {
-                        s += 'Click to return to browser brands';
-                    }
-                    return s;
+                    return ''+
+                        this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
                 }
             },
-            series: [{
-                name: name,
-                data: data,
-                color: 'white'
-            }],
-            exporting: {
-                enabled: false
-            }
+            plotOptions: {
+                column: {
+                    stacking: 'percent'
+                }
+            },
+                series: [{
+                name: 'John',
+                data: [5, 3, 4, 7]
+            }, {
+                name: 'Jane',
+                data: [2, 2, 3, 2]
+            }, {
+                name: 'Joe',
+                data: [3, 4, 4, 2]
+            }]
         });
     });
     
 });
-		</script>
+    </script>
 
-<script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="http://code.highcharts.com/modules/exporting.js"></script>
+<script src="./assets/js/highcharts.js"></script>
+<script src="./assets/js/modules/exporting.js"></script>
 
 <div id="container3" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-				<h2 class="featurette-heading">
-					고객 만족도 측정 그래프 <br/> <span class="muted">앱 전체&부분 ,답변, 문제해결, 건의사항적용 관련 만족도 </span>
-				</h2>
-				<p class="lead">Donec ullamcorper nulla non metus auctor
-					fringilla. Vestibulum id ligula porta felis euismod semper.
-					Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-					Fusce dapibus, tellus ac cursus commodo.</p>
-			</div>
 
-			<hr class="featurette-divider">
+<h2 class="featurette-heading">
+  Error & Bug 측정 그래프  <br/><span class="muted">앱의 오류 및 버그 종류별 </span>
+</h2>
+<p class="lead">Donec ullamcorper nulla non metus auctor
+  fringilla. Vestibulum id ligula porta felis euismod semper.
+  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+  Fusce dapibus, tellus ac cursus commodo.</p>
+</div>
 
-			<!-- /END THE FEATURETTES -->
+<hr class="featurette-divider">
 
-			<div class="footer">
-				<p>&copy; Company 2013 Software Maestro 3rd ' Mobile Application
-					Feedback Solution '</p>
-			</div>
+<div class="featurette">
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript">
+  $(function () {
+    var chart;
+    $(document).ready(function() {
 
-		</div>
-		<!-- /container -->
+      var colors = Highcharts.getOptions().colors,
+      categories = ['Answer', 'Solution', 'Applicated Suggestion', 'Total satisfaction of app'],
+      name = 'Customer Satisfation',
+      data = [{
+        y: 55.11,
+        color: colors[0],
+        drilldown: {
+          name: 'MSIE versions',
+          categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+          data: [10.85, 7.35, 33.06, 2.81],
+          color: colors[0]
+        }
+      }, {
+        y: 21.63,
+        color: colors[1],
+        drilldown: {
+          name: 'Firefox versions',
+          categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+          data: [0.20, 0.83, 1.58, 13.12, 5.43],
+          color: colors[1]
+        }
+      }, {
+        y: 11.94,
+        color: colors[2],
+        drilldown: {
+          name: 'Chrome versions',
+          categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
+          'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
+          data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
+          color: colors[2]
+        }
+      }, {
+        y: 7.15,
+        color: colors[3],
+        drilldown: {
+          name: 'Safari versions',
+          categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+          'Safari 3.1', 'Safari 4.1'],
+          data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+          color: colors[3]
+        }
+      }];
+      function setChart(name, categories, data, color) {
+        chart.xAxis[0].setCategories(categories, false);
+        chart.series[0].remove(false);
+        chart.addSeries({
+          name: name,
+          data: data,
+          color: color || 'white'
+        }, false);
+        chart.redraw();
+      }
 
-	<!-- Le javascript
+      chart = new Highcharts.Chart({
+        chart: {
+          renderTo: 'container4',
+          type: 'column'
+        },
+        title: {
+          text: 'Customer Satisfaction'
+        },
+        subtitle: {
+          text: ''
+        },
+        xAxis: {
+          categories: categories
+        },
+        yAxis: {
+          title: {
+            text: 'Total Satisfaction Score'
+          }
+        },
+        plotOptions: {
+          column: {
+            cursor: 'pointer',
+            point: {
+              events: {
+                click: function() {
+                  var drilldown = this.drilldown;
+                                if (drilldown) { // drill down
+                                  setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
+                                } else { // restore
+                                  setChart(name, categories, data);
+                                }
+                              }
+                            }
+                          },
+                          dataLabels: {
+                            enabled: true,
+                            color: colors[0],
+                            style: {
+                              fontWeight: 'bold'
+                            },
+                            formatter: function() {
+                              return this.y +'%';
+                            }
+                          }
+                        }
+                      },
+                      tooltip: {
+                        formatter: function() {
+                          var point = this.point,
+                          s = this.x +':<b>'+ this.y +'% market share</b><br/>';
+                          if (point.drilldown) {
+                            s += 'Click to view '+ point.category +' versions';
+                          } else {
+                            s += 'Click to return to browser brands';
+                          }
+                          return s;
+                        }
+                      },
+                      series: [{
+                        name: name,
+                        data: data,
+                        color: 'white'
+                      }],
+                      exporting: {
+                        enabled: false
+                      } 
+                    });
+});
+
+});
+</script>
+
+<script src="./assets/js/highcharts.js"></script>
+<script src="./assets/js/modules/exporting.js"></script>
+
+<div id="container4" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<h2 class="featurette-heading">
+  고객 만족도 측정 그래프 <br/> <span class="muted">앱 전체&부분 ,답변, 문제해결, 건의사항적용 관련 만족도 </span>
+</h2>
+<p class="lead">Donec ullamcorper nulla non metus auctor
+  fringilla. Vestibulum id ligula porta felis euismod semper.
+  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+  Fusce dapibus, tellus ac cursus commodo.</p>
+</div>
+
+<hr class="featurette-divider">
+<!-- Example row of columns ∂
+<div class="row">
+  <div class="span4">
+    <h2>Heading</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+  <div class="span4">
+    <h2>Heading</h2>
+    <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+  <div class="span4">
+    <h2>Heading</h2>
+    <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+    <p><a class="btn" href="#">View details &raquo;</a></p>
+  </div>
+</div>
+
+<hr> -->
+
+<footer>
+  <p>&copy; Company 2013</p>
+</footer>
+
+<!--</div> --><!-- /container -->
+
+    <!-- Le javascript
     ================================================== -->
-	<!-- Placed at the end of the document so the pages load faster -->
-	<script src="./assets/js/jquery.js"></script>
-	<script src="./assets/js/bootstrap-transition.js"></script>
-	<script src="./assets/js/bootstrap-alert.js"></script>
-	<script src="./assets/js/bootstrap-modal.js"></script>
-	<script src="./assets/js/bootstrap-dropdown.js"></script>
-	<script src="./assets/js/bootstrap-scrollspy.js"></script>
-	<script src="./assets/js/bootstrap-tab.js"></script>
-	<script src="./assets/js/bootstrap-tooltip.js"></script>
-	<script src="./assets/js/bootstrap-popover.js"></script>
-	<script src="./assets/js/bootstrap-button.js"></script>
-	<script src="./assets/js/bootstrap-collapse.js"></script>
-	<script src="./assets/js/bootstrap-carousel.js"></script>
-	<script src="./assets/js/bootstrap-typeahead.js"></script>
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap-transition.js"></script>
+    <script src="./assets/js/bootstrap-alert.js"></script>
+    <script src="./assets/js/bootstrap-modal.js"></script>
+    <script src="./assets/js/bootstrap-dropdown.js"></script>
+    <script src="./assets/js/bootstrap-scrollspy.js"></script>
+    <script src="./assets/js/bootstrap-tab.js"></script>
+    <script src="./assets/js/bootstrap-tooltip.js"></script>
+    <script src="./assets/js/bootstrap-popover.js"></script>
+    <script src="./assets/js/bootstrap-button.js"></script>
+    <script src="./assets/js/bootstrap-collapse.js"></script>
+    <script src="./assets/js/bootstrap-carousel.js"></script>
+    <script src="./assets/js/bootstrap-typeahead.js"></script>
 
-</body>
-</html>
+  </body>
+  </html>

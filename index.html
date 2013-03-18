@@ -9,6 +9,7 @@
 
   <!-- Le styles -->
   <link href="./assets/css/bootstrap.css" rel="stylesheet">
+
   <style type="text/css">
   body {
     padding-top: 60px;
@@ -48,6 +49,9 @@
   line-height: 1;
   letter-spacing: -1px;
 }
+
+
+
 </style>
 <link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
 
@@ -106,7 +110,43 @@
       </div>
 
       <div class="container">
-
+        
+        <hr class="featurette-divider">
+        <div class="tcenter">
+          <ul class="thumbnails" >
+            <li class="span4">
+              <div class="thumbnail">
+                <img data-src="holder.js/300x200" >
+                <h3>Thumbnail label</h3>
+                <p>Thumbnail caption...</p>
+              </div>
+            </li>
+            <li class="span4">
+              <div class="thumbnail">
+                <img data-src="holder.js/300x200" >
+                <h3>Thumbnail label</h3>
+                <p>Thumbnail caption...</p>
+              </div>
+            </li>
+          </ul>
+              <ul class="thumbnails">
+     
+            <li class="span4">
+              <div class="thumbnail">
+                <img data-src="holder.js/300x200" >
+                <h3>Thumbnail label</h3>
+                <p>Thumbnail caption...</p>
+              </div>
+            </li>
+            <li class="span4">
+              <div class="thumbnail">
+                <img data-src="holder.js/300x200" >
+                <h3>Thumbnail label</h3>
+                <p>Thumbnail caption...</p>
+              </div>
+            </li>
+          </ul>
+        </div>
         <!-- Main hero unit for a primary marketing message or call to action -->
         <div class="hero-unit">
         <!-- <h1>Hello, world!</h1>
@@ -275,157 +315,157 @@ style="min-width: 400px; height: 400px; margin: 0 auto"></div>
 
 <hr class="featurette-divider">
 <div class="featurette">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script type="text/javascript">
-$(function () {
-    var chart;
-    $(document).ready(function() {
-        chart = new Highcharts.Chart({
-            chart: {
-                renderTo: 'container3',
-                type: 'column'
-            },
-            title: {
-                text: 'Error & Bugs'
-            },
-            xAxis: {
-                categories: ['Ginger Bread', 'Ice cream Sandwich', 'Jelly Bean', 'Froyo']
-            },
-            yAxis: {
-                min: 0,
-                title: {
-                    text: 'Error Rate'
-                }
-            },
-            tooltip: {
-                formatter: function() {
-                    return ''+
-                        this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
-                }
-            },
-            plotOptions: {
-                column: {
-                    stacking: 'percent'
-                }
-            },
-                series: [{
-                name: 'John',
-                data: [5, 3, 4, 7]
-            }, {
-                name: 'Jane',
-                data: [2, 2, 3, 2]
-            }, {
-                name: 'Joe',
-                data: [3, 4, 4, 2]
-            }]
-        });
-    });
-    
-});
-    </script>
-
-<script src="./assets/js/highcharts.js"></script>
-<script src="./assets/js/modules/exporting.js"></script>
-
-<div id="container3" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
-
-<h2 class="featurette-heading">
-  Error & Bug 측정 그래프  <br/><span class="muted">앱의 오류 및 버그 종류별 </span>
-</h2>
-<p class="lead">Donec ullamcorper nulla non metus auctor
-  fringilla. Vestibulum id ligula porta felis euismod semper.
-  Praesent commodo cursus magna, vel scelerisque nisl consectetur.
-  Fusce dapibus, tellus ac cursus commodo.</p>
-</div>
-
-<hr class="featurette-divider">
-
-<div class="featurette">
   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
   <script type="text/javascript">
   $(function () {
     var chart;
     $(document).ready(function() {
-
-      var colors = Highcharts.getOptions().colors,
-      categories = ['Answer', 'Solution', 'Applicated Suggestion', 'Total satisfaction of app'],
-      name = 'Customer Satisfation',
-      data = [{
-        y: 55.11,
-        color: colors[0],
-        drilldown: {
-          name: 'MSIE versions',
-          categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
-          data: [10.85, 7.35, 33.06, 2.81],
-          color: colors[0]
-        }
-      }, {
-        y: 21.63,
-        color: colors[1],
-        drilldown: {
-          name: 'Firefox versions',
-          categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
-          data: [0.20, 0.83, 1.58, 13.12, 5.43],
-          color: colors[1]
-        }
-      }, {
-        y: 11.94,
-        color: colors[2],
-        drilldown: {
-          name: 'Chrome versions',
-          categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
-          'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
-          data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
-          color: colors[2]
-        }
-      }, {
-        y: 7.15,
-        color: colors[3],
-        drilldown: {
-          name: 'Safari versions',
-          categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
-          'Safari 3.1', 'Safari 4.1'],
-          data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
-          color: colors[3]
-        }
-      }];
-      function setChart(name, categories, data, color) {
-        chart.xAxis[0].setCategories(categories, false);
-        chart.series[0].remove(false);
-        chart.addSeries({
-          name: name,
-          data: data,
-          color: color || 'white'
-        }, false);
-        chart.redraw();
-      }
-
       chart = new Highcharts.Chart({
         chart: {
-          renderTo: 'container4',
+          renderTo: 'container3',
           type: 'column'
         },
         title: {
-          text: 'Customer Satisfaction'
-        },
-        subtitle: {
-          text: ''
+          text: 'Error & Bugs'
         },
         xAxis: {
-          categories: categories
+          categories: ['Ginger Bread', 'Ice cream Sandwich', 'Jelly Bean', 'Froyo']
         },
         yAxis: {
+          min: 0,
           title: {
-            text: 'Total Satisfaction Score'
+            text: 'Error Rate'
+          }
+        },
+        tooltip: {
+          formatter: function() {
+            return ''+
+            this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
           }
         },
         plotOptions: {
           column: {
-            cursor: 'pointer',
-            point: {
-              events: {
-                click: function() {
-                  var drilldown = this.drilldown;
+            stacking: 'percent'
+          }
+        },
+        series: [{
+          name: 'John',
+          data: [5, 3, 4, 7]
+        }, {
+          name: 'Jane',
+          data: [2, 2, 3, 2]
+        }, {
+          name: 'Joe',
+          data: [3, 4, 4, 2]
+        }]
+      });
+    });
+    
+  });
+  </script>
+
+  <script src="./assets/js/highcharts.js"></script>
+  <script src="./assets/js/modules/exporting.js"></script>
+
+  <div id="container3" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+  <h2 class="featurette-heading">
+    Error & Bug 측정 그래프  <br/><span class="muted">앱의 오류 및 버그 종류별 </span>
+  </h2>
+  <p class="lead">Donec ullamcorper nulla non metus auctor
+    fringilla. Vestibulum id ligula porta felis euismod semper.
+    Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+    Fusce dapibus, tellus ac cursus commodo.</p>
+  </div>
+
+  <hr class="featurette-divider">
+
+  <div class="featurette">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+      var chart;
+      $(document).ready(function() {
+
+        var colors = Highcharts.getOptions().colors,
+        categories = ['Answer', 'Solution', 'Applicated Suggestion', 'Total satisfaction of app'],
+        name = 'Customer Satisfation',
+        data = [{
+          y: 55.11,
+          color: colors[0],
+          drilldown: {
+            name: 'MSIE versions',
+            categories: ['MSIE 6.0', 'MSIE 7.0', 'MSIE 8.0', 'MSIE 9.0'],
+            data: [10.85, 7.35, 33.06, 2.81],
+            color: colors[0]
+          }
+        }, {
+          y: 21.63,
+          color: colors[1],
+          drilldown: {
+            name: 'Firefox versions',
+            categories: ['Firefox 2.0', 'Firefox 3.0', 'Firefox 3.5', 'Firefox 3.6', 'Firefox 4.0'],
+            data: [0.20, 0.83, 1.58, 13.12, 5.43],
+            color: colors[1]
+          }
+        }, {
+          y: 11.94,
+          color: colors[2],
+          drilldown: {
+            name: 'Chrome versions',
+            categories: ['Chrome 5.0', 'Chrome 6.0', 'Chrome 7.0', 'Chrome 8.0', 'Chrome 9.0',
+            'Chrome 10.0', 'Chrome 11.0', 'Chrome 12.0'],
+            data: [0.12, 0.19, 0.12, 0.36, 0.32, 9.91, 0.50, 0.22],
+            color: colors[2]
+          }
+        }, {
+          y: 7.15,
+          color: colors[3],
+          drilldown: {
+            name: 'Safari versions',
+            categories: ['Safari 5.0', 'Safari 4.0', 'Safari Win 5.0', 'Safari 4.1', 'Safari/Maxthon',
+            'Safari 3.1', 'Safari 4.1'],
+            data: [4.55, 1.42, 0.23, 0.21, 0.20, 0.19, 0.14],
+            color: colors[3]
+          }
+        }];
+        function setChart(name, categories, data, color) {
+          chart.xAxis[0].setCategories(categories, false);
+          chart.series[0].remove(false);
+          chart.addSeries({
+            name: name,
+            data: data,
+            color: color || 'white'
+          }, false);
+          chart.redraw();
+        }
+
+        chart = new Highcharts.Chart({
+          chart: {
+            renderTo: 'container4',
+            type: 'column'
+          },
+          title: {
+            text: 'Customer Satisfaction'
+          },
+          subtitle: {
+            text: ''
+          },
+          xAxis: {
+            categories: categories
+          },
+          yAxis: {
+            title: {
+              text: 'Total Satisfaction Score'
+            }
+          },
+          plotOptions: {
+            column: {
+              cursor: 'pointer',
+              point: {
+                events: {
+                  click: function() {
+                    var drilldown = this.drilldown;
                                 if (drilldown) { // drill down
                                   setChart(drilldown.name, drilldown.categories, drilldown.data, drilldown.color);
                                 } else { // restore
@@ -529,6 +569,6 @@ $(function () {
     <script src="./assets/js/bootstrap-collapse.js"></script>
     <script src="./assets/js/bootstrap-carousel.js"></script>
     <script src="./assets/js/bootstrap-typeahead.js"></script>
-
+<script src="./assets/js/holder/holder.js"></script>
   </body>
   </html>

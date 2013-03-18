@@ -5518,6 +5518,13 @@ input[type="submit"].btn.btn-mini {
   border-right-width: 0;
 }
 
+.tcenter {
+  position: relative;
+  margin-left: -400px;
+  left: 50%;
+  text-align: center;
+}
+
 .thumbnails {
   margin-left: -20px;
   list-style: none;
@@ -5536,7 +5543,7 @@ input[type="submit"].btn.btn-mini {
 }
 
 .row-fluid .thumbnails {
-  margin-left: 0;
+  margin-left: 50;
 }
 
 .thumbnails > li {

@@ -1,5 +1,8 @@
+ #!/usr/bin/python
+# -*- coding: utf-8 -*-
 from salinasolution.controllog.models import Crash, DeviceInfo, Session
 from django.contrib import admin
+
 '''
 Created on 2013. 3. 7.
 

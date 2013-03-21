@@ -1,3 +1,5 @@
+ #!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
 '''
 Created on 2013. 3. 7.

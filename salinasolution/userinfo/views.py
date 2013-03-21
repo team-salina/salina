@@ -1,3 +1,5 @@
+ #!/usr/bin/python
+# -*- coding: utf-8 -*-
 from django.db.models import Count
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -28,12 +30,15 @@ def view_app(request):
                               context_instance=RequestContext(request))
 '''    
     
-    
+'''
+관리자가 페이지에서 해당 앱에 대한 세부정보를 보는 페이지 
+''' 
 def view_admin(request):
    
     debug(TAG, "view_admin_method")
-    feedback_info = FeedbackInfo()
+    
     #get feedback aggregation from db
+    '''
     if request.method == 'GET':
         app_id = request.GET[Var.APP_ID]
     question_info = feedback_info.make_tmplt_obj(Var.QUESTION, app_id)
@@ -41,21 +46,42 @@ def view_admin(request):
     problem_info = feedback_info.make_tmplt_obj(Var.PROBLEM, app_id)
     praise_info = feedback_info.make_tmplt_obj(Var.PRAISE, app_id)
     #get session aggregation from db
-    '''
-    Session.objects.annotate(cnt=Count('start_time')) \
-          .dates('start_time', 'day')
-    '''
+   
     session_info = Session.objects.raw('SELECT DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
     user_info = Session.objects.raw('SELECT start_time as date, COUNT(start_time) as cnt FROM ( SELECT * FROM controllog_session GROUP BY user ) GROUP BY DAY(start_time)')
     debug(TAG, "before_response")
-    return render_to_response('index.html', {question_info: 'question_info',
+    '''
+    
+    question_info = FeedbackInfo().setValue("300","200", "900")
+    suggestion_info = FeedbackInfo().setValue("100", "300", "400")
+    problem_info = FeedbackInfo().setValue("600", "700", "100")
+    praise_info = FeedbackInfo().setValue("100", "200", "300")
+    '''
+    #print question_info.new_cnt
+    question_info = FeedbackInfo()
+    
+    question_info.new_cnt = 100
+    
+    print question_info.new_cnt
+    '''
+    test = 1000
+    print question_info.new_cnt
+    return render_to_response('index.html', {'question_info': question_info,
+                                             'suggestion_info': suggestion_info,
+                                             'problem_info': problem_info,
+                                             'praise_info': praise_info,
+                                             'test' : test,
+                                             },
+                              context_instance=RequestContext(request))
+    
+    '''
+                                                question_info: 'question_info',
                                              suggestion_info: 'suggestion_info',
                                              problem_info: 'problem_info',
                                              praise_info: 'praise_info',
                                              session_info: 'session_info',
                                              user_info: 'user_info',
-                                             },
-                              context_instance=RequestContext(request))
+    '''
     
       
         

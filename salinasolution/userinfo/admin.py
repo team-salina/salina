@@ -1,3 +1,5 @@
+ #!/usr/bin/python
+# -*- coding: utf-8 -*-
 from salinasolution.userinfo.models import App, Manager, User 
 from django.contrib import admin
 

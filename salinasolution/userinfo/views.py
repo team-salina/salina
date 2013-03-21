@@ -9,6 +9,9 @@ from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVo
 from salinasolution.controllog.models import Crash, DeviceInfo, Session
 from salinasolution.var import Var
 from salinasolution.templetobj import FeedbackInfo
+from django.core.context_processors import request
+from salinasolution import pson 
+import json
 # Create your views here.
 
 TAG = "adminpage.views"
@@ -36,11 +39,14 @@ def view_app(request):
 def view_admin(request):
    
     debug(TAG, "view_admin_method")
+   
+        
     
     #get feedback aggregation from db
     '''
     if request.method == 'GET':
         app_id = request.GET[Var.APP_ID]
+    
     question_info = feedback_info.make_tmplt_obj(Var.QUESTION, app_id)
     suggestion_info = feedback_info.make_tmplt_obj(Var.SUGGESTION, app_id)
     problem_info = feedback_info.make_tmplt_obj(Var.PROBLEM, app_id)
@@ -56,21 +62,13 @@ def view_admin(request):
     suggestion_info = FeedbackInfo().setValue("100", "300", "400")
     problem_info = FeedbackInfo().setValue("600", "700", "100")
     praise_info = FeedbackInfo().setValue("100", "200", "300")
-    '''
-    #print question_info.new_cnt
-    question_info = FeedbackInfo()
     
-    question_info.new_cnt = 100
-    
-    print question_info.new_cnt
-    '''
-    test = 1000
     print question_info.new_cnt
     return render_to_response('index.html', {'question_info': question_info,
                                              'suggestion_info': suggestion_info,
                                              'problem_info': problem_info,
                                              'praise_info': praise_info,
-                                             'test' : test,
+                                             
                                              },
                               context_instance=RequestContext(request))
     

@@ -6011,7 +6011,7 @@ a.badge:focus {
 .carousel-inner > .next,
 .carousel-inner > .prev {
   position: absolute;
-  top: 0;
+  top: 90px;
   width: 100%;
 }
 
@@ -6038,7 +6038,7 @@ a.badge:focus {
 
 .carousel-control {
   position: absolute;
-  top: 40%;
+  top: 52%;
   left: 15px;
   width: 40px;
   height: 40px;

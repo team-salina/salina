@@ -6,6 +6,8 @@ import java.util.Date;
 import org.salina.android.DatapointHelper;
 import org.salina.android.Salina;
 
+import com.google.gson.annotations.SerializedName;
+
 
 /**
  * 피드백 모델 클래스
@@ -13,7 +15,7 @@ import org.salina.android.Salina;
  *
  */
 public class Feedback {
-
+	@SerializedName("seq")
 	private int pk = -1;
 	private String user_id = "";
 	private String device_key;

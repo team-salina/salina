@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>Highcharts Example</title>
+
+		<script type="text/javascript" src="./assets/js/jquery.js"></script>
+		<script type="text/javascript">
+$(function () {
+    var chart;
+    $(document).ready(function() {
+        chart = new Highcharts.Chart({
+            chart: {
+                renderTo: 'container',
+                type: 'area',
+                spacingBottom: 30
+            },
+            title: {
+                text: 'Week'
+            },
+            subtitle: {
+                text: '* Jane\'s banana consumption is unknown',
+                floating: true,
+                align: 'right',
+                verticalAlign: 'bottom',
+                y: 15
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                verticalAlign: 'top',
+                x: 150,
+                y: 100,
+                floating: true,
+                borderWidth: 1,
+                backgroundColor: '#FFFFFF'
+            },
+            xAxis: {
+                categories: ['3/19', '3/20', '3/21', '3/22', '3/23', '3/24']
+            },
+            yAxis: {
+                title: {
+                    text: 'Count'
+                },
+                 categories: ['0','25','50','75','100','200'],
+                /*labels: {
+                    formatter: function() {
+                        return this.value;
+                    }
+                }*/
+            },
+            tooltip: {
+                formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.x +': '+ this.y;
+                }
+            },
+            plotOptions: {
+                area: {
+                    fillOpacity: 0.5
+                }
+            },
+            credits: {
+                enabled: false
+            },
+            series: [{
+                name: 'Feedback',
+                data: [0, 1, 4, 4, 5, 2]
+            }]
+        });
+    });
+    
+});
+		</script>
+	</head>
+	<body>
+<script src="./assets/js/highcharts.js"></script>
+<script src="./assets/js/modules/exporting.js"></script>
+
+<div id="container" style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+
+	</body>
+</html>

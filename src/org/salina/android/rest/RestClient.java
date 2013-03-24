@@ -46,7 +46,7 @@ public class RestClient {
 	/**
 	 * 서버 호스트 URL
 	 */
-	public static final String SERVER_HOST = "http://61.43.139.106/";
+	public static final String SERVER_HOST = "http://61.43.139.106:8000/";
 	
 	/**
 	 * 질문 URL
@@ -114,6 +114,10 @@ public class RestClient {
 	}
 	
 	private String request(HttpUriRequest request){
+		if (Constants.IS_LOGGABLE) {
+			Log.v(Constants.LOG_TAG, "request for : " + request.getURI().toString());
+		}
+		
 		HttpClient client = new DefaultHttpClient();
 		HttpParams params = client.getParams();
 		

@@ -42,6 +42,8 @@ public class FeedbackDialog {
 	private static LinearLayout pl;
 	private static WindowManager.LayoutParams plParams;
 	
+	private EditText etContent;
+	
 	private Context context;
 	
 	private FeedbackDialog(Context context) {
@@ -144,7 +146,7 @@ public class FeedbackDialog {
 			navLayout.addView(btPraise, btPraiseParams);
 			
 		/* 피드백 내용 EditText View */
-		final EditText etContent = new EditText(context);
+		etContent = new EditText(context);
 		etContent.setBackgroundColor(Color.WHITE);
 		etContent.setTextColor(Color.BLACK);
 		ViewGroup.LayoutParams etContentParams = new ViewGroup.LayoutParams(
@@ -246,6 +248,9 @@ public class FeedbackDialog {
 	}
 
 	protected void closeDialog(LinearLayout parentLayout) {
+		// 닫기 전에 content 내용 비움
+		etContent.setText("");
+		
 		WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
 		windowManager.removeView(parentLayout);
 	}

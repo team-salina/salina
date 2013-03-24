@@ -1,5 +1,6 @@
 package org.salina.android.model;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import org.salina.android.DatapointHelper;
@@ -27,6 +28,9 @@ public class Feedback {
 		this.device_key = DatapointHelper.getAndroidIdHashOrNull(Salina.getContext());
 		this.contents = contents;
 		this.category = category;
+		
+		this.app_id = Salina.getAppId();
+		this.pub_date = Calendar.getInstance().getTime();
 	}
 	
 	public Feedback(int pk, String user_id, String device_key,

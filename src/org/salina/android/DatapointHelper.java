@@ -420,47 +420,6 @@ public final class DatapointHelper
     }
 
 
-    /**
-     * Retrieve the Facebook attribution cookie at installation time
-     *
-     * @return Facebook attribution cookie or null if unavailable
-     */
-    public static String getFBAttribution(final Context context)
-    {
-        String facebookAttribution = null;
-
-        final ContentResolver contentResolver = context.getContentResolver();
-        final Uri uri = Uri.parse("content://com.facebook.katana.provider.AttributionIdProvider"); //$NON-NLS-1$
-        final String columnName = "aid"; //$NON-NLS-1$
-        final String[] projection =
-            { columnName };
-        Cursor cursor = null;
-        try
-        {
-            cursor = contentResolver.query(uri, projection, null, null, null);
-            if (null != cursor && cursor.moveToFirst())
-            {
-                facebookAttribution = cursor.getString(cursor.getColumnIndex(columnName));
-            }
-        }
-        catch (final Exception e)
-        {
-            if (Constants.IS_LOGGABLE)
-            {
-                Log.w(Constants.LOG_TAG, "Error reading FB attribution", e); //$NON-NLS-1$
-            }
-        }
-        finally
-        {
-            if (null != cursor)
-            {
-                cursor.close();
-                cursor = null;
-            }
-        }
-
-        return facebookAttribution;
-    }
     
     /**
      * Gets the versionName of the application.

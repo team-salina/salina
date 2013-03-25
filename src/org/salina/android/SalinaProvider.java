@@ -479,7 +479,6 @@ import android.util.Log;
 			db.execSQL(String.format("CREATE TABLE"));
 			
 			final ContentValues values = new ContentValues();
-			values.put(InfoDbColumns.FB_ATTRIBUTION, DatapointHelper.getFBAttribution(mContext));
 			values.put(InfoDbColumns.FIRST_RUN, Boolean.TRUE);
 			db.insertOrThrow(InfoDbColumns.TABLE_NAME, null, values);
 		}

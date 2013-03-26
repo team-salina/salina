@@ -5,6 +5,7 @@ import java.util.Date;
 
 import org.salina.android.DatapointHelper;
 import org.salina.android.Salina;
+import org.salina.android.SalinaUtils;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -21,7 +22,7 @@ public class Feedback {
 	private String device_key;
 	private Category category;
 	private String app_id;
-	private Date pub_date;
+	private String pub_date;
 	private String contents;
 	
 	public Feedback(){ }
@@ -32,11 +33,11 @@ public class Feedback {
 		this.category = category;
 		
 		this.app_id = Salina.getAppId();
-		this.pub_date = Calendar.getInstance().getTime();
+		this.pub_date = SalinaUtils.dateToStringNow();
 	}
 	
 	public Feedback(int pk, String user_id, String device_key,
-			Category category, String app_id, Date pub_date, String contents) {
+			Category category, String app_id, String pub_date, String contents) {
 		this.pk = pk;
 		this.user_id = user_id;
 		this.device_key = device_key;
@@ -75,11 +76,11 @@ public class Feedback {
 	public void setApp_id(String app_id) {
 		this.app_id = app_id;
 	}
-	public Date getPub_date() {
+	public String getPub_date() {
 		return pub_date;
 	}
 	public void setPub_date(Date pub_date) {
-		this.pub_date = pub_date;
+		this.pub_date = SalinaUtils.dateToString(pub_date);
 	}
 	public String getContents() {
 		return contents;

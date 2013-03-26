@@ -55,7 +55,7 @@ public class SalinaSession implements DataHandleBehavior{
 	 * Constraints : None
 	 */
 	@SerializedName("start_time")
-	private Date startTime;
+	private String startTime;
 	
 	/**
 	 * 세션 종료 시각
@@ -65,7 +65,7 @@ public class SalinaSession implements DataHandleBehavior{
 	 * Constraints : None
 	 */
 	@SerializedName("end_time")
-	private Date endTime;
+	private String endTime;
 	
 	public SalinaSession(Object component) {
 		init(component);
@@ -96,11 +96,11 @@ public class SalinaSession implements DataHandleBehavior{
 	 * 세션 종료 시 {@link #close()}호출
 	 */
 	public void open() {
-		startTime = Calendar.getInstance().getTime();
+		startTime = SalinaUtils.dateToStringNow();
 	}
 	
 	public void close() {
-		endTime = Calendar.getInstance().getTime();
+		endTime = SalinaUtils.dateToStringNow();
 	}
 
 	@Override

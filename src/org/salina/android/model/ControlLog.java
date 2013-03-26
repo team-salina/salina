@@ -14,12 +14,6 @@ import com.google.gson.annotations.SerializedName;
  *
  */
 public class ControlLog {
-	@SerializedName("user_id")
-	private String userId;
-	
-	@SerializedName("device_key")
-	private String deviceKey;
-	
 	@SerializedName("Session")
 	private List<SalinaSession> sessions;
 	
@@ -28,11 +22,6 @@ public class ControlLog {
 	
 	@SerializedName("Crash")
 	private List<Crash> crash;
-	
-	public ControlLog(String userId, String deviceKey){
-		this.userId = userId;
-		this.deviceKey = deviceKey;
-	}
 	
 	public void addSession(SalinaSession session) {
 		if(null == this.sessions) {

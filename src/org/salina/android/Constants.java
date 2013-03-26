@@ -33,7 +33,7 @@ public class Constants {
 	public static final class Urls {
 		private static final String SCHEME = "http://";
 		private static final String HOST = "61.43.139.106:8000/";
-		public static final String CONTROL_LOG = SCHEME + HOST + "controllog";
+		public static final String CONTROL_LOG = SCHEME + HOST + "controllog/";
 	}
 	
 }

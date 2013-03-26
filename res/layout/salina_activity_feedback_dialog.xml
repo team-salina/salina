@@ -1,0 +1,290 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical">	
+	<TabHost 
+	    android:id="@+id/salina_fd_tabhost"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:orientation="vertical" >
+	
+	        <TabWidget
+	            android:id="@android:id/tabs"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0"
+	            android:orientation="horizontal" />
+	
+	        <FrameLayout
+	            android:id="@android:id/tabcontent"
+	            android:layout_width="match_parent"
+	            android:layout_height="0dip"
+	            android:layout_weight="1" >
+	
+	            <LinearLayout
+	                android:id="@+id/salina_fd_qstLinearLayout"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:orientation="vertical" >
+	
+	                <!-- 여기가 윗부분 레이아웃 -->
+	                
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0px"
+	                    android:layout_weight="4"
+	                    android:orientation="vertical" >
+	
+	                    <LinearLayout
+	                        android:layout_width="match_parent"
+	                        android:layout_height="match_parent"
+	                        android:layout_margin="10dp"
+	                        android:background="@android:color/background_dark"
+	                        android:gravity="center"
+	                        android:orientation="vertical" >
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="1"
+	                            android:gravity="center"
+	                            android:orientation="vertical" >
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:text="@string/have_a_question"
+	                                android:textColor="@android:color/white"
+	                                android:textSize="20sp" />
+	                        </LinearLayout>
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="4"
+	                            android:orientation="vertical" >
+	
+	                            <EditText
+	                                android:id="@+id/salina_fd_qstContents"
+	                                android:layout_width="match_parent"
+	                                android:layout_height="match_parent"
+	                                android:minHeight="200dp"
+	                                android:layout_margin="10dp"
+	                                android:background="@android:color/white"
+	                                android:ems="10"
+	                                android:inputType="textMultiLine" />
+	                        </LinearLayout>
+	                    </LinearLayout>
+	                </LinearLayout>
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/salina_fd_sgtLinearLayout"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:orientation="vertical" >
+	
+	                <!-- 여기가 윗부분 레이아웃 -->
+	
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0px"
+	                    android:layout_weight="4"
+	                    android:orientation="vertical" >
+	
+	                    <LinearLayout
+	                        android:layout_width="match_parent"
+	                        android:layout_height="match_parent"
+	                        android:layout_margin="10dp"
+	                        android:background="@android:color/background_dark"
+	                        android:gravity="center"
+	                        android:orientation="vertical" >
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="1"
+	                            android:gravity="center"
+	                            android:orientation="vertical" >
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:text="@string/have_a_suggestion"
+	                                android:textColor="@android:color/white"
+	                                android:textSize="20sp" />
+	
+	                        </LinearLayout>
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="4"
+	                            android:orientation="vertical" >
+	
+	                            <EditText
+	                                android:id="@+id/salina_fd_sgtContents"
+	                                android:layout_width="match_parent"
+	                                android:layout_height="match_parent"
+	                                android:minHeight="200dp"
+	                                android:layout_margin="10dp"
+	                                android:background="@android:color/white"
+	                                android:ems="10"
+	                                android:inputType="textMultiLine" />
+	                        </LinearLayout>
+	                    </LinearLayout>
+	                </LinearLayout>
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/salina_fd_prblmLinearLayout"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:orientation="vertical" >
+	
+	                <!-- 여기가 윗부분 레이아웃 -->
+	
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0px"
+	                    android:layout_weight="4"
+	                    android:orientation="vertical" >
+	
+	                    <LinearLayout
+	                        android:layout_width="match_parent"
+	                        android:layout_height="match_parent"
+	                        android:layout_margin="10dp"
+	                        android:background="@android:color/background_dark"
+	                        android:gravity="center"
+	                        android:orientation="vertical" >
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="1"
+	                            android:gravity="center"
+	                            android:orientation="vertical" >
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:text="@string/have_a_problem"
+	                                android:textColor="@android:color/white"
+	                                android:textSize="20sp" />
+	
+	                        </LinearLayout>
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="4"
+	                            android:orientation="vertical" >
+	
+	                            <EditText
+	                                android:id="@+id/salina_fd_prbContents"
+	                                android:layout_width="match_parent"
+	                                android:layout_height="match_parent"
+	                                android:minHeight="200dp"
+	                                android:layout_margin="10dp"
+	                                android:background="@android:color/white"
+	                                android:ems="10"
+	                                android:inputType="textMultiLine" />
+	                        </LinearLayout>
+	                    </LinearLayout>
+	                </LinearLayout>
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/salina_fd_praiseLinearLayout"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent"
+	                android:orientation="vertical" >
+	
+	                <!-- 여기가 윗부분 레이아웃 -->
+	
+	                <LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="0px"
+	                    android:layout_weight="4"
+	                    android:orientation="vertical" >
+	
+	                    <LinearLayout
+	                        android:layout_width="match_parent"
+	                        android:layout_height="match_parent"
+	                        android:layout_margin="10dp"
+	                        android:background="@android:color/background_dark"
+	                        android:gravity="center"
+	                        android:orientation="vertical" >
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="1"
+	                            android:gravity="center"
+	                            android:orientation="vertical" >
+	
+	                            <TextView
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content"
+	                                android:text="@string/have_a_praise"
+	                                android:textColor="@android:color/white"
+	                                android:textSize="20sp" />
+	                        </LinearLayout>
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="3"
+	                            android:orientation="vertical" >
+	
+	                            <EditText
+	                                android:id="@+id/salina_fd_prsContents"
+	                                android:layout_width="match_parent"
+	                                android:layout_height="match_parent"
+	                                android:layout_margin="10dp"
+	                                android:background="@android:color/white"
+	                                android:minHeight="200dp"
+	                                android:ems="10"
+	                                android:inputType="textMultiLine" />
+	                        </LinearLayout>
+	
+	                        <LinearLayout
+	                            android:layout_width="match_parent"
+	                            android:layout_height="0px"
+	                            android:layout_weight="1"
+	                            android:gravity="center"
+	                            android:orientation="vertical" >
+	
+	                            <RatingBar
+	                                android:layout_width="wrap_content"
+	                                android:layout_height="wrap_content" />
+	                        </LinearLayout>
+	                    </LinearLayout>
+	                </LinearLayout>
+	
+	                
+	            </LinearLayout>
+	        </FrameLayout>
+	    </LinearLayout>
+	
+	</TabHost>
+	<!-- 여기가 아랫부분 레이아웃 -->
+	
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/salina_fd_btSend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/salina_fd_btSend" />
+    </LinearLayout>
+</LinearLayout>

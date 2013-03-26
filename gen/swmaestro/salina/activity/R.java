@@ -21,19 +21,40 @@ public final class R {
     }
     public static final class id {
         public static int btText=0x7f080000;
-        public static int menu_settings=0x7f080002;
+        public static int menu_settings=0x7f08000c;
+        public static int salina_fd_btSend=0x7f08000b;
+        public static int salina_fd_praiseLinearLayout=0x7f080009;
+        public static int salina_fd_prbContents=0x7f080008;
+        public static int salina_fd_prblmLinearLayout=0x7f080007;
+        public static int salina_fd_prsContents=0x7f08000a;
+        public static int salina_fd_qstContents=0x7f080004;
+        public static int salina_fd_qstLinearLayout=0x7f080003;
+        public static int salina_fd_sgtContents=0x7f080006;
+        public static int salina_fd_sgtLinearLayout=0x7f080005;
+        public static int salina_fd_tabhost=0x7f080002;
         public static int test=0x7f080001;
     }
     public static final class layout {
         public static int activity_main=0x7f030000;
+        public static int salina_activity_feedback_dialog=0x7f030001;
     }
     public static final class menu {
         public static int activity_main=0x7f070000;
     }
     public static final class string {
         public static int app_name=0x7f050000;
+        public static int have_a_praise=0x7f05000c;
+        public static int have_a_problem=0x7f05000b;
+        public static int have_a_question=0x7f050009;
+        public static int have_a_suggestion=0x7f05000a;
         public static int hello_world=0x7f050001;
         public static int menu_settings=0x7f050002;
+        public static int salina_fd_btSend=0x7f05000d;
+        public static int salina_fd_tab_praise_label=0x7f050007;
+        public static int salina_fd_tab_problem_label=0x7f050006;
+        public static int salina_fd_tab_question_label=0x7f050004;
+        public static int salina_fd_tab_suggestion_label=0x7f050005;
+        public static int salina_fd_toast_text=0x7f050008;
         public static int title_activity_main=0x7f050003;
     }
     public static final class style {

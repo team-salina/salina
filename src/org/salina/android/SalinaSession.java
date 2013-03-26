@@ -7,6 +7,8 @@ import java.util.Date;
 import org.salina.android.model.ControlLog;
 import org.salina.android.rest.RestClient;
 
+import android.util.Log;
+
 import com.google.gson.annotations.SerializedName;
 
 /**
@@ -79,6 +81,11 @@ public class SalinaSession implements DataHandleBehavior{
 		// Device Key 초기화
 		deviceKey = DatapointHelper.getTelephonyDeviceIdHashOrNull(Salina.getContext());
 		
+		if (null == deviceKey) {
+			deviceKey = DatapointHelper.getAndroidIdHashOrNull(Salina.getContext());
+		}
+		
+		
 		// Application Id 초기화
 		appId = Salina.getAppId();
 		
@@ -101,9 +108,11 @@ public class SalinaSession implements DataHandleBehavior{
 		new Thread(){
 			@Override
 			public void run() {
+				Log.e(Constants.LOG_TAG, String.format("device key: " + deviceKey));
+				
 				RestClient client = Salina.getBean(Salina.REST_CLIENT, RestClient.class);
 				
-				ControlLog chunks = Salina.newControlLog();
+				ControlLog chunks = new ControlLog();
 				chunks.addSession(SalinaSession.this);
 				client.post(Constants.Urls.CONTROL_LOG, chunks);
 			}

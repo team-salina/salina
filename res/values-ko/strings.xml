@@ -1,0 +1,18 @@
+<resources>
+
+    <string name="app_name">피드백 보내기</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="salina_fd_tab_question_label">질문하기</string>
+	<string name="salina_fd_tab_suggestion_label">제안하기</string>
+	<string name="salina_fd_tab_problem_label">문제보고</string>
+	<string name="salina_fd_tab_praise_label">칭찬하기</string>
+	<string name="salina_fd_toast_text">소중한 의견 감사합니다.</string>
+	
+	<string name="have_a_question">무엇이든 물어보세요!</string>
+	<string name="have_a_suggestion">좋은 아이디어가 있으신가요?</string>
+	<string name="have_a_problem">무슨 문제가 생겼나요?</string>
+	<string name="have_a_praise">어떤 것이 마음에 드셨나요?</string>
+	<string name="salina_fd_btSend">의견 보내기</string>
+</resources>

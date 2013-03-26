@@ -118,13 +118,13 @@ public class FeedbackLabelService extends Service implements OnTouchListener, On
 		Log.d("Salina Android", "feedback label service destroyed");
 		windowManager.removeView(btFeedbackLabel);
 		
-		if(dialogLayout != null && isDialogVisible){
+		/*if(dialogLayout != null && isDialogVisible){
 			try{
 			windowManager.removeView(dialogLayout);
 			} catch(Exception e){
 				Log.getStackTraceString(e);
 			}
-		}
+		}*/
 		
 		btFeedbackLabel = null;
 		dialogLayout = null;
@@ -154,11 +154,15 @@ public class FeedbackLabelService extends Service implements OnTouchListener, On
 		case MotionEvent.ACTION_UP:
 			if(!stateMove){
 				// TODO Refactoring : Method xpt
-				windowManager.addView(
+				/*windowManager.addView(
 						dialogLayout = FeedbackDialog.getLayout(this, this, this),
 						dialogLayoutParams = FeedbackDialog.getLayoutParams());
 				
-				isDialogVisible = true;
+				isDialogVisible = true;*/
+				
+				Intent intent = new Intent(this, FeedbackDialogActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
 				
 				if(IS_LOGGABLE)
 				{

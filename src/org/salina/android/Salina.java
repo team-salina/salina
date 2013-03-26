@@ -135,9 +135,4 @@ public final class Salina {
 	public static Context getContext() {
 		return context;
 	}
-
-	public static ControlLog newControlLog() {
-		return new ControlLog("", DatapointHelper.getAndroidIdHashOrNull(context));
-	}
-	
 }

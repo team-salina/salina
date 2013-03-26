@@ -1,7 +1,7 @@
 # Django settings for salinasolution project.
 import os
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -95,7 +95,7 @@ STATICFILES_DIRS = (
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    PROJECT_PATH + '/static',
+    #PROJECT_PATH + '/static',
 )
 
 # List of finder classes that know how to find static files in

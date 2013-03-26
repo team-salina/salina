@@ -7,20 +7,17 @@ Created on 2013. 3. 7.
 '''
 class Var:
     # this variable for categories
-    QUESTION = 1
-    SUGGESTION = 2
-    PROBLEM = 3
-    PRAISE = 4
-    REPLY = 5
-    ANSWER = 6
+    QUESTION = 'QUESTION'
+    SUGGESTION = 'SUGGESTION'
+    PROBLEM = 'PROBLEM'
+    PRAISE = 'PRAISE'
+    
     
     CATEGORIES = (
                   (QUESTION, 'question'),
                   (SUGGESTION, 'suggestion'),
                   (PROBLEM, 'problem'),
                   (PRAISE, 'praise'),
-                  (REPLY, 'reply'),
-                  (ANSWER, 'answer'),
                   )
     
     # this variable for key_mapping

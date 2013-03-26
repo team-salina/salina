@@ -27,6 +27,11 @@ class Session(models.Model):
     activity_name = models.CharField(max_length=50)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+     
+    def auto_save(self):
+        self.user = User().auto_save(self.user_id, self.device_key)
+        self.save()
+        return self
     
 '''
 device info는 유저가 사용하는 기기에 대한 총괄적인 정보를 나타낸다.
@@ -42,6 +47,11 @@ class DeviceInfo(models.Model):
     country = models.CharField(max_length=50)
     app_version = models.CharField(max_length=50)
     create_date = models.DateTimeField(auto_now_add=True)
+    
+    def auto_save(self):
+        self.user = User().auto_save(self.user_id, self.device_key)
+        self.save()
+        return self
 
 
 '''
@@ -58,6 +68,11 @@ class Crash(models.Model):
     method_name = models.CharField(max_length=50)
     line_number = models.IntegerField()
     occur_time = models.DateTimeField(auto_now_add=True) 
+    
+    def auto_save(self):
+        self.user = User().auto_save(self.user_id, self.device_key)
+        self.save()
+        return self
     
     
     

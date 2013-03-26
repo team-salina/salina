@@ -8,10 +8,13 @@ admin.autodiscover()
  
 
 urlpatterns = patterns('',
+                       
     url(r'^admin/', include(admin.site.urls)),
+    
     url(r'^feedback/', include('feedback.urls')),
     url(r'^controllog/', include('controllog.urls')),
     url(r'^userinfo/', include('userinfo.urls')),
+    
 )
 
 

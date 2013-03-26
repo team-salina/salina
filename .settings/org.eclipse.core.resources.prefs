@@ -2,6 +2,7 @@ eclipse.preferences.version=1
 encoding//salinasolution/controllog/admin.py=utf-8
 encoding//salinasolution/controllog/models.py=utf-8
 encoding//salinasolution/controllog/urls.py=utf-8
+encoding//salinasolution/controllog/views.py=utf-8
 encoding//salinasolution/debug.py=utf-8
 encoding//salinasolution/feedback/models.py=utf-8
 encoding//salinasolution/feedback/urls.py=utf-8

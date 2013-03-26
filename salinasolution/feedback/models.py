@@ -30,7 +30,8 @@ class Feedback(models.Model):
     
     user = models.ForeignKey(User)
     app_id = models.CharField(max_length = 50)
-    category = models.IntegerField(default = 0,choices = Var.CATEGORIES)
+    #category = models.IntegerField(default = 0,choices = Var.CATEGORIES)
+    category = models.CharField(max_length = 50, choices = Var.CATEGORIES)
     pub_date = models.DateTimeField(auto_now_add = True)
     contents = models.TextField()
     solved_check = models.BooleanField(default = False)
@@ -50,9 +51,14 @@ class Feedback(models.Model):
      auto_save_by_property와 같은 행위를 하지만 feedback 인스턴스를 받아서 수행한다. 
     '''
     def auto_save_by_object(self, feed_obj):
-        feed = Feedback().auto_save_by_property(feed_obj.user_id, feed_obj.device_key, feed_obj.app_id, feed_obj.category, feed_obj.contents)
+        feed = Feedback().auto_save_by_property(feed_obj.user.user_id, feed_obj.user.device_key, feed_obj.app_id, feed_obj.category, feed_obj.contents)
         feed.save()
         return feed
+    
+    def auto_save(self):
+        feed = Feedback(user = User().auto_save(self.user_id, self.device_key), category = self.category, contents = self.contents, app_id = self.app_id)
+        feed.save()
+        return feed 
     
 '''
  feedback 테이블을 foreignkey로 참조하고 있다. (하나의 feedback에 대해서 여러개의  답글(reply)가 있을 수 있기 때문에)
@@ -85,6 +91,9 @@ class ReplyComment(models.Model):
     user = models.ForeignKey(User)
     reply_id = models.IntegerField()
     contents = models.TextField()
+    9l
+    
+    
     pub_date = models.DateTimeField(auto_now_add = True)
     
 '''
@@ -114,6 +123,7 @@ class ReplyEvaluation(models.Model):
     ev_score = models.FloatField()
 
 '''
+{u'category': u'SUGGESTION', u'device_key': u'7848f43255e85c015c4f739b38598ed02bc2c91735b6cb195e5bdc460402768d', u'user_id': u'', u'contents': u'\u3141\u3134\u3147\u313b\u3147\u3134\u3139', u'pk': -1}
 피드백중 칭찬의 경우  점수가 나타나게 되는데, 그점수는 praise score 테이블에서 나타나게 된다.
 praise score는 feedback 테이블을 참조하고 있다.
 '''  

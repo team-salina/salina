@@ -21,9 +21,15 @@ TAG = "controllog.views"
 def controllog(request):
     debug(TAG, "start method")
     return_data = None
+    
     if request.method == 'POST' :
+        
+        debug(TAG, "start method")
+        print request.raw_post_data
         dic = json.loads(request.raw_post_data)
-        print dic
+        pson.save_control_log(dic)
+        
+         
     return HttpResponse(return_data)
     
     

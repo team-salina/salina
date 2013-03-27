@@ -39,47 +39,31 @@ def view_app(request):
 def view_admin(request):
    
     debug(TAG, "view_admin_method")
-   
-        
     
     #get feedback aggregation from db
-    '''
+    
     if request.method == 'GET':
-        app_id = request.GET[Var.APP_ID]
+        #app_id = 'request.GET[Var.APP_ID]'
+        app_id = 'abc'
+        
+        question_info = FeedbackInfo().make_tmplt_obj(Var.QUESTION, app_id)
+        suggestion_info = FeedbackInfo().make_tmplt_obj(Var.SUGGESTION, app_id)
+        problem_info = FeedbackInfo().make_tmplt_obj(Var.PROBLEM, app_id)
+        praise_info = FeedbackInfo().make_tmplt_obj(Var.PRAISE, app_id)
+        #get session aggregation from db
     
-    question_info = feedback_info.make_tmplt_obj(Var.QUESTION, app_id)
-    suggestion_info = feedback_info.make_tmplt_obj(Var.SUGGESTION, app_id)
-    problem_info = feedback_info.make_tmplt_obj(Var.PROBLEM, app_id)
-    praise_info = feedback_info.make_tmplt_obj(Var.PRAISE, app_id)
-    #get session aggregation from db
-   
-    session_info = Session.objects.raw('SELECT DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
-    user_info = Session.objects.raw('SELECT start_time as date, COUNT(start_time) as cnt FROM ( SELECT * FROM controllog_session GROUP BY user ) GROUP BY DAY(start_time)')
-    debug(TAG, "before_response")
-    '''
-    
-    question_info = FeedbackInfo().setValue("300","200", "900")
-    suggestion_info = FeedbackInfo().setValue("100", "300", "400")
-    problem_info = FeedbackInfo().setValue("600", "700", "100")
-    praise_info = FeedbackInfo().setValue("100", "200", "300")
-    
-    print question_info.new_cnt
-    return render_to_response('index.html', {'question_info': question_info,
-                                             'suggestion_info': suggestion_info,
-                                             'problem_info': problem_info,
-                                             'praise_info': praise_info,
-                                             
-                                             },
-                              context_instance=RequestContext(request))
-    
-    '''
-                                                question_info: 'question_info',
-                                             suggestion_info: 'suggestion_info',
-                                             problem_info: 'problem_info',
-                                             praise_info: 'praise_info',
-                                             session_info: 'session_info',
-                                             user_info: 'user_info',
-    '''
+        session_info = Session.objects.raw('SELECT DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
+        #user_info = Session.objects.raw('SELECT start_time as date, COUNT(start_time) as cnt FROM ( SELECT * FROM controllog_session GROUP BY user ) GROUP BY DAY(start_time)')
+        debug(TAG, "before_response")
+        print session_info
+        
+        return render_to_response('index.html', {'question_info': question_info,
+                                                 'suggestion_info': suggestion_info,
+                                                 'problem_info': problem_info,
+                                                 'praise_info': praise_info,
+                                                 },
+                                  context_instance=RequestContext(request))
+
     
       
         

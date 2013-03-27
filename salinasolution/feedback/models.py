@@ -91,9 +91,6 @@ class ReplyComment(models.Model):
     user = models.ForeignKey(User)
     reply_id = models.IntegerField()
     contents = models.TextField()
-    9l
-    
-    
     pub_date = models.DateTimeField(auto_now_add = True)
     
 '''

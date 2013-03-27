@@ -4,6 +4,8 @@ from django.db import models
 from xmlrpclib import DateTime
 from salinasolution.userinfo.models import User
 import json
+import time
+from datetime import datetime
 
 '''
 Created on 2013. 3. 7.
@@ -20,17 +22,27 @@ controllog 부분은  사용자의 로그를 수집하는 부분으로  session(
 activity_name에는 사용한 액티비티가 들어가고, start_time은 액티비티를 들어온 시간, 
 end_time은 액티비티를 나간 시간을 기록한다.
 '''  
+
+date_format = "%Y-%m-%d %H:%M:%S"
+
 class Session(models.Model):
     
     user = models.ForeignKey(User)
-    app_id = models.CharField(max_length = 50)
     activity_name = models.CharField(max_length=50)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
+    app_id = models.CharField(max_length = 50)
      
     def auto_save(self):
-        self.user = User().auto_save(self.user_id, self.device_key)
-        self.save()
+        try:
+            self.user = User().auto_save(self.user.user_id, self.user.device_key)
+            #print self.start_time
+            #print self.end_time
+            self.start_time = datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S")
+            self.end_time = datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S")
+            self.save()
+        except Exception as e:
+            print e    
         return self
     
 '''

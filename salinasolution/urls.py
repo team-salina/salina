@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
+from controllog import views
 import settings
  
 admin.autodiscover()
@@ -10,11 +11,10 @@ admin.autodiscover()
 urlpatterns = patterns('',
                        
     url(r'^admin/', include(admin.site.urls)),
-    
     url(r'^feedback/', include('feedback.urls')),
     url(r'^controllog/', include('controllog.urls')),
     url(r'^userinfo/', include('userinfo.urls')),
-    
+     
 )
 
 

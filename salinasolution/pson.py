@@ -23,22 +23,45 @@ def save_control_log(dic):
     key_list = dic.keys()
     
     for key_name in key_list:
-        obj_instance=make_instance_by_name(key_name)
+        obj_instance = make_instance_by_name(key_name)
         obj_list = dic[key_name]
         save_obj_list(obj_list, obj_instance)
         
 def save_obj_list(obj_list, obj_instance):
     
     for dic in obj_list:
-        made_obj = make_obj(dic, obj_instance)
-        made_obj.auto_save()
+        try :
+            made_obj = make_obj(dic, obj_instance)
+            debug("asdfas",made_obj.app_id)
+            debug("asdfas",made_obj.__class__.__name__)
+            made_obj.auto_save()
+        except Exception as e:
+            print e
     
 def make_obj(dic, obj):
-    user = dic_to_obj(dic, User())
-    setattr(obj, "user", user)
-    obj = dic_to_obj(dic, obj)
-    return obj
+    
+   user = dic_to_obj(dic, User())
+   debug(TAG + " make_obj user.dev_key : ", user.device_key)
+   setattr(obj, "user", user)
+   debug(TAG + " make_obj obj.user.dev_key : ", obj.user.device_key)
+   obj = dic_to_obj(dic, obj)
+    
+   return obj
 
+
+def dic_to_obj(dic, obj):
+    METHOD_TAG = " dic_to_obj "
+    dic_key_list = dic.keys()
+    # if obj instance have user model, it is saved
+    # but if user model doesn't exist in user, it will not save
+    debug(TAG + METHOD_TAG + "obj name : ", obj.__class__.__name__)
+    for key in dic_key_list :
+        if hasattr(obj, key) :
+            setattr(obj, key, dic[key])        
+    if isinstance(obj, Session):
+        debug(TAG + METHOD_TAG + "obj key : ", obj.activity_name)
+        debug(TAG + METHOD_TAG + "obj key : ", obj.start_time)    
+    return obj
 
 def make_feed_obj(dic):
     feed = Feedback()
@@ -48,17 +71,7 @@ def make_feed_obj(dic):
     print feed.app_id
     return feed
 
-def dic_to_obj(dic, obj):
-    METHOD_TAG = " dic_to_obj "
-    dic_key_list = dic.keys()
-    # if obj instance have user model, it is saved
-    # but if user model doesn't exist in user, it will not save
-    debug(TAG + METHOD_TAG + "obj name : ", obj.__class__.__name__)
-    for key in dic_key_list :
-        
-        setattr(obj, key, dic[key])        
-        
-    return obj
+
 
 
 def get_obj_instance_name(obj):

@@ -52,10 +52,9 @@ def view_admin(request):
         praise_info = FeedbackInfo().make_tmplt_obj(Var.PRAISE, app_id)
         #get session aggregation from db
     
-        session_info = Session.objects.raw('SELECT DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
-        #user_info = Session.objects.raw('SELECT start_time as date, COUNT(start_time) as cnt FROM ( SELECT * FROM controllog_session GROUP BY user ) GROUP BY DAY(start_time)')
-        debug(TAG, "before_response")
-        print session_info
+        session_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
+        user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
+            
         
         return render_to_response('index.html', {'question_info': question_info,
                                                  'suggestion_info': suggestion_info,

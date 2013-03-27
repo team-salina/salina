@@ -1,7 +1,7 @@
 # Django settings for salinasolution project.
 import os
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 PROJECT_PATH = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))

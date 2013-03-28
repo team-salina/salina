@@ -72,23 +72,45 @@ def view_developer(request):
    
     debug(TAG, "view_admin_method")
     
-    #get feedback aggregation from db
-                                                 
-                                                 
-    return render_to_response('developer.html', {
+    #user id 기반 앱 정보 가져오는 부분    
+    manager_app_info = None
+    '''
+    if request.method == 'GET' :                                             
+         manager_id = request.GET[Var.MANAGER_ID]
+         manager_app_info = Manager.objects.select_related().filter(manager_id = manager_id)
+    '''   
+                 
+    return render_to_response('developer.html', {'manager_app_info' : manager_app_info
                                                  },
                                   context_instance=RequestContext(request))
     
     
 def view_app_home(request):
-   
-    debug(TAG, "view_admin_method")
     
-    #get feedback aggregation from db
+    #app에 대한 통계정보 가져오는 부분 
+    #현재는 클라이언트에서 받아오지 않으므로 주석처리  
+    '''
+    if request.method == 'GET':
+        app_id = request.GET[Var.APP_ID]
+        #피드백 정보를 디비에서 가져오는 부분
+        question_info = FeedbackInfo().make_tmplt_obj(Var.QUESTION, app_id)
+        suggestion_info = FeedbackInfo().make_tmplt_obj(Var.SUGGESTION, app_id)
+        problem_info = FeedbackInfo().make_tmplt_obj(Var.PROBLEM, app_id)
+        praise_info = FeedbackInfo().make_tmplt_obj(Var.PRAISE, app_id)
+        #get session aggregation from db
+         #세션 정보를 디비에서 가져오는 부분
+        session_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
+        user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
                                                  
-                                                 
-    return render_to_response('app-home.html', {
+        return render_to_response('index.html', {
+                                                 'question_info': question_info,
+                                                 'suggestion_info': suggestion_info,
+                                                 'problem_info': problem_info,
+                                                 'praise_info': praise_info,
                                                  },
+                                  context_instance=RequestContext(request))
+      '''
+    return render_to_response('app-home.html', {    },
                                   context_instance=RequestContext(request))
     
     
@@ -96,19 +118,23 @@ def view_app_home(request):
 def view_feedback(request):
    
     debug(TAG, "view_admin_method")
-    
-    #get feedback aggregation from db
+    feedback_detail = None
+    '''
+    #피드백 내용을 가져오는 부눈
+    if request.method == 'GET':
+        category = request.GET[Var.CATEGORY]
+        feedback_detail = Feedback.objects.filter(category = category)
                                                  
-                                                 
+    '''                                             
     return render_to_response('feedback.html', {
+                                                'feedback_detail':feedback_detail
                                                  },
                                   context_instance=RequestContext(request))
+                                  
+                
     
     
 def view_register(request):
-   
-    
-    
     #get feedback aggregation from db
                                                  
                                                  
@@ -118,9 +144,6 @@ def view_register(request):
     
     
 def view_contact(request):
-   
-    
-    
     #get feedback aggregation from db
                                                  
                                                  

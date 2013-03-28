@@ -24,8 +24,8 @@ urlpatterns = patterns('userinfo.views',
      url(r'^main_admin/app-home.html', 'view_app_home'),
      url(r'^main_admin/feedback.html', 'view_feedback'),
      url(r'^main_admin/register.html', 'view_register'),
-     url(r'^main_admin/#contact', 'view_contact'),
-     url(r'^main_admin/#about', 'view_about'),
+     url(r'^main_admin/download.htm', 'view_contact'),
+     url(r'^main_admin/about.html', 'view_about'),
      
 
 )

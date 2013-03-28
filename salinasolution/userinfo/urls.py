@@ -17,8 +17,19 @@ urlpatterns = patterns('userinfo.views',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
      #url(r'^app/$', 'view_app'),
+     #http://61.43.139.106:8000/userinfo/main_admin/app-home.html
      url(r'^main_admin/$', 'view_admin'),
+     url(r'^main_admin/index.html', 'view_admin'),
+     url(r'^main_admin/developer.html', 'view_developer'),
+     url(r'^main_admin/app-home.html', 'view_app_home'),
+     url(r'^main_admin/feedback.html', 'view_feedback'),
+     url(r'^main_admin/register.html', 'view_register'),
+     url(r'^main_admin/#contact', 'view_contact'),
+     url(r'^main_admin/#about', 'view_about'),
+     
 
 )
+
+
 
 

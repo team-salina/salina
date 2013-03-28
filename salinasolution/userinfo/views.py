@@ -56,12 +56,89 @@ def view_admin(request):
         user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
             
         
-        return render_to_response('index.html', {'question_info': question_info,
+        
+                                                 
+                                                 
+        return render_to_response('index.html', {
+                                                 'question_info': question_info,
                                                  'suggestion_info': suggestion_info,
                                                  'problem_info': problem_info,
                                                  'praise_info': praise_info,
                                                  },
                                   context_instance=RequestContext(request))
+        
+        
+def view_developer(request):
+   
+    debug(TAG, "view_admin_method")
+    
+    #get feedback aggregation from db
+                                                 
+                                                 
+    return render_to_response('developer.html', {
+                                                 },
+                                  context_instance=RequestContext(request))
+    
+    
+def view_app_home(request):
+   
+    debug(TAG, "view_admin_method")
+    
+    #get feedback aggregation from db
+                                                 
+                                                 
+    return render_to_response('app-home.html', {
+                                                 },
+                                  context_instance=RequestContext(request))
+    
+    
+        
+def view_feedback(request):
+   
+    debug(TAG, "view_admin_method")
+    
+    #get feedback aggregation from db
+                                                 
+                                                 
+    return render_to_response('feedback.html', {
+                                                 },
+                                  context_instance=RequestContext(request))
+    
+    
+def view_register(request):
+   
+    
+    
+    #get feedback aggregation from db
+                                                 
+                                                 
+    return render_to_response('register.html', {
+                                                 },
+                                  context_instance=RequestContext(request))
+    
+    
+def view_contact(request):
+   
+    
+    
+    #get feedback aggregation from db
+                                                 
+                                                 
+    return render_to_response('download.html', {
+                                                 },
+                                  context_instance=RequestContext(request))
+    
+def view_about(request):
+   
+    
+    
+    #get feedback aggregation from db
+                                                 
+                                                 
+    return render_to_response('about.html', {
+                                                 },
+                                  context_instance=RequestContext(request))
+
 
     
       

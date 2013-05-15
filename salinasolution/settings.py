@@ -1,6 +1,7 @@
 # Django settings for salinasolution project.
 import os
 
+
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
 
@@ -180,3 +181,10 @@ LOGGING = {
         },
     }
 }
+
+
+
+
+    
+    
+    

@@ -5,8 +5,11 @@ from django.contrib import admin
 from controllog import views
 import settings
  
-admin.autodiscover()
  
+ 
+admin.autodiscover()
+
+
 
 urlpatterns = patterns('',
                        
@@ -19,9 +22,9 @@ urlpatterns = patterns('',
 
 
 urlpatterns += patterns('',
+     
      url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.STATIC_ROOT,
     }),
-
-
+                        
 )

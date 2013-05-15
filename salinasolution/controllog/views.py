@@ -13,9 +13,12 @@ import os
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution import pson
+import redis
 # Create your views here.
 
 TAG = "controllog.views"
+
+r = redis.StrictRedis(host='localhost', port = 6379, db = 0)
 
 @csrf_exempt
 def controllog(request):
@@ -27,6 +30,8 @@ def controllog(request):
         debug(TAG, "start method")
         print request.raw_post_data
         dic = json.loads(request.raw_post_data)
+        
+        
         pson.save_control_log(dic)
         
          

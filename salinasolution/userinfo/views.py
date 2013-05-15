@@ -109,7 +109,7 @@ def view_app_home(request):
                                                  'praise_info': praise_info,
                                                  },
                                   context_instance=RequestContext(request))
-      '''
+      '''    
     return render_to_response('app-home.html', {    },
                                   context_instance=RequestContext(request))
     
@@ -119,13 +119,15 @@ def view_feedback(request):
    
     debug(TAG, "view_admin_method")
     feedback_detail = None
+    
     '''
     #피드백 내용을 가져오는 부눈
     if request.method == 'GET':
         category = request.GET[Var.CATEGORY]
         feedback_detail = Feedback.objects.filter(category = category)
                                                  
-    '''                                             
+    '''  
+                                               
     return render_to_response('feedback.html', {
                                                 'feedback_detail':feedback_detail
                                                  },

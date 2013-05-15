@@ -4,8 +4,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.core.context_processors import request
 from salinasolution.debug import debug
 import json
-from salinasolution.var import Var
-from salinasolution.feedback.models import Feedback
+import  salinasolution.var as Var
+from salinasolution.userfeedback.models import Feedback
 from salinasolution.userinfo.models import App, Manager, User
 from django.core import serializers
 from django.http import HttpResponse
@@ -13,6 +13,7 @@ import os
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution import pson
+import salinasolution.dataread as dataread 
 
 '''
 this page is for view of feedback
@@ -52,6 +53,25 @@ def feedback(request):
         return_data = save_feedback(request)
         print return_data
     return HttpResponse(return_data)
+
+
+def view_community_feedback(request):
+    
+    app_id = request.GET[Var.APP_ID]
+    category = request.GET[Var.CATEGORY]
+    data_num = 10
+    
+    if request.method == 'GET':
+        debug(TAG, "POST METHOD")
+        return_list = dataread.read_data(app_id, category, data_num)
+        json_return_data = json.dumps(return_list)
+        
+    return render_to_response('index.html', {
+                                                 'feedback': json_return_data,
+                                                 
+                                                 },
+                                  context_instance=RequestContext(request))
+        
     
   
     

@@ -4,9 +4,9 @@ from django.db import models
 from random import choice
 from django.db.models.base import Model
 from compiler.ast import Mod
-from salinasolution.var import Var
 from salinasolution.userinfo.models import User
 from django.db.models.deletion import CASCADE
+import salinasolution.var as var
 # Create your models here.
 
 
@@ -31,7 +31,7 @@ class Feedback(models.Model):
     user = models.ForeignKey(User)
     app_id = models.CharField(max_length = 50)
     #category = models.IntegerField(default = 0,choices = Var.CATEGORIES)
-    category = models.CharField(max_length = 50, choices = Var.CATEGORIES)
+    category = models.CharField(max_length = 50, choices = var.CATEGORIES)
     pub_date = models.DateTimeField(auto_now_add = True)
     contents = models.TextField()
     solved_check = models.BooleanField(default = False)

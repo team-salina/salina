@@ -70,7 +70,7 @@ class DeviceInfo(models.Model):
 crash 정보는 해당 유저가 겪은 버그정보에 대해서 상세하게 나타내주는 역할을 한다.
 여기에 포함되는 정보는 예외의 이름, 예외 발생시의 스택정보, 발생된 메소드 이름, 
 발생된 에러의  line number, 발생된 시간등이 나타난다. 
-'''
+
 class Crash(models.Model):
     
     user = models.ForeignKey(User)
@@ -85,7 +85,7 @@ class Crash(models.Model):
         self.user = User().auto_save(self.user_id, self.device_key)
         self.save()
         return self
-    
+'''    
     
     
     

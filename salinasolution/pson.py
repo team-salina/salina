@@ -1,11 +1,12 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import json
+import var
 from salinasolution.userinfo.models import User
-from salinasolution.var import Var
-from salinasolution.controllog.models import Crash, DeviceInfo, Session
-from salinasolution.feedback.models import Feedback
+from salinasolution.systemfeedback.models import DeviceInfo, Session
+from salinasolution.userfeedback.models import Feedback
 from salinasolution.debug import debug 
+from django.db import transaction
 
 
 TAG = "pson"
@@ -29,14 +30,13 @@ def save_control_log(dic):
         
 def save_obj_list(obj_list, obj_instance):
     
-    for dic in obj_list:
-        try :
-            made_obj = make_obj(dic, obj_instance)
-            debug("asdfas",made_obj.app_id)
-            debug("asdfas",made_obj.__class__.__name__)
-            made_obj.auto_save()
-        except Exception as e:
-            print e
+    with transaction.commit_on_success():
+        for dic in obj_list:
+            try :
+                made_obj = make_obj(dic, obj_instance)
+                made_obj.auto_save()
+            except Exception as e:
+                print e
     
 def make_obj(dic, obj):
     
@@ -71,9 +71,6 @@ def make_feed_obj(dic):
     print feed.app_id
     return feed
 
-
-
-
 def get_obj_instance_name(obj):
     
     class_name = str(obj.__class__.__name__)
@@ -94,26 +91,6 @@ def get_obj_instance_name(obj):
      
     return return_str
         
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

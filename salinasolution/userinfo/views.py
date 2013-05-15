@@ -5,9 +5,9 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution.debug import debug
 from salinasolution.userinfo.models import Manager
-from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
-from salinasolution.controllog.models import Crash, DeviceInfo, Session
-from salinasolution.var import Var
+from salinasolution.userfeedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
+from salinasolution.systemfeedback.models import  DeviceInfo, Session
+import salinasolution.var as Var
 from salinasolution.templetobj import FeedbackInfo
 from django.core.context_processors import request
 from salinasolution import pson 
@@ -54,8 +54,6 @@ def view_admin(request):
     
         session_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
         user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
-            
-        
         
                                                  
                                                  

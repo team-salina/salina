@@ -1,6 +1,6 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from salinasolution.controllog.models import Crash, DeviceInfo, Session
+from salinasolution.systemfeedback.models import Crash, DeviceInfo, Session
 from django.contrib import admin
 
 '''

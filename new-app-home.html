@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Salina - Mobile Application Feedback Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Le styles -->
+  <link href="./assets/css/bootstrap.css" rel="stylesheet">
+
+  <style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+/* Featurettes
+------------------------- */
+.featurette-divider {
+  margin: 80px 0; /* Space out the Bootstrap <hr> more */
+}
+
+.featurette {
+  padding-top: 120px;
+  /* Vertically center images part 1: add padding above and below text. */
+  overflow: hidden;
+  /* Vertically center images part 2: clear their floats. */
+}
+
+.featurette-image {
+  margin-top: -120px;
+  /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
+}
+
+/* Give some space on the sides of the floated elements so text doesn't run right into it. */
+.featurette-image.pull-left {
+  margin-right: 40px;
+}
+
+.featurette-image.pull-right {
+  margin-left: 40px;
+}
+
+/* Thin out the marketing headings */
+.featurette-heading {
+  font-size: 50px;
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+
+
+
+</style>
+<link href="./assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="./assets/js/html5shiv.js"></script>
+      <![endif]-->
+
+      <!-- Fav and touch icons -->
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="./assets/ico/apple-touch-icon-144-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="./assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="./assets/ico/apple-touch-icon-72-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" href="./assets/ico/apple-touch-icon-57-precomposed.png">
+      <link rel="shortcut icon" href="./assets/ico/favicon.png">
+    </head>
+
+    <body>
+
+      <div class="navbar navbar-inverse navbar-fixed-top" >
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" style="font-size:35px" href="index.html">Salina <br/> <b class = "brand" style="font-size:15px">mobile app feedback solution </b> </a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li class="active"><a href="new-app-home.html">Dash Board</a></li>
+                <li><a href="Basic Statistics.html">Basic Statistics</a></li>
+                <li><a href="Advanced Statistics.html">Advanced Statistics</a></li>
+                <li><a href="Salina Insight.html">Salina Insight</a></li>
+                <li><a href="Feedback Manage.html">Feedback Manage</a></li>
+              </ul>
+              <p class="navbar-text pull-right">
+                Logged in as <a href="#" class="navbar-link">Username</a>
+              </p>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+
+      <div class="container-fluid" style="margin-top:40px; margin-left:50px">
+        <div class="row-fluid" style="margin-top:10px">
+          <div class="span1" style="margin:0;width:70px">
+            <ul class="thumbnails" style="margin-left:10px;width:50px;height:50px">
+              <img src="./assets/img/12.png" >
+            </ul>
+          </div>
+          <div class="span3" style="margin:0">
+            <div class="colum-fluid">
+              <g style="font-size:10px">매일매일 소개팅 </g>
+            </div> 
+            <strong style="font-size:20px">정오의 데이트 </strong>
+          </div>
+        </div>
+        <hr style="margin:15px 0;">
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+        <div class="hero-unit">
+          <!--User&Sessions Graph-->
+          <script type="text/javascript">
+          $(function () {
+            var chart;
+            $(document).ready(function() {
+              chart = new Highcharts.Chart({
+                chart: {
+                  renderTo: 'container2',
+                  type: 'line'
+                },
+                title: {
+                  text: 'Users & Sessions'
+                },
+                subtitle: {
+                  text: ''
+                },
+                xAxis: {
+                  categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                },
+                yAxis: {
+                  title: {
+                    text: ''
+                  }
+                },
+                tooltip: {
+                  enabled: false,
+                  formatter: function() {
+                    return '<b>'+ this.series.name +'</b><br/>'+
+                    this.x +': '+ this.y +'°C';
+                  }
+                },
+                plotOptions: {
+                  line: {
+                    dataLabels: {
+                      enabled: true
+                    },
+                    enableMouseTracking: false
+                  }
+                },
+                series: [{
+                  name: 'Sessions',
+                  data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6]
+                }, {
+                  name: 'Users',
+                  data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8]
+                }]
+              });
+});
+
+});
+</script>
+<div id="container2"
+style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+<h2 class="featurette-heading" style="font-size:35px">
+  Users & Sessions 측정 그래프 <br/><span class="muted" style="font-size:25px">유저수와 세션 측정</span>
+  <a href="UserSessions.html"><button class="btn btn-warning" type="button">상세보기</button></a>
+</h2>
+</div>
+
+<div>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>사용자 활성도</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr  class="warning">
+        <td>1</td>
+        <td>누적 사용자 수 </td>
+        <td>110230 current</td>
+        <td>105283 a week ago</td>
+        <td> 91153% 2 weeks ago</td>
+      </tr>
+      <tr  class="error">
+        <td>2</td>
+        <td>전체 사용자 대비 활성유저 </td>
+        <td>  15% per day </td>
+        <td> 19% per week   </td>
+        <td>  25% per month</td>
+      </tr>
+      <tr  class="warning">
+        <td>3</td>
+        <td>신규사용자 </td>
+        <td>  194 per day  </td>
+        <td>   1820 per week   </td>
+        <td> 7867 per month</td>
+      </tr>
+      <tr class="info">
+        <td>4</td>
+        <td>재방문 사용자</td>
+        <td>2403 (42%) per day </td>
+        <td>12529 (39%) per week  </td>
+        <td> 45788 (40%) per month</td>
+      </tr>
+      <tr  class="warning">
+        <td>5</td>
+        <td>이탈 사용자 </td>
+        <td>568 (6%) per day</td>
+        <td> 3342 (6%) per week </td>
+        <td> 11251 (7%) per month</td>
+      </tr>
+    </tbody>
+  </table>
+
+<hr>
+
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th> User Feedback </th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="success">
+        <td>1</td>
+        <td>피드백 활성도 </td>
+        <td>전체 유저 중 피드백 작성 비율 : 3%</td>
+        <td>활성 유저 중 피드백 작성 비율 : 15%</td>
+        <td>  피드백 응답율 : 64%</td>
+      </tr>
+      <tr  class="info">
+        <td>2</td>
+        <td>오늘의 새 피드백 </td>
+        <td>   Question: 32건</td>
+        <td>  Suggestion : 4건   </td>
+        <td> Problem : 5건</td>
+        <td> Praise : 19건</td>
+      </tr>
+      <tr class="success">
+        <td>3</td>
+        <td>피드백 응답율 </td>
+        <td>   Question: 320/359건 (89%) </td>
+        <td>  Suggestion : 48/49건 (98%)  </td>
+        <td> Problem : 57/57건 (100%)</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+
+
+</div>
+</div><!--container-fluid-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap-transition.js"></script>
+    <script src="./assets/js/bootstrap-alert.js"></script>
+    <script src="./assets/js/bootstrap-modal.js"></script>
+    <script src="./assets/js/bootstrap-dropdown.js"></script>
+    <script src="./assets/js/bootstrap-scrollspy.js"></script>
+    <script src="./assets/js/bootstrap-tab.js"></script>
+    <script src="./assets/js/bootstrap-tooltip.js"></script>
+    <script src="./assets/js/bootstrap-popover.js"></script>
+    <script src="./assets/js/bootstrap-button.js"></script>
+    <script src="./assets/js/bootstrap-collapse.js"></script>
+    <script src="./assets/js/bootstrap-carousel.js"></script>
+    <script src="./assets/js/bootstrap-typeahead.js"></script>
+    <script src="./assets/js/holder/holder.js"></script>
+    <script src="./assets/js/highcharts.js"></script>
+    <script src="./assets/js/highcharts-more.js"></script>
+    <script src="./assets/js/modules/exporting.js"></script>
+  </body>
+  </html>

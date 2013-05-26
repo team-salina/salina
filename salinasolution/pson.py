@@ -3,8 +3,8 @@
 import json
 import var
 from salinasolution.userinfo.models import User
-from salinasolution.systemfeedback.models import DeviceInfo, Session
-from salinasolution.userfeedback.models import Feedback
+from salinasolution.controllog.models import DeviceInfo, Session
+from salinasolution.feedback.models import Feedback
 from salinasolution.debug import debug 
 from django.db import transaction
 
@@ -15,9 +15,6 @@ def make_instance_by_name(name):
     constructor = globals()[name]
     obj_instance = constructor()
     return obj_instance
-
-
-
 
 def save_control_log(dic):
     
@@ -56,11 +53,8 @@ def dic_to_obj(dic, obj):
     # but if user model doesn't exist in user, it will not save
     debug(TAG + METHOD_TAG + "obj name : ", obj.__class__.__name__)
     for key in dic_key_list :
-        if hasattr(obj, key) :
-            setattr(obj, key, dic[key])        
-    if isinstance(obj, Session):
-        debug(TAG + METHOD_TAG + "obj key : ", obj.activity_name)
-        debug(TAG + METHOD_TAG + "obj key : ", obj.start_time)    
+        #if hasattr(obj, key) :
+            setattr(obj, key, dic[key])
     return obj
 
 def make_feed_obj(dic):

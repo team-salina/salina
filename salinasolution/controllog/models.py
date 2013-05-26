@@ -49,6 +49,7 @@ class Session(models.Model):
 device info는 유저가 사용하는 기기에 대한 총괄적인 정보를 나타낸다.
 기기정보에는  os version, devce_name(기기이름), 국가정보, 위도 , 경도, 
 현재 배포된 애플리케이션 버전, 해당 정보가 저장된 시점이 기록된다. 
+단한번만 보내도록 시키자 준영이한테
 '''  
 class DeviceInfo(models.Model):
     
@@ -64,7 +65,11 @@ class DeviceInfo(models.Model):
         self.user = User().auto_save(self.user_id, self.device_key)
         self.save()
         return self
+    
+    
+    
 
+    
 
 '''
 crash 정보는 해당 유저가 겪은 버그정보에 대해서 상세하게 나타내주는 역할을 한다.

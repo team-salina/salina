@@ -33,37 +33,7 @@ def view_app(request):
                               context_instance=RequestContext(request))
 '''    
     
-'''
-관리자가 페이지에서 해당 앱에 대한 세부정보를 보는 페이지 
-''' 
-def view_admin(request):
-   
-    debug(TAG, "view_admin_method")
-    
-    #get feedback aggregation from db
-    
-    if request.method == 'GET':
-        #app_id = 'request.GET[Var.APP_ID]'
-        app_id = 'abc'
-        
-        question_info = FeedbackInfo().make_tmplt_obj(Var.QUESTION, app_id)
-        suggestion_info = FeedbackInfo().make_tmplt_obj(Var.SUGGESTION, app_id)
-        problem_info = FeedbackInfo().make_tmplt_obj(Var.PROBLEM, app_id)
-        praise_info = FeedbackInfo().make_tmplt_obj(Var.PRAISE, app_id)
-        #get session aggregation from db
-    
-        session_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
-        user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
-        
-                                                 
-                                                 
-        return render_to_response('index.html', {
-                                                 'question_info': question_info,
-                                                 'suggestion_info': suggestion_info,
-                                                 'problem_info': problem_info,
-                                                 'praise_info': praise_info,
-                                                 },
-                                  context_instance=RequestContext(request))
+
         
         
 def view_developer(request):

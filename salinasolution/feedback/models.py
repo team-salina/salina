@@ -17,7 +17,22 @@ Created on 2013. 3. 7.
 
 사용자가 올린글을 db에 저장하고, 저장한 글에 대한 답글 댓글, 칭찬 평점을 저장하는 모델이다.
 '''
-
+'''
+class DeviceInfo(models.Model):
+    
+    user = models.ForeignKey(User)
+    app_id = models.CharField(max_length = 50)
+    os_version = models.CharField(max_length=50)
+    device_name = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    app_version = models.CharField(max_length=50)
+    create_date = models.DateTimeField(auto_now_add=True)
+    
+    def auto_save(self):
+        self.user = User().auto_save(self.user_id, self.device_key)
+        self.save()
+        return self
+'''
 
 '''
 Feedback 테이블은 사용자가 올린 피드백을 저장한다.

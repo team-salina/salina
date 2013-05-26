@@ -5,7 +5,7 @@ from django.core.context_processors import request
 from salinasolution.debug import debug
 import json
 import  salinasolution.var as Var
-from salinasolution.userfeedback.models import Feedback
+from salinasolution.feedback.models import Feedback
 from salinasolution.userinfo.models import App, Manager, User
 from django.core import serializers
 from django.http import HttpResponse

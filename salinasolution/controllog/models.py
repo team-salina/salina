@@ -36,8 +36,6 @@ class Session(models.Model):
     def auto_save(self):
         try:
             self.user = User().auto_save(self.user.user_id, self.user.device_key)
-            #print self.start_time
-            #print self.end_time
             self.start_time = datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S")
             self.end_time = datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S")
             self.save()
@@ -59,10 +57,27 @@ class DeviceInfo(models.Model):
     device_name = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
     app_version = models.CharField(max_length=50)
-    create_date = models.DateTimeField(auto_now_add=True)
+    
+    network_type = models.CharField(max_length=50)
+    locale_language = models.CharField(max_length=50)
+    device_country = models.CharField(max_length=50)
+    network_carrier = models.CharField(max_length=50)
+    network_type = models.CharField(max_length=50)
+    latitude = models.FloatField()
+    longitude  = models.FloatField()
+    device_manufacturer = models.CharField(max_length=50)
+    device_model = models.CharField(max_length=50)
+    app_version = models.CharField(max_length=50)
+    
+    create_date = models.DateTimeField()
     
     def auto_save(self):
         self.user = User().auto_save(self.user_id, self.device_key)
+        #String을 정해진 포맷으로 바꾸는 부분
+        self.latitude = float(self.latitude)
+        self.longitude = float(self.longitude)
+        self.create_date = datetime.strptime(self.create_date,"%Y-%m-%d %H:%M:%S")        
+        
         self.save()
         return self
     
@@ -71,26 +86,7 @@ class DeviceInfo(models.Model):
 
     
 
-'''
-crash 정보는 해당 유저가 겪은 버그정보에 대해서 상세하게 나타내주는 역할을 한다.
-여기에 포함되는 정보는 예외의 이름, 예외 발생시의 스택정보, 발생된 메소드 이름, 
-발생된 에러의  line number, 발생된 시간등이 나타난다. 
 
-class Crash(models.Model):
-    
-    user = models.ForeignKey(User)
-    app_id = models.CharField(max_length = 50)
-    exception_name = models.CharField(max_length=50)
-    stacktrace = models.CharField(max_length=50)
-    method_name = models.CharField(max_length=50)
-    line_number = models.IntegerField()
-    occur_time = models.DateTimeField(auto_now_add=True) 
-    
-    def auto_save(self):
-        self.user = User().auto_save(self.user_id, self.device_key)
-        self.save()
-        return self
-'''    
     
     
     

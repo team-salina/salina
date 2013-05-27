@@ -45,7 +45,6 @@ class Feedback(models.Model):
     
     user = models.ForeignKey(User)
     app_id = models.CharField(max_length = 50)
-    #category = models.IntegerField(default = 0,choices = Var.CATEGORIES)
     category = models.CharField(max_length = 50, choices = var.CATEGORIES)
     pub_date = models.DateTimeField(auto_now_add = True)
     contents = models.TextField()
@@ -143,3 +142,23 @@ class PraiseScore(models.Model):
     
     feedback = models.ForeignKey(Feedback, related_name = 'praisescores')
     praise_score = models.FloatField()
+    
+'''
+Feedback의 Context를 저장하기 위한 데이타
+'''
+class FeedbackContext(models.Model):
+    feedback = models.ForeignKey(Feedback)
+    app_version = models.CharField()
+    android_version = models.CharField()
+    android_sdk = models.CharField()
+    device_model = models.CharField()
+    device_manufacturer = models.CharField()
+    locale_language = models.CharField()
+    locale_country = models.CharField()
+    device_country = models.CharField()
+    network_carrier = models.CharField()
+    network_country = models.CharField()
+    network_type = models.CharField()
+    latitude = models.CharField()
+    longitude = models.CharField()
+    

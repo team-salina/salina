@@ -1,19 +1,87 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
-from django.core.context_processors import request
 from salinasolution.debug import debug
 import json
 import  salinasolution.var as Var
 from salinasolution.feedback.models import Feedback
 from salinasolution.userinfo.models import App, Manager, User
-from django.core import serializers
 from django.http import HttpResponse
-import os
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution import pson
 import salinasolution.dataread as dataread 
+
+
+
+'''
+
+@csrf_exempt
+def system_feedback(request):
+    if request.mehtod == 'POST':
+        dic = json.loads(request.raw_post_data)
+        
+        
+        def make_instance_by_name(name):
+    constructor = globals()[name]
+    obj_instance = constructor()
+    return obj_instance
+'''
+
+
+
+@csrf_exempt
+def save_user_feedback(request):
+   if request.mehtod == 'POST':
+        feedback = Feedback()
+       
+        dic = json.loads(request.raw_post_data)
+        dic_key_list = dic.keys()
+        
+        for key in dic_key_list:
+            
+            if key == 'Feedback':
+                instance = pson.make_instance_by_name(key)
+                instance = pson.dic_to_obj(dic[key], instance)
+                instance.auto_save()
+                feedback = instance
+            
+            elif key == 'FeedbackContext':
+                instance = pson.make_instance_by_name(key)
+                instance = pson.dic_to_obj(dic[key], instance)
+                instance.feedback = feedback
+                instance.save()
+                 
+        
+        
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 '''
 this page is for view of feedback

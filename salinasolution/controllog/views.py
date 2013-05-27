@@ -1,7 +1,4 @@
- #!/usr/bin/python
-# -*- coding: utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt
-from django.core.context_processors import request
 from salinasolution.debug import debug
 from salinasolution.feedback.models import Feedback
 from salinasolution.controllog.models import Session
@@ -17,142 +14,85 @@ import json
 import salinasolution.var as Var
 import salinasolution.templetobj
 from salinasolution.var import SYSTEM_SYSTEM_TYPE, SYSTEM_USER_TYPE
-
-
+import redis
+import ast
+from salinasolution.datawrite import save_screen_flow
 '''
-관리자가 페이지에서 해당 앱에 대한 세부정보를 보는 페이지 
+controllog create 하는 연산
+'''
 
-def view_admin(request):
-   
-    debug(TAG, "view_admin_method")
+
+#Redis Port num은 6379
+
+r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
+
+def save_screen_flow(screen_list, app_id):
     
-    #get feedback aggregation from db
+    reverse_screen_list  = screen_list.reverse()
     
-    if request.method == 'GET':
-        #app_id = 'request.GET[Var.APP_ID]'
-        app_id = 'abc'
+    for screen in reverse_screen_list:
+        #마지막 값일 경우에는 break
+        if len(list)-1 == reverse_screen_list.index(screen):
+            break
         
-        question_info = FeedbackInfo().make_tmplt_obj(Var.QUESTION, app_id)
-        suggestion_info = FeedbackInfo().make_tmplt_obj(Var.SUGGESTION, app_id)
-        problem_info = FeedbackInfo().make_tmplt_obj(Var.PROBLEM, app_id)
-        praise_info = FeedbackInfo().make_tmplt_obj(Var.PRAISE, app_id)
-        #get session aggregation from db
-    
-        session_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
-        user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
+        #마지막 값이 아닐 경우에는 app_id를 사용해서
+        screen_key = screen + app_id
+        next_index = reverse_screen_list.index(screen) + 1
+        input_screen_name = reverse_screen_list[next_index]
+        screen_obj = {'screen_name': '', 'visit_num': 0}
         
-                                                 
-                                                 
-        return render_to_response('index.html', {
-                                                 'question_info': question_info,
-                                                 'suggestion_info': suggestion_info,
-                                                 'problem_info': problem_info,
-                                                 'praise_info': praise_info,
-                                                 },
-                                  context_instance=RequestContext(request))
-                                  
-'''
+        screen_obj['screen_name'] = input_screen_name
+        #실제로 screen을 삽입하는 부분
+        #screen 존재시
+        if r.exists(screen_key) :
+            for i in r.llen(screen_key):
+                cur_screen_str = r.lindex(screen_key, i)
+                cur_screen_obj = ast.literal_eval(cur_screen_str)
+                if cur_screen_obj['screen_name'] == input_screen_name :
+                    cur_screen_obj['visit_num'] = cur_screen_obj['visit_num'] + 1
+                    r.lset(screen_key, i, cur_screen_obj)
+                else :
+                    r.rpush(screen_key, screen_obj)
+        else :
+            r.rpush(screen_key, screen_obj)
 
-
-# Create your views here.
-
-TAG = "controllog.views"
-
-r = redis.StrictRedis(host='localhost', port = 6379, db = 0)
-'''
-사용자의 조작로그를 저장하는 부분
-'''
+#controllog를 저장하는 부분
 @csrf_exempt
-def controllog(request):
-    debug(TAG, "start method")
-    return_data = None
-    
-    if request.method == 'POST' :
+def save_system_feedback(request):
+    if request.method == 'POST':
         
-        debug(TAG, "start method")
-        print request.raw_post_data
         dic = json.loads(request.raw_post_data)
-        pson.save_control_log(dic)
+        dic_key_list = dic.keys()
+        app_id = ""
         
-         
-    return HttpResponse(return_data)
-
-
-'''
-dash board의 정보를 읽어서 개발자에게 주는 부분 
-'''
-def view_dashboard(request):
-    if request.method == 'GET':
-        app_id = request.GET[Var.APP_ID]
-        query =  " SELECT id, HOUR(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY HOUR(start_time) where app_id = %(app_id)s"
-        params = {'app_id' : app_id}
-        time_session_info = Session.objects.raw(query, params)
-        
-        #뭘 넘겨야 할지 결정하기
-        return render_to_response('index.html', {
-                                                 'time_session_info': time_session_info,
-                                                 },
-                                  context_instance=RequestContext(request))
-        
-        
-        
-
-
-
-'''
-basic 기능을 제공하는 부분
-1차원적인 view 제공
-'''
-def view_basic(request):
-    
-    if request.method == 'GET':
-        app_id = request.GET[Var.APP_ID]
-        #뭘 넘겨야 할지 결정하기
-        
-    
-    return
-         
-    
-    
-def view_advanced(request):    
-    
-    if request.method == 'GET':
-        app_id = request.GET[Var.APP_ID]
-        focus_var = request.GET[Var.FOCUS_VAR]
-        composite_var = request.GET(Var.COMPOSITE_VAR)
-        type_var = request.GET(Var.ADVANCED_TYPE)
-        
-        #system system feedback 제공
-        if(type_var == SYSTEM_SYSTEM_TYPE) :
-            return
-        
-        #system user feedback 제공
-        elif(type_var == SYSTEM_USER_TYPE) :
-            #태웅이에게 넘겨달라고 할때 feedback은 숫자로 넘겨달라고 하자
-            params = [focus_var, focus_var]
-            Session.objects.raw(' SELECT count(CASE WHEN solved_check = false) as unsolved_feedback, count(CASE WHEN solved_check = true) as solved_feedback, count(device_name), device_name FROM ' +  
-            '(SELECT * from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.app_id = log.app_id, feedback.user = log.user, feedback.category = %s)'+
-            'GROUP BY device_name'
-            , params)
+        for key in dic_key_list:
+            '''
+                dic에 만들어서 redis에 저장하자 
+                                    그리고 객체로 저장 
+            '''
+            #Session인 경우 redis에 저장
+            if key == 'SessionList':
+                session_list = dic[key]
+                for session in session_list:
+                    r.rpush(key, session)
+                    app_id = session[Var.APP_ID]
+            #DeviceInfo인 경우 redis에 저장    
+            elif key == 'DeviceInfo':
+                r.rpush(key, dic[key])
             
-        
+            elif key == 'ScreenFlow':
+                save_screen_flow(dic[key], app_id)
+            #여긴 준영이랑 논의
+            elif key == 'Event':
+                return
+            
+            
+                    
+                    
+                
+    
+            
+            
          
-    
-'''
-insight를 보는 부분
-준영이는 프로세스가 종료될때 activity랑 같이 보내준다.
-액티비티는 a - b - c - d - e 이런 형식으로 온다.
-저장은 linked list를 통해서 저장한다.
-redis 자체가 persistence하다. 그렇기 때문에  따로 db에 저장하지 않는다.
-'''
-def view_insight(request):
-    if request.method == 'GET':
-        
-    
-    
-    
-        return 
-    
-    
     
     

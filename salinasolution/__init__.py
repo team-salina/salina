@@ -1,3 +1,12 @@
-import datawrite
+import time
+import threading
+
+'''
+def foo():
+      print(time.ctime())
+      threading.Timer(10, foo).start()
 
 
+foo()
+
+'''

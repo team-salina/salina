@@ -5,8 +5,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution.debug import debug
 from salinasolution.userinfo.models import Manager
-from salinasolution.userfeedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
-from salinasolution.systemfeedback.models import  DeviceInfo, Session
+from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
+from salinasolution.controllog.models import  DeviceInfo, Session
 import salinasolution.var as Var
 from salinasolution.templetobj import FeedbackInfo
 from django.core.context_processors import request
@@ -34,7 +34,13 @@ def view_app(request):
 '''    
     
 
-        
+def view_admin(request):
+    print "sex"
+    manager_app_info  = []
+    
+    return render_to_response('developer.html', {'manager_app_info' : manager_app_info
+                                                 },
+                                  context_instance=RequestContext(request))
         
 def view_developer(request):
    

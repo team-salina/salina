@@ -18,10 +18,11 @@ urlpatterns = patterns('feedback.views',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-     url(r'^question', 'feedback'),
-     url(r'^suggestion', 'feedback'),
-     url(r'^problem', 'feedback'),
-     url(r'^praise', 'feedback'),
+     #url(r'^question', 'feedback'),
+     #url(r'^suggestion', 'feedback'),
+     #url(r'^problem', 'feedback'),
+     #url(r'^praise', 'feedback'),
      #url(r'^app/$', 'view_app'),
+     url(r'^save_user_feedback/$', 'save_user_feedback'),
     
 )

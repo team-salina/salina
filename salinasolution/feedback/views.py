@@ -4,35 +4,35 @@ from django.views.decorators.csrf import csrf_exempt
 from salinasolution.debug import debug
 import json
 import  salinasolution.var as Var
+from salinasolution.controllog.models import Session, DeviceInfo
 from salinasolution.feedback.models import Feedback
 from salinasolution.userinfo.models import App, Manager, User
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution import pson
-import salinasolution.dataread as dataread 
+import salinasolution.redisread as redisread
+import redis 
+
+TAG = "feedback.views"
+
+#every python file has this TAG, this TAG means the path of salina framework
 
 
+# request로부터 feedback 정보를 얻고, db로 저장하는 메서드
+# create_feedback
 
 '''
-
-@csrf_exempt
-def system_feedback(request):
-    if request.mehtod == 'POST':
-        dic = json.loads(request.raw_post_data)
-        
-        
-        def make_instance_by_name(name):
-    constructor = globals()[name]
-    obj_instance = constructor()
-    return obj_instance
+#redis를 사용하기 위한 전역 변수
+r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 '''
 
-
+r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
 @csrf_exempt
 def save_user_feedback(request):
-   if request.mehtod == 'POST':
+    print "save_user_feedback"
+    if request.mehtod == 'POST':
         feedback = Feedback()
        
         dic = json.loads(request.raw_post_data)
@@ -50,97 +50,117 @@ def save_user_feedback(request):
                 instance = pson.make_instance_by_name(key)
                 instance = pson.dic_to_obj(dic[key], instance)
                 instance.feedback = feedback
-                instance.save()
+                instance.auto_save()
                  
-        
-        
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-this page is for view of feedback
-this page can make user vote, evaluation, feedback
-made by doo hyung
-'''
-
-#every python file has this TAG, this TAG means the path of salina framework
-TAG = "feedback.views"
-
-# request로부터 feedback 정보를 얻고, db로 저장하는 메서드
-# create_feedback
-
-def save_feedback(request):
-    #convert json to python data
-    #request로부터 얻어온 데이터로 dic로 전환시킨다.
-    dic = json.loads(request.raw_post_data)
-    print dic
-    #if you execute dic_to_obj, it convert from dic to obj
-    #pson.dic_to_obj 메서드를 수행하면 인자로 넣은 obj의 속성값을(property)를 채워서 반환한다.
-    feed = pson.make_feed_obj(dic)
-    #serialize를 수행하면 해당 객체를 json으로 만들어서 반환시킨다.
-    #return_data =  serializers.serialize('json',dic)
-    #debug(TAG, return_data)
-    return "success"
-
-#피드백을 만들거나 투표를 하거나 하는 기능을 하는 메서드
-@csrf_exempt
-def feedback(request):
-    debug(TAG, "suggestion method start")
-    return_data = None 
-    #create feedback
-    #feedback data를 생성한다.(create = post)
-    if request.method == 'POST':
-        debug(TAG, "POST METHOD")
-        
-        return_data = save_feedback(request)
-        print return_data
-    return HttpResponse(return_data)
-
-
-def view_community_feedback(request):
-    
-    app_id = request.GET[Var.APP_ID]
-    category = request.GET[Var.CATEGORY]
-    data_num = 10
-    
+                 
+def view_dashboard(request):
     if request.method == 'GET':
-        debug(TAG, "POST METHOD")
-        return_list = dataread.read_data(app_id, category, data_num)
-        json_return_data = json.dumps(return_list)
+        app_id = request.GET[Var.APP_ID]
+        #query =  "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM controllog_session GROUP BY HOUR(start_time) where app_id = %(app_id)s"
+        query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM " 
+        +"(SELECT * FROM controllog_session where start_time = CURDATE()) as time_table"
+        +" where app_id = 'com.nnoco.dday' GROUP BY HOUR(start_time);" 
         
-    return render_to_response('index.html', {
-                                                 'feedback': json_return_data,
-                                                 
+        params = [app_id]
+        time_session_info = Session.objects.raw(query, params)
+        
+        #뭘 넘겨야 할지 결정하기
+        return render_to_response('index.html', {
+                                                 'time_session_info': time_session_info,
                                                  },
                                   context_instance=RequestContext(request))
         
+        
+def view_basic(request):
+    if request.method == 'GET':
+        app_id = request.GET[Var.APP_ID]
+        focus_var = request.GET[Var.FOCUS_VAR]
+        composite_var = request.GET(Var.COMPOSITE_VAR)
+        #뭘 넘겨야 할지 결정하기
+    return
+
+def view_advanced(request):
+    if request.method == 'GET':
+        
+        app_id = request.GET[Var.APP_ID]
+        focus_var = request.GET[Var.FOCUS_VAR]
+        composite_var = request.GET(Var.COMPOSITE_VAR)
+        
+        query = 'SELECT device_name, count(device_name), SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM'
+        + '(SELECT device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.user_id = log.user_id) as join_table'
+        + 'GROUP BY device_name'
+        
+        params = [app_id]
+        advanced_view = Feedback.objects.raw(query, params)
+        
+        return render_to_response('index.html', {
+                                                 'advanced_view': advanced_view,
+                                                 },
+                                  context_instance=RequestContext(request))
+        
+        
+        
+def view_destination_activity_flow(request):
+    print "feedback"
+    if request.method == 'GET' :
+        app_id = request.GET[Var.APP_ID]
+        destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
+        graph_num = request.GET[Var.DESTINATION_ACTIVITY]
+        node_num = 4
+        
+        screen_key = app_id + "_" + destination_activity
+        
+        data_list = []
+        dic_list = []
+        dic = {"activity_name":"","visit_num":0}
+        
+        data_collect_flag = False
+        
+        for i in graph_num :
+            
+            for j in node_num :
+                
+                if r.exists(screen_key) == False:
+                    data_collect_flag = True
+                    break
+                    
+                activity_list = r.zrange(screen_key, 0, -1, withscores = True)
+                reverse_activity_list = activity_list.reverse() 
+                #큰것부터 차례로 뽑아야함
+                dic['activity_name'] = reverse_activity_list[i][0]
+                dic['visit_num'] = reverse_activity_list[i][1]
+                    
+                dic_list.append(dic)
+                    
+                screen_key = app_id + "_" + dic['activity_name']
+            
+            data_list.append(dic_list)
+            
+            if data_collect_flag == True:
+                break
+            
+
+def view_trigger_function(request):
     
-  
+    if request.method == 'GET':
+        app_id = request.GET[Var.APP_ID]
+        destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
+        screen_key = app_id + "_" + destination_activity
+        
+        
+        list = r.zrange(screen_key, 0, -1,withscores = True)
+        
+        #뭘 넘겨야 할지 결정하기
+        return render_to_response('index.html', {
+                                                 'list': list,
+                                                 },
+                                  context_instance=RequestContext(request))
     
+             
+        
+         
+        
+        
+        
+
 

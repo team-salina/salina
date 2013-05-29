@@ -51,8 +51,7 @@ device info는 유저가 사용하는 기기에 대한 총괄적인 정보를 �
 '''  
 class DeviceInfo(models.Model):
     
-    user = models.ForeignKey(User)
-    app_id = models.CharField(max_length = 50)
+    user = models.ForeignKey(User,  primary_key = True)
     os_version = models.CharField(max_length=50)
     device_name = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
@@ -76,6 +75,7 @@ class DeviceInfo(models.Model):
         #String을 정해진 포맷으로 바꾸는 부분
         self.latitude = float(self.latitude)
         self.longitude = float(self.longitude)
+        #String을 정해진 포맷으로 바꾸는 부분
         self.create_date = datetime.strptime(self.create_date,"%Y-%m-%d %H:%M:%S")        
         
         self.save()

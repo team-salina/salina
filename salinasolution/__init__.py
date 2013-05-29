@@ -1,12 +1,11 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+
 import time
 import threading
+import rediswrite
 
-'''
-def foo():
-      print(time.ctime())
-      threading.Timer(10, foo).start()
+#rediswrite.insert_system_feedback_to_db(10)
 
 
-foo()
 
-'''

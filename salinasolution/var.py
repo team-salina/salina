@@ -31,9 +31,6 @@ CATEGORY = "category"
 MANAGER_ID = "manager_id"
     
 # this is for controllog
-SESSION = 'session'
-DEVICE_INFO = 'device_info'
-CRASH = 'crash'
     
 ACTIVITY_NAME = "activity_name"
 START_TIME = "start_time"
@@ -55,8 +52,10 @@ OCCUR_TIME = "OCCUR_TIME"
 INIT_SCORE = 0
     
 # data type에 따라 cache에 저장할 데이터 구분
-SESSION_DATA = 'SESSION_DATA'
-DEVICE_INFO = 'DEVICE_INFO'
+REDIS_KEY_SESSION = 'Session'
+REDIS_KEY_DEVICE_INFO = 'DeviceInfo'
+REDIS_KEY_SCREEN_FLOW = 'ScreenFlow'
+REDIS_KEY_EVENT = 'Event'
 
 #redis관련
 REDIS_PORT_NUM = 6379
@@ -69,6 +68,8 @@ COMPOSITE_VAR = 'COMPOSITE_VAR'
 ADVANCED_TYPE = 'ADVANCED_TYPE'
 SYSTEM_SYSTEM_TYPE = 'SYSTEM_SYSTEM_TYPE'
 SYSTEM_USER_TYPE = 'SYSTEM_USER_TYPE'
+
+DESTINATION_ACTIVITY = 'DESTINATION_ACTIVITY'
 
 class Dummy: pass
 

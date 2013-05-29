@@ -1,4 +1,6 @@
-from salinasolution.userfeedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
+ #!/usr/bin/python
+# -*- coding: utf-8 -*-
+from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
 from django.contrib import admin
 
 admin.site.register(Feedback)

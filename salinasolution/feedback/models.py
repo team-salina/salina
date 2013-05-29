@@ -29,7 +29,7 @@ class DeviceInfo(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     
     def auto_save(self):
-        self.user = User().auto_save(self.user_id, self.device_key)
+        self.user = User().aut9   _save(self.user_id, self.device_key)
         self.save()
         return self
 '''
@@ -147,18 +147,25 @@ class PraiseScore(models.Model):
 Feedback의 Context를 저장하기 위한 데이타
 '''
 class FeedbackContext(models.Model):
+    
     feedback = models.ForeignKey(Feedback)
-    app_version = models.CharField()
-    android_version = models.CharField()
-    android_sdk = models.CharField()
-    device_model = models.CharField()
-    device_manufacturer = models.CharField()
-    locale_language = models.CharField()
-    locale_country = models.CharField()
-    device_country = models.CharField()
-    network_carrier = models.CharField()
-    network_country = models.CharField()
-    network_type = models.CharField()
-    latitude = models.CharField()
-    longitude = models.CharField()
+    app_version = models.CharField(max_length = 50)
+    android_version = models.CharField(max_length = 50)
+    android_sdk = models.CharField(max_length = 50)
+    device_model = models.CharField(max_length = 50)
+    device_manufacturer = models.CharField(max_length = 50)
+    locale_language = models.CharField(max_length = 50)
+    locale_country = models.CharField(max_length = 50)
+    device_country = models.CharField(max_length = 50)
+    network_carrier = models.CharField(max_length = 50)
+    network_country = models.CharField(max_length = 50)
+    network_type = models.CharField(max_length = 50)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    
+    def auto_save(self):
+        self.latitude = float(self.latitude)
+        self.longitude = float(self.longitude)
+        self.save()
+        return self
     

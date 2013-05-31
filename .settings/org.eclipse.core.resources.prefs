@@ -16,6 +16,7 @@ encoding//salinasolution/rediswrite.py=utf-8
 encoding//salinasolution/templetobj.py=utf-8
 encoding//salinasolution/urls.py=utf-8
 encoding//salinasolution/userinfo/admin.py=utf-8
+encoding//salinasolution/userinfo/form.py=utf-8
 encoding//salinasolution/userinfo/models.py=utf-8
 encoding//salinasolution/userinfo/urls.py=utf-8
 encoding//salinasolution/userinfo/views.py=utf-8

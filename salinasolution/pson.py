@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import json
 import var
-from salinasolution.userinfo.models import User
+from salinasolution.userinfo.models import AppUser
 from salinasolution.controllog.models import DeviceInfo, Session
 from salinasolution.feedback.models import Feedback
 from salinasolution.debug import debug 
@@ -37,7 +37,7 @@ def save_obj_list(obj_list, obj_instance):
     
 def make_obj(dic, obj):
     
-   user = dic_to_obj(dic, User())
+   user = dic_to_obj(dic, AppUser())
    debug(TAG + " make_obj user.dev_key : ", user.device_key)
    setattr(obj, "user", user)
    debug(TAG + " make_obj obj.user.dev_key : ", obj.user.device_key)
@@ -59,7 +59,7 @@ def dic_to_obj(dic, obj):
 
 def make_feed_obj(dic):
     feed = Feedback()
-    user = dic_to_obj(dic, User())
+    user = dic_to_obj(dic, AppUser())
     setattr(feed, "user", user)
     feed = dic_to_obj(dic, feed)
     print feed.app_id

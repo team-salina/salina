@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from salinasolution.debug import debug
 from salinasolution.feedback.models import Feedback
 from salinasolution.controllog.models import Session
-from salinasolution.userinfo.models import App, Manager, User
+from salinasolution.userinfo.models import App
 from django.core import serializers
 from django.http import HttpResponse
 import os
@@ -99,7 +99,7 @@ def save_system_feedback(request):
     
     print "start save_system_feedback"
     
-    if request.method == 'POST':
+    if request.method == 'POST' :
         
         dic = json.loads(request.raw_post_data)
         dic_key_list = dic.keys()

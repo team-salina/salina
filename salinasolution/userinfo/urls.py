@@ -18,14 +18,17 @@ urlpatterns = patterns('userinfo.views',
     # url(r'^admin/', include(admin.site.urls)),
      #url(r'^app/$', 'view_app'),
      #http://61.43.139.106:8000/userinfo/main_admin/app-home.html
-     url(r'^main_admin/$', 'view_admin'),
+     #register_page
+     #url(r'^login/$', 'django.contrib.auth.views.login'),
+     #url(r'^main_admin/login.html', 'django.contrib.auth.views.login'),
+     url(r'^main_admin/register.html', 'register_page'),
      url(r'^main_admin/index.html', 'view_admin'),
      url(r'^main_admin/developer.html', 'view_developer'),
      url(r'^main_admin/app-home.html', 'view_app_home'),
      url(r'^main_admin/feedback.html', 'view_feedback'),
-     url(r'^main_admin/register.html', 'view_register'),
      url(r'^main_admin/download.htm', 'view_contact'),
      url(r'^main_admin/about.html', 'view_about'),
+     
      
 
 )

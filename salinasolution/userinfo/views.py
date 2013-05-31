@@ -4,7 +4,7 @@ from django.db.models import Count
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution.debug import debug
-from salinasolution.userinfo.models import Manager
+from salinasolution.userinfo.models import AppUser
 from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
 from salinasolution.controllog.models import  DeviceInfo, Session
 import salinasolution.var as Var
@@ -12,29 +12,43 @@ from salinasolution.templetobj import FeedbackInfo
 from django.core.context_processors import request
 from salinasolution import pson 
 import json
+from django.views.decorators.csrf import csrf_protect, csrf_exempt
+from salinasolution.userinfo.form import RegistrationForm
+from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
+#import django.contrib.auth.views.login
+
+
 # Create your views here.
 
-TAG = "adminpage.views"
-'''
-def view_app(request):
-    debug(TAG, "view_app_method")
-    if request.method == 'GET':
-        user_id = request.GET[Var.USER_ID]
-        
-        manager_info = Manager.objects.get(user_id = user_id)
-        app_info = manager_info.managerappinfo_set.get()
-        app_list = []
-        
-        for feedback in app_info.feedback_set.all:
-            app_info = feedback.group_by('category').annotate(ccount=Count('category'))
-            app_list.append(app_info)
-            
-    return render_to_response('', {'app_list':app_list},
-                              context_instance=RequestContext(request))
-'''    
-    
+TAG = "adminpage.views"   
 
+@csrf_protect
+def register_page(request):
+    print "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    if request.method == 'POST':
+        print "POST"
+        print request.POST['password1']
+        print request.POST['password2']
+        form = RegistrationForm(request.POST)
+        print form.errors
+        if form.is_valid():
+            print "form valid"
+            user = User.objects.create_user(
+               username = form.cleaned_data['username'],
+               password = form.cleaned_data['password1'],
+               email = form.cleaned_data['email'] 
+            )
+            print "register_success"
+            return HttpResponseRedirect('/')
+      
+        
+    return render_to_response('registration/register.html', {
+                                                 },
+                                  context_instance=RequestContext(request))    
+        
 def view_admin(request):
+    
     print "sex"
     manager_app_info  = []
     
@@ -128,11 +142,11 @@ def view_contact(request):
                                   context_instance=RequestContext(request))
     
 def view_about(request):
+    
    
     
     
-    #get feedback aggregation from db
-                                                 
+    #get feedback aggregation from db                                                 
                                                  
     return render_to_response('about.html', {
                                                  },

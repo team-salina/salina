@@ -16,12 +16,14 @@ urlpatterns = patterns('',
     url(r'^feedback/', include('feedback.urls')),
     url(r'^controllog/', include('controllog.urls')),
     url(r'^userinfo/', include('userinfo.urls')),
+    url(r'^login/$', 'django.contrib.auth.views.login'),
+    
      
 )
 
 
 urlpatterns += patterns('',
-     
+    
      url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {
         'document_root': settings.STATIC_ROOT,
     }),

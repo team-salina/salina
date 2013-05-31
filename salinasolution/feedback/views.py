@@ -1,18 +1,19 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from salinasolution.debug import debug
 import json
 import  salinasolution.var as Var
 from salinasolution.controllog.models import Session, DeviceInfo
-from salinasolution.feedback.models import Feedback
-from salinasolution.userinfo.models import App, Manager, User
+from salinasolution.feedback.models import Feedback, FeedbackContext
+from salinasolution.userinfo.models import App,  AppUser
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution import pson
 import salinasolution.redisread as redisread
 import redis 
+import ast
 
 TAG = "feedback.views"
 
@@ -31,27 +32,39 @@ r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
 @csrf_exempt
 def save_user_feedback(request):
+    
     print "save_user_feedback"
-    if request.mehtod == 'POST':
-        feedback = Feedback()
-       
-        dic = json.loads(request.raw_post_data)
-        dic_key_list = dic.keys()
+    if request.method == 'POST':
+        print "post"
         
-        for key in dic_key_list:
-            
-            if key == 'Feedback':
-                instance = pson.make_instance_by_name(key)
-                instance = pson.dic_to_obj(dic[key], instance)
-                instance.auto_save()
-                feedback = instance
-            
-            elif key == 'FeedbackContext':
-                instance = pson.make_instance_by_name(key)
-                instance = pson.dic_to_obj(dic[key], instance)
-                instance.feedback = feedback
-                instance.auto_save()
-                 
+        feedback = Feedback()
+        
+        dic = str(json.loads(request.raw_post_data))
+        dic = ast.literal_eval(dic)
+        dic = dic["user_feedback"]
+        
+        
+        dic_key_list = dic.keys()
+        print dic_key_list
+        try :    
+            for key in dic_key_list:
+                if key == 'Feedback':
+                    instance = pson.make_instance_by_name(key)
+                    instance = pson.dic_to_obj(dic[key], instance)
+                    instance = instance.auto_save()
+                    feedback = instance
+                    
+                elif key == 'FeedbackContext':
+                    instance = FeedbackContext()
+                    instance = pson.dic_to_obj(dic[key], instance)
+                    instance.feedback = feedback
+                    instance.save()    
+        except Exception as e:
+            print e
+        
+        return "success"
+         
+    return "fail"              
                  
 def view_dashboard(request):
     if request.method == 'GET':
@@ -145,8 +158,7 @@ def view_trigger_function(request):
     if request.method == 'GET':
         app_id = request.GET[Var.APP_ID]
         destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
-        screen_key = app_id + "_" + destination_activity
-        
+        screen_key = app_id + "_" + destination_activity        
         
         list = r.zrange(screen_key, 0, -1,withscores = True)
         

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from xmlrpclib import DateTime
-from salinasolution.userinfo.models import User
+from salinasolution.userinfo.models import AppUser
 import json
 import time
 from datetime import datetime
@@ -27,7 +27,7 @@ date_format = "%Y-%m-%d %H:%M:%S"
 
 class Session(models.Model):
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(AppUser)
     activity_name = models.CharField(max_length=50)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -35,7 +35,7 @@ class Session(models.Model):
      
     def auto_save(self):
         try:
-            self.user = User().auto_save(self.user.user_id, self.user.device_key)
+            self.user = AppUser().auto_save(self.user.user_id, self.user.device_key)
             self.start_time = datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S")
             self.end_time = datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S")
             self.save()
@@ -51,7 +51,7 @@ device info는 유저가 사용하는 기기에 대한 총괄적인 정보를 �
 '''  
 class DeviceInfo(models.Model):
     
-    user = models.ForeignKey(User,  primary_key = True)
+    user = models.ForeignKey(AppUser,  primary_key = True)
     os_version = models.CharField(max_length=50)
     device_name = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
@@ -71,7 +71,7 @@ class DeviceInfo(models.Model):
     create_date = models.DateTimeField()
     
     def auto_save(self):
-        self.user = User().auto_save(self.user_id, self.device_key)
+        self.user = AppUser().auto_save(self.user_id, self.device_key)
         #String을 정해진 포맷으로 바꾸는 부분
         self.latitude = float(self.latitude)
         self.longitude = float(self.longitude)

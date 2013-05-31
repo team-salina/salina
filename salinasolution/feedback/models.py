@@ -4,7 +4,7 @@ from django.db import models
 from random import choice
 from django.db.models.base import Model
 from compiler.ast import Mod
-from salinasolution.userinfo.models import User
+from salinasolution.userinfo.models import AppUser
 from django.db.models.deletion import CASCADE
 import salinasolution.var as var
 # Create your models here.
@@ -43,13 +43,16 @@ reply_num은 답글의 갯수를 나타낸다.
 '''
 class Feedback(models.Model):
     
-    user = models.ForeignKey(User)
-    app_id = models.CharField(max_length = 50)
+    seq = models.AutoField(primary_key = True)
+    user = models.ForeignKey(AppUser)
     category = models.CharField(max_length = 50, choices = var.CATEGORIES)
-    pub_date = models.DateTimeField(auto_now_add = True)
     contents = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add = True)
+    
     solved_check = models.BooleanField(default = False)
     reply_num = models.IntegerField(default = 0)
+    
+    app_id = models.CharField(max_length = 50)
     
     
     '''
@@ -57,7 +60,7 @@ class Feedback(models.Model):
     user데이터를 사용하여 feedback 테이블에도 저장하게 된다.
     '''
     def auto_save_by_property(self, user_id, device_key, app_id, category, contents):
-        feed = Feedback(user = User().auto_save(user_id, device_key), category = category, contents = contents)
+        feed = Feedback(user = AppUser().auto_save(user_id, device_key), category = category, contents = contents)
         feed.save()
         return feed
     
@@ -70,7 +73,7 @@ class Feedback(models.Model):
         return feed
     
     def auto_save(self):
-        feed = Feedback(user = User().auto_save(self.user_id, self.device_key), category = self.category, contents = self.contents, app_id = self.app_id)
+        feed = Feedback(user = AppUser().auto_save(self.user_id, self.device_key), category = self.category, contents = self.contents, app_id = self.app_id)
         feed.save()
         return feed 
     
@@ -80,7 +83,7 @@ class Feedback(models.Model):
 '''
 class Reply(models.Model):
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(AppUser)
     feedback_id = models.IntegerField()
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
@@ -92,7 +95,7 @@ class Reply(models.Model):
 '''
 class FeedbackComment(models.Model):
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(AppUser)
     feedback_id = models.IntegerField()
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
@@ -102,7 +105,7 @@ reply에 대한 댓글을 나타낸다.
 '''   
 class ReplyComment(models.Model):
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(AppUser)
     reply_id = models.IntegerField()
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
@@ -112,7 +115,7 @@ feedback에 대해서 vote(투표)한 리스트의 사람들을 나타낸다.
 '''
 class FeedbackVote(models.Model):
     
-    user = models.ForeignKey(User)                    
+    user = models.ForeignKey(AppUser)                    
     feedback_id = models.IntegerField()
 
 '''
@@ -120,7 +123,7 @@ reply에 대해서 vote(투표)한 리스트의 사람들을 나타낸다.
 '''  
 class ReplyVote(models.Model):
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(AppUser)
     reply_id = models.IntegerField()
 
 
@@ -129,7 +132,7 @@ class ReplyVote(models.Model):
 '''       
 class ReplyEvaluation(models.Model):
     
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(AppUser)
     reply_id = models.IntegerField()
     ev_score = models.FloatField()
 
@@ -150,18 +153,30 @@ class FeedbackContext(models.Model):
     
     feedback = models.ForeignKey(Feedback)
     app_version = models.CharField(max_length = 50)
-    android_version = models.CharField(max_length = 50)
-    android_sdk = models.CharField(max_length = 50)
+    
     device_model = models.CharField(max_length = 50)
     device_manufacturer = models.CharField(max_length = 50)
+    device_country = models.CharField(max_length = 50)
+    
+    screen_name = models.CharField(max_length = 50)
+    
     locale_language = models.CharField(max_length = 50)
     locale_country = models.CharField(max_length = 50)
-    device_country = models.CharField(max_length = 50)
+    
+    os_version = models.CharField(max_length = 50)
+    
     network_carrier = models.CharField(max_length = 50)
-    network_country = models.CharField(max_length = 50)
     network_type = models.CharField(max_length = 50)
+    
     latitude = models.FloatField()
     longitude = models.FloatField()
+    
+    def auto_save_(self, feedback):
+        self.feedback = feedback
+        self.latitude = float(self.latitude)
+        self.longitude = float(self.longitude)
+        self.save()
+        return self
     
     def auto_save(self):
         self.latitude = float(self.latitude)

@@ -25,7 +25,6 @@ TAG = "adminpage.views"
 
 @csrf_protect
 def register_page(request):
-    print "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"
     if request.method == 'POST':
         print "POST"
         print request.POST['password1']

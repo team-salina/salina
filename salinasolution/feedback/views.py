@@ -22,12 +22,6 @@ TAG = "feedback.views"
 
 # request로부터 feedback 정보를 얻고, db로 저장하는 메서드
 # create_feedback
-
-'''
-#redis를 사용하기 위한 전역 변수
-r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
-'''
-
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
 @csrf_exempt

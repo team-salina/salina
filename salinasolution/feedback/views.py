@@ -24,6 +24,13 @@ TAG = "feedback.views"
 # create_feedback
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
+
+'''
+####################################################################################
+user feedback을 저장하는 부분
+####################################################################################
+'''
+
 @csrf_exempt
 def save_user_feedback(request):
     
@@ -58,19 +65,31 @@ def save_user_feedback(request):
         
         return "success"
          
-    return "fail"              
-                 
+    return "fail" 
+
+
+'''
+####################################################################################
+user feedback을 저장하는 부분
+####################################################################################
+'''
+
+'''
+####################################################################################
+각 웹페이지 마다 데이터 전송하는 부분
+####################################################################################
+''' 
+
+'''                
 def view_dashboard(request):
     if request.method == 'GET':
         app_id = request.GET[Var.APP_ID]
         #query =  "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM controllog_session GROUP BY HOUR(start_time) where app_id = %(app_id)s"
         query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM " 
         +"(SELECT * FROM controllog_session where start_time = CURDATE()) as time_table"
-        +" where app_id = 'com.nnoco.dday' GROUP BY HOUR(start_time);" 
-        
+        +" where app_id = 'com.nnoco.dday' GROUP BY HOUR(start_time);"        
         params = [app_id]
-        time_session_info = Session.objects.raw(query, params)
-        
+        time_session_info = Session.objects.raw(query, params)        
         #뭘 넘겨야 할지 결정하기
         return render_to_response('index.html', {
                                                  'time_session_info': time_session_info,
@@ -85,6 +104,7 @@ def view_basic(request):
         composite_var = request.GET(Var.COMPOSITE_VAR)
         #뭘 넘겨야 할지 결정하기
     return
+'''
 
 def view_advanced(request):
     if request.method == 'GET':
@@ -124,13 +144,10 @@ def view_destination_activity_flow(request):
         data_collect_flag = False
         
         for i in graph_num :
-            
             for j in node_num :
-                
                 if r.exists(screen_key) == False:
                     data_collect_flag = True
                     break
-                    
                 activity_list = r.zrange(screen_key, 0, -1, withscores = True)
                 reverse_activity_list = activity_list.reverse() 
                 #큰것부터 차례로 뽑아야함
@@ -154,7 +171,7 @@ def view_trigger_function(request):
         destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
         screen_key = app_id + "_" + destination_activity        
         
-        list = r.zrange(screen_key, 0, -1,withscores = True)
+        list = r.zrange(screen_key, 0, -1, withscores = True)
         
         #뭘 넘겨야 할지 결정하기
         return render_to_response('index.html', {
@@ -163,7 +180,15 @@ def view_trigger_function(request):
                                   context_instance=RequestContext(request))
     
              
-        
+'''
+####################################################################################
+각 웹페이지 마다 데이터 전송하는 부분
+####################################################################################
+'''    
+
+
+
+
          
         
         

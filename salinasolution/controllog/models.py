@@ -1,10 +1,7 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.db import models
-from xmlrpclib import DateTime
-from salinasolution.userinfo.models import AppUser
-import json
-import time
+from salinasolution.userinfo.models import AppUser, App
 from datetime import datetime
 
 '''
@@ -22,7 +19,6 @@ controllog 부분은  사용자의 로그를 수집하는 부분으로  session(
 activity_name에는 사용한 액티비티가 들어가고, start_time은 액티비티를 들어온 시간, 
 end_time은 액티비티를 나간 시간을 기록한다.
 '''  
-
 date_format = "%Y-%m-%d %H:%M:%S"
 
 class Session(models.Model):
@@ -31,7 +27,7 @@ class Session(models.Model):
     activity_name = models.CharField(max_length=50)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    app_id = models.CharField(max_length = 50)
+    app = models.ForeignKey(App)
      
     def auto_save(self):
         try:
@@ -76,7 +72,7 @@ class DeviceInfo(models.Model):
         self.latitude = float(self.latitude)
         self.longitude = float(self.longitude)
         #String을 정해진 포맷으로 바꾸는 부분
-        self.create_date = datetime.strptime(self.create_date,"%Y-%m-%d %H:%M:%S")        
+        self.create_date = datetime.strptime(self.create_date,"%Y-%m-%d %H:%M:%S")
         
         self.save()
         return self

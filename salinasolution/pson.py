@@ -85,8 +85,9 @@ def get_obj_instance_name(obj):
      
     return return_str
         
-
-
+def obj_to_dic(obj):
+    return
+    
 
 '''
 def makeObj(request, obj):

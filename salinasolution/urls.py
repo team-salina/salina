@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^controllog/', include('controllog.urls')),
     url(r'^userinfo/', include('userinfo.urls')),
     url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^$', 'django.contrib.auth.views.login'),
     
      
 )

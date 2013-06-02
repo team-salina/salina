@@ -4,12 +4,13 @@ from django.db import models
 from random import choice
 from django.db.models.base import Model
 from compiler.ast import Mod
-from salinasolution.userinfo.models import AppUser
+from salinasolution.userinfo.models import AppUser, App
 from django.db.models.deletion import CASCADE
 import salinasolution.var as var
+import jsonpickle
 # Create your models here.
 
-
+#jsonpickle.
 '''
 Created on 2013. 3. 7.
 
@@ -44,7 +45,7 @@ reply_num은 답글의 갯수를 나타낸다.
 class Feedback(models.Model):
     
     seq = models.AutoField(primary_key = True)
-    user = models.ForeignKey(AppUser)
+    appuser = models.ForeignKey(AppUser)
     category = models.CharField(max_length = 50, choices = var.CATEGORIES)
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
@@ -52,7 +53,8 @@ class Feedback(models.Model):
     solved_check = models.BooleanField(default = False)
     reply_num = models.IntegerField(default = 0)
     
-    app_id = models.CharField(max_length = 50)
+    app = models.ForeignKey(App)
+    
     
     
     '''
@@ -159,6 +161,7 @@ class FeedbackContext(models.Model):
     device_country = models.CharField(max_length = 50)
     
     screen_name = models.CharField(max_length = 50)
+    function_name = models.CharField(max_length = 50)
     
     locale_language = models.CharField(max_length = 50)
     locale_country = models.CharField(max_length = 50)

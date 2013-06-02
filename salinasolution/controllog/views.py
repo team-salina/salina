@@ -28,69 +28,11 @@ controllog create 하는 연산
 #Redis Port num은 6379
 
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
-
-
-def save_trigger_event(event_list, app_id):
-    
-    
-    print "event list : " + str(event_list)
-    ex_screen_name = ''
-    event_container = []
-    
-    for event_dic in reversed(event_list):
-        
-        cur_screen_name = event_dic['screen_name']
-        print "cur_screen :" +  cur_screen_name
-        event_name = event_dic['event_name']
-        
-        #처음 인경우
-        if event_list.index(event_dic) == len(event_list) - 1 :
-            ex_screen_name = cur_screen_name
-       
-       #같다면
-        if ex_screen_name == cur_screen_name :
-            event_container.append(event_name)
-        
-        #다르다면    
-        else :
-            screen_key = app_id + "_" + cur_screen_name
-            print "screen_key : " + screen_key 
-             
-            #redis에 추가하는 부분
-            for event in event_container:
-                r.zincrby(screen_key, event, 1)
-            event_container = []
-            ex_screen_name = cur_screen_name
-        
-        
-        #if i == len(reverse_event_list) :
-        
-
-
-def save_screen_flow(screen_list, app_id):
-    
-    
-    
-    try :
-        for screen in reversed(screen_list):
-            #마지막 값일 경우에는 break
-            if 0 == screen_list.index(screen):
-                #print "save_screen_flow : break"
-                break
-            #마지막 값이 아닐 경우에는 app_id를 사용해서
-            screen_key = app_id + "_" + screen 
-            #print "screek_key : " + screen_key
-            next_index = screen_list.index(screen) - 1
-            input_screen_name = screen_list[next_index]
-            #실제로 screen을 삽입하는 부분
-            #screen 존재시
-            
-            r.zincrby(screen_key, input_screen_name, 1)
-    
-    except Exception as e:
-        print " save_screen_flow exception : " + str(e)
-         
-
+'''
+####################################################################################
+system feedback을 저장하는 부분
+####################################################################################
+'''
 #controllog를 저장하는 부분
 @csrf_exempt
 def save_system_feedback(request):
@@ -138,8 +80,73 @@ def save_system_feedback(request):
              print " save_system_feedback exception : " + str(e) 
                   
                 
-        return "success"      
+        return "success"    
+
+
+def save_trigger_event(event_list, app_id):
+    
+    
+    print "event list : " + str(event_list)
+    ex_screen_name = ''
+    event_container = []
+    
+    for event_dic in reversed(event_list):
+        
+        cur_screen_name = event_dic['screen_name']
+        print "cur_screen :" +  cur_screen_name
+        event_name = event_dic['event_name']
+        
+        #처음 인경우
+        if event_list.index(event_dic) == len(event_list) - 1 :
+            ex_screen_name = cur_screen_name
+       
+       #같다면
+        if ex_screen_name == cur_screen_name :
+            event_container.append(event_name)
+        
+        #다르다면    
+        else :
+            screen_key = app_id + "_" + cur_screen_name
+            print "screen_key : " + screen_key 
+             
+            #redis에 추가하는 부분
+            for event in event_container:
+                r.zincrby(screen_key, event, 1)
+            event_container = []
+            ex_screen_name = cur_screen_name
+        
+        
+        #if i == len(reverse_event_list) :
+        
+
+
+def save_screen_flow(screen_list, app_id):
+    
+    try :
+        for screen in reversed(screen_list):
+            #마지막 값일 경우에는 break
+            if 0 == screen_list.index(screen):
+                #print "save_screen_flow : break"
+                break
+            #마지막 값이 아닐 경우에는 app_id를 사용해서
+            screen_key = app_id + "_" + screen 
+            #print "screek_key : " + screen_key
+            next_index = screen_list.index(screen) - 1
+            input_screen_name = screen_list[next_index]
+            #실제로 screen을 삽입하는 부분
+            #screen 존재시
             
+            r.zincrby(screen_key, input_screen_name, 1)
+    
+    except Exception as e:
+        print " save_screen_flow exception : " + str(e)
+         
+  
+'''
+####################################################################################
+system feedback을 저장하는 부분
+####################################################################################
+'''
             
                     
                 

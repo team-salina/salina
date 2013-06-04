@@ -49,6 +49,23 @@ public class RestClient {
 	public static final String SERVER_HOST = "http://61.43.139.106:8000/";
 	
 	/**
+	 * User Feedback URL
+	 * 
+	 * modified 2013. 5. 29
+	 * description : 각 카테고리별로 나누어 전송하지 않고 하나의 URL을 사용해서 전송함
+	 */
+	public static final String URL_USER_FEEDBACK = "http://61.43.139.106:8000/feedback/save_user_feedback/";
+	
+	/**
+	 * System Feedback URL
+	 * 
+	 * modifed 2013. 5. 30
+	 * description : 시스템 피드백 전송 URL
+	 */
+	public static final String URL_SYSTEM_FEEDBACK = "http://61.43.139.106:8000/controllog/save_system_feedback/";
+	
+	
+	/**
 	 * 질문 URL
 	 */
 	public static final String URL_QUESTION = SERVER_HOST + "feedback/suggestion/";
@@ -70,6 +87,13 @@ public class RestClient {
 	
 	/** Http Request Connection Timeout Limit */
 	public static final int TIMEOUT_LIMIT_MILLISEC = 10000;
+
+	/**
+	 * 서버로부터 DeviceKey를 발급받기 위해 사용하는 URL
+	 */
+	public static final String URL_GET_DEVICE_KEY = "http://61.43.139.106:8000/controllog/device_key/";
+	
+	public static final String SEND_FAILURE_MESSAGE = "send failure";
 
 	private Gson mGson = new Gson();
 	
@@ -130,7 +154,7 @@ public class RestClient {
 		
 		HttpResponse response = null;
 		
-		String result = "";
+		String result = SEND_FAILURE_MESSAGE;
 		
 		try {
 			response = client.execute(request);

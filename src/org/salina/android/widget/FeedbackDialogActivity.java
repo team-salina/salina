@@ -94,8 +94,8 @@ public class FeedbackDialogActivity extends Activity {
 	private FeedbackDialogActivity addTabSpec(TabHost tabHost, String tag, String label, int viewid) {
 		tabHost.addTab(tabHost
 			.newTabSpec(tag)
-			.setIndicator(label)
-			.setContent(viewid));
+			.setIndicator(label)// TODO: ㅇ
+			.setContent(viewid));	
 		return this;
 	}
 	

@@ -18,8 +18,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 /**
- * ���ø����̼ǿ� �ǵ�� ���̺��� ���� ����
- * @author ���ؿ�
+ * Widget Component
+ * Feedback Label Service
+ * 최상위 윈도우 WindowManager에 피드백 레이블 뷰를 부착함으로써 사용자에
+ * @author 이준영
  *
  */
 public class FeedbackLabelService extends Service implements OnTouchListener, OnClickListener{
@@ -89,7 +91,10 @@ public class FeedbackLabelService extends Service implements OnTouchListener, On
 				WindowManager.LayoutParams.TYPE_PHONE,
 				WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
 				PixelFormat.TRANSLUCENT);
-		labelParams.gravity = Gravity.RIGHT | Gravity.CENTER_VERTICAL;
+		labelParams.gravity = Gravity.RIGHT | Gravity.BOTTOM;
+		
+		// 레이블 초기 투명도 설정
+		labelParams.alpha = 0.9f;
 		
 		// Feedback Label 버튼 초기화
 		btFeedbackLabel = new Button(this);	
@@ -177,10 +182,10 @@ public class FeedbackLabelService extends Service implements OnTouchListener, On
 			// TODO Refactoring : 메서드 추출
 			int y = (int)(event.getRawY() - START_Y);
 			
-			labelParams.y = PREV_Y+ y;
+			labelParams.y = PREV_Y- y;
 			
 			// 피드백 레이블 투명도 조절
-			labelParams.alpha += (event.getRawX()-START_X) / MAX_WIDTH / 5;
+			labelParams.alpha += (event.getRawX()-START_X) / MAX_WIDTH;
 			if(labelParams.alpha < 0.2) labelParams.alpha = 0.2f;
 			else if(labelParams.alpha > 1) labelParams.alpha = 1;
 			

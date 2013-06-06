@@ -3,7 +3,6 @@
 from django.db import models
 from salinasolution.debug import debug
 from django.db.models.deletion import CASCADE
-from MySQLdb.constants.FLAG import UNIQUE_KEY
 from django.contrib.auth.models import User
 
 '''
@@ -20,8 +19,8 @@ Created on 2013. 3. 7.
 '''
 class App(models.Model):
     
-    user = models.ForeignKey(User)
     app_id = models.CharField(max_length = 50, primary_key = True)
+    user = models.ForeignKey(User)
     app_name = models.CharField(max_length = 50)
     description = models.CharField(max_length = 50)
     create_date = models.DateField(auto_now_add = True)

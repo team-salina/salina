@@ -1,12 +1,14 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import json
+from __future__ import with_statement 
+import simplejson as json
 import var
 from salinasolution.userinfo.models import AppUser
 from salinasolution.controllog.models import DeviceInfo, Session
 from salinasolution.feedback.models import Feedback
 from salinasolution.debug import debug 
 from django.db import transaction
+
 
 
 TAG = "pson"
@@ -32,8 +34,8 @@ def save_obj_list(obj_list, obj_instance):
             try :
                 made_obj = make_obj(dic, obj_instance)
                 made_obj.auto_save()
-            except Exception as e:
-                print e
+            except Exception :
+                print "asdf"
     
 def make_obj(dic, obj):
     

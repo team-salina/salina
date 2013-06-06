@@ -28,6 +28,8 @@ urlpatterns = patterns('userinfo.views',
      url(r'^main_admin/feedback.html', 'view_feedback'),
      url(r'^main_admin/download.htm', 'view_contact'),
      url(r'^main_admin/about.html', 'view_about'),
+     url(r'^main_admin/real_voice.html', 'view_real_voice'),
+     url(r'^main_admin/advanced.html', 'view_advanced'),
      
      
 

@@ -7,7 +7,7 @@ from compiler.ast import Mod
 from salinasolution.userinfo.models import AppUser, App
 from django.db.models.deletion import CASCADE
 import salinasolution.var as var
-import jsonpickle
+
 # Create your models here.
 
 #jsonpickle.

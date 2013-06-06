@@ -35,7 +35,7 @@ class Session(models.Model):
             self.start_time = datetime.strptime(self.start_time,"%Y-%m-%d %H:%M:%S")
             self.end_time = datetime.strptime(self.end_time,"%Y-%m-%d %H:%M:%S")
             self.save()
-        except Exception as e:
+        except Exception, e:
             print e    
         return self
     

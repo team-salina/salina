@@ -5,19 +5,21 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution.debug import debug
 from salinasolution.userinfo.models import AppUser, App
-from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
+from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote,\
+    FeedbackContext
 from salinasolution.controllog.models import  DeviceInfo, Session
 import salinasolution.var as Var
 from salinasolution.templetobj import FeedbackInfo
 from django.core.context_processors import request
 from salinasolution import pson 
-import json
+import simplejson as json
 from django.views.decorators.csrf import csrf_protect, csrf_exempt
 from salinasolution.userinfo.form import RegistrationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
+from django.template.context import RequestContext
 #import django.contrib.auth.views.login
 
 
@@ -80,6 +82,18 @@ def view_app_home(request):
     user_data = []
     
     app = ""
+    
+    if request.method == 'GET' :
+            app_id = request.GET[Var.APP_ID]
+            params = [app_id]
+            session_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE()) as time_table  where app_id = %s GROUP BY HOUR(start_time);"
+            user_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE() GROUP BY user_id) as time_table  where app_id = %s GROUP BY HOUR(start_time);"
+            
+            app = App.objects.get(pk = app_id)
+            session_data = Session.objects.raw(session_query, params)
+            user_data = Session.objects.raw(user_query, params)
+    '''
+    
     try :  
         if request.method == 'GET' :
             app_id = request.GET[Var.APP_ID]
@@ -87,14 +101,14 @@ def view_app_home(request):
             session_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE()) as time_table  where app_id = %s GROUP BY HOUR(start_time);"
             user_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE() GROUP BY user_id) as time_table  where app_id = %s GROUP BY HOUR(start_time);"
             
-            app = App.objects.get(app_id = app_id)
+            app = App.objects.get(pk = app_id)
             session_data = Session.objects.raw(session_query, params)
             user_data = Session.objects.raw(user_query, params)
             
-            
-            
     except Exception as e:
         print "exception : " + str(e)
+    
+    '''
     return render_to_response('app-home.html', {  
                                                    'user_data':user_data,
                                                   'session_data':session_data,
@@ -102,7 +116,36 @@ def view_app_home(request):
                                                   },
                                   context_instance=RequestContext(request))
     
-    
+
+@login_required
+def view_real_voice(request):
+    if request.method == 'GET' :
+        app_id = request.GET[Var.APP_ID]
+        params = [app_id]
+        
+        
+        raw_query = "SELECT * FROM (SELECT * FROM feedback_feedback WHERE app_id = 'noon_date') as feedback, feedback_feedbackcontext WHERE feedback.seq = feedback_feedbackcontext.feedback_id ORDER BY function_name ASC;"
+        
+        feedback = Feedback.objects.raw(raw_query)
+        
+        '''    
+        
+        feedback=Feedback.objects.filter(app = app_id)
+        for feed in feedback :
+            feedbackcontext = feed.feedbackcontext_set.all()
+            print feedbackcontext[0].function_name
+        
+        for feed in feedback :
+            feedbackcontext = feed.feedbackcontext_set.all()
+            print feedbackcontext.app_version
+        '''
+        
+        return render_to_response('real_voice.html', {
+                                                'feedback':feedback,
+                                                'app_id':app_id,
+                                                 },
+                                  context_instance=RequestContext(request))
+
         
 def view_feedback(request):
    
@@ -152,6 +195,27 @@ def view_about(request):
     return render_to_response('about.html', {
                                                  },
                                   context_instance=RequestContext(request))
+    
+    
+    
+def view_advanced(request):
+    if request.method == 'GET':
+        
+        app_id = request.GET[Var.APP_ID]
+        #focus_var = request.GET[Var.FOCUS_VAR]
+        #composite_var = request.GET(Var.COMPOSITE_VAR)
+        
+        query = 'SELECT seq, x, count(device_name) as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'
+        
+        
+        params = [app_id]
+        graph_data = Feedback.objects.raw(query)
+        
+        #focuas var/ comsite var 추가
+        return render_to_response('advanced.html', {
+                                                 'graph_data': graph_data,
+                                                 },
+                                  context_instance=RequestContext(request))
 
 
     
@@ -176,5 +240,28 @@ def view_about(request):
                                                  },
                                   context_instance=RequestContext(request))
 '''  
+    
+'''
+def search_page(request):
+    form = SearchForm()
+    feedbacks = []
+    show_results = False
+    if request.GET['query'].strip():
+        show_results = True
+        query = request.GET['query'].strip()
+        if query:
+            form = SearchForm({'query' : query})
+            feedbacks = \
+                Feedback.objects.filter(contents__icontains=query)[:10]
+    varaibles = RequestContext(request, {'form':form,
+                                         'feedbacks':feedbacks,
+                                         'show_results':show_results,
+                                         'show_tags': True,
+                                         'show_user': True,
+                                         }
+                               )
+                
+    return render_to_response('search.html', varaibles)
+'''    
         
  

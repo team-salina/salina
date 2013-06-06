@@ -12,14 +12,16 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution import pson, templetobj
 import redis
-import json
+import simplejson as json
 import salinasolution.var as Var
 import salinasolution.templetobj
 from salinasolution.var import SYSTEM_SYSTEM_TYPE, SYSTEM_USER_TYPE
 import redis
-import ast
+import salinasolution.ast as ast
 from django.conf.locale import tr
 from django.contrib.auth.decorators import login_required
+import uuid
+from django.template.loader import render_to_string
 
 '''
 controllog create 하는 연산
@@ -33,6 +35,11 @@ r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 system feedback을 저장하는 부분
 ####################################################################################
 '''
+
+def send_device_key(request):
+    value = str(uuid.uuid4())
+    return HttpResponse(value)
+
 #controllog를 저장하는 부분
 @csrf_exempt
 def save_system_feedback(request):
@@ -47,6 +54,37 @@ def save_system_feedback(request):
         
         dic_key_list = dic.keys()
         print dic_key_list
+        
+        
+        for key in dic_key_list:
+                
+                #Session인 경우 redis에 저장
+                if key == 'Session':
+                    session_list = dic[key]
+                    #print "session list" + str(session_list)
+                    for session in session_list:
+                        #print str(session)
+                        r.rpush(key, session)
+                        app_id = session[Var.APP_ID]
+                        print "app_id : " + app_id
+                #DeviceInfo인 경우 redis에 저장    
+                elif key == 'DeviceInfo':
+                    #print "deviceinfo" + str(dic[key])
+                    r.rpush(key, dic[key])
+                
+                if key == 'ScreenFlow':
+                    #print "screenflow before"
+                    #print "dic : " + str(dic[key])
+                    #print "app_id : " + app_id
+                    save_screen_flow(dic[key], app_id)
+                    #print "screenflow after"
+                
+                #여긴 준영이랑 논의
+                elif key == 'Event':
+                    print "event"
+                    save_trigger_event(dic[key], app_id)
+        
+        '''
         try:
             for key in dic_key_list:
                 
@@ -78,7 +116,7 @@ def save_system_feedback(request):
                 
         except Exception as e:
              print " save_system_feedback exception : " + str(e) 
-                  
+        '''          
                 
         return "success"    
 
@@ -122,6 +160,22 @@ def save_trigger_event(event_list, app_id):
 
 def save_screen_flow(screen_list, app_id):
     
+    for screen in reversed(screen_list):
+            #마지막 값일 경우에는 break
+            if 0 == screen_list.index(screen):
+                #print "save_screen_flow : break"
+                break
+            #마지막 값이 아닐 경우에는 app_id를 사용해서
+            screen_key = app_id + "_" + screen 
+            #print "screek_key : " + screen_key
+            next_index = screen_list.index(screen) - 1
+            input_screen_name = screen_list[next_index]
+            #실제로 screen을 삽입하는 부분
+            #screen 존재시
+            
+            r.zincrby(screen_key, input_screen_name, 1)
+    
+    '''
     try :
         for screen in reversed(screen_list):
             #마지막 값일 경우에는 break
@@ -140,6 +194,8 @@ def save_screen_flow(screen_list, app_id):
     
     except Exception as e:
         print " save_screen_flow exception : " + str(e)
+        
+    '''
          
   
 '''

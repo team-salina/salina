@@ -1,5 +1,6 @@
 eclipse.preferences.version=1
 encoding//salinasolution/__init__.py=utf-8
+encoding//salinasolution/ast.py=utf-8
 encoding//salinasolution/controllog/admin.py=utf-8
 encoding//salinasolution/controllog/models.py=utf-8
 encoding//salinasolution/controllog/urls.py=utf-8
@@ -9,7 +10,9 @@ encoding//salinasolution/feedback/admin.py=utf-8
 encoding//salinasolution/feedback/models.py=utf-8
 encoding//salinasolution/feedback/urls.py=utf-8
 encoding//salinasolution/feedback/views.py=utf-8
+encoding//salinasolution/filesearch.py=utf-8
 encoding//salinasolution/manage.py=utf-8
+encoding//salinasolution/mygcm.py=utf-8
 encoding//salinasolution/pson.py=utf-8
 encoding//salinasolution/redisread.py=utf-8
 encoding//salinasolution/rediswrite.py=utf-8

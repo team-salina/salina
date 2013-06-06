@@ -1,6 +1,6 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote
+from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote, FeedbackContext
 from django.contrib import admin
 
 admin.site.register(Feedback)
@@ -11,6 +11,7 @@ admin.site.register(Reply)
 admin.site.register(ReplyComment)
 admin.site.register(ReplyEvaluation)
 admin.site.register(ReplyVote)
+admin.site.register(FeedbackContext)
 
 
 

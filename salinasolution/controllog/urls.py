@@ -18,6 +18,7 @@ urlpatterns = patterns('controllog.views',
 
     # Uncomment the next line to enable the admin:
     url(r'^save_system_feedback/$', 'save_system_feedback'),
+    url(r'^device_key/$', 'send_device_key'),
     
     
     

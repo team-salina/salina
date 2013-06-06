@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from salinasolution.debug import debug
-import json
+import simplejson as json
 import  salinasolution.var as Var
 from salinasolution.controllog.models import Session, DeviceInfo
 from salinasolution.feedback.models import Feedback, FeedbackContext
@@ -13,7 +13,9 @@ from django.template import RequestContext
 from salinasolution import pson
 import salinasolution.redisread as redisread
 import redis 
-import ast
+import salinasolution.ast as ast
+
+
 
 TAG = "feedback.views"
 
@@ -47,6 +49,19 @@ def save_user_feedback(request):
         
         dic_key_list = dic.keys()
         print dic_key_list
+        for key in dic_key_list:
+                if key == 'Feedback':
+                    instance = pson.make_instance_by_name(key)
+                    instance = pson.dic_to_obj(dic[key], instance)
+                    instance = instance.auto_save()
+                    feedback = instance
+                    
+                elif key == 'FeedbackContext':
+                    instance = FeedbackContext()
+                    instance = pson.dic_to_obj(dic[key], instance)
+                    instance.feedback = feedback
+                    instance.save()
+        '''
         try :    
             for key in dic_key_list:
                 if key == 'Feedback':
@@ -62,7 +77,7 @@ def save_user_feedback(request):
                     instance.save()    
         except Exception as e:
             print e
-        
+        '''
         return "success"
          
     return "fail" 
@@ -114,7 +129,7 @@ def view_advanced(request):
         composite_var = request.GET(Var.COMPOSITE_VAR)
         
         query = 'SELECT device_name, count(device_name), SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM'
-        + '(SELECT device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.user_id = log.user_id) as join_table'
+        + '(SELECT device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table'
         + 'GROUP BY device_name'
         
         params = [app_id]

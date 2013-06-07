@@ -21,6 +21,8 @@ CATEGORIES = (
                   )
     
     # this variable for key_mapping
+    
+FEEDBACK_ID = "feedback_id"
 USER_ID = "user_id"
 DEVICE_KEY = "device_key"
 APP_ID = "app_id"

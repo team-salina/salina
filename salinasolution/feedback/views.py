@@ -14,7 +14,7 @@ from salinasolution import pson
 import salinasolution.redisread as redisread
 import redis 
 import salinasolution.ast as ast
-
+from django.db.models import Count
 
 
 TAG = "feedback.views"
@@ -202,6 +202,113 @@ def view_trigger_function(request):
 '''    
 
 
+
+
+'''
+
+feedback = models.ForeignKey(Feedback)
+    app_version = models.CharField(max_length = 50)
+    
+    device_model = models.CharField(max_length = 50)
+    device_manufacturer = models.CharField(max_length = 50)
+    device_country = models.CharField(max_length = 50)
+    
+    screen_name = models.CharField(max_length = 50)
+    function_name = models.CharField(max_length = 50)
+    
+    locale_language = models.CharField(max_length = 50)
+    locale_country = models.CharField(max_length = 50)
+    
+    os_version = models.CharField(max_length = 50)
+    
+    network_carrier = models.CharField(max_length = 50)
+    network_type = models.CharField(max_length = 50)
+    
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    
+'''
+def view_my_feedback(request):
+    if request.method == 'GET':
+        app_id = request.GET[Var.APP_ID]
+        device_key = request.GET[Var.DEVICE_KEY]
+        
+        #feedbackcontexts = FeedbackContext.objects.filter(feedback__appuser__device_key = device_key).filter(feedback__app__app_id = app_id)
+        myfeedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__appuser__pk = device_key).select_related()
+        
+        return render_to_response('sdk/my_feedback.html', {
+                                                 'myfeedbacks': myfeedbacks,
+                                                 },
+                                  context_instance=RequestContext(request))
+'''
+    seq = models.AutoField(primary_key = True)
+    appuser = models.ForeignKey(AppUser)
+    category = models.CharField(max_length = 50, choices = var.CATEGORIES)
+    contents = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add = True)
+    solved_check = models.BooleanField(default = False)
+    reply_num = models.IntegerField(default = 0)
+    app = models.ForeignKey(App)
+'''
+        
+'''
+class ReplyVote(models.Model):
+appuser = models.ForeignKey(AppUser)                   
+reply = models.ForeignKey(Reply)
+'''    
+        
+def view_feedback_detail(request):
+
+    if request.method == 'GET':
+        feedback_id = request.GET[Var.FEEDBACK_ID]
+        
+        #feedback 관련된 객체들0
+        feedback_info = Feedback.objects.get(seq = feedback_id).feedbackcontext_set.all().select_related()
+        feedback_info = feedback_info[0]
+        feedback = feedback_info.feedback
+        
+        feedback_vote_num = feedback.feedbackvote_set.all().count()
+        setattr(feedback_info,'vote_num', feedback_vote_num)
+        
+        feedback_comments = feedback.feedbackcomment_set.all().select_related()
+        feedback_comments_num = feedback_comments.count()
+        feedback_replys = feedback.reply_set.all().select_related()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        for reply in feedback_replys:
+            vote_num=reply.replyvote_set.all().count()
+            setattr(reply,"vote_num",vote_num)
+            comment_list = reply.replycomment_set.all().select_related()
+            comment_count = comment_list.count()
+            setattr(reply,"comment_list",comment_list)
+            setattr(reply,"comment_count",comment_count)
+        
+        
+        return render_to_response('sdk/feedback_detail.html', {
+                                                 
+                                                 'feedback_info':feedback_info,
+                                                 'feedback_comments':feedback_comments,
+                                                 'feedback_comments_num':feedback_comments_num,
+                                                 'feedback_replys':feedback_replys
+                                                 
+                                                 
+                                                 },
+                                  context_instance=RequestContext(request))
+        
+
+        
+        
+        
+        
+        
+    
 
 
          

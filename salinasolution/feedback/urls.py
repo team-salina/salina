@@ -24,5 +24,7 @@ urlpatterns = patterns('feedback.views',
      #url(r'^praise', 'feedback'),
      #url(r'^app/$', 'view_app'),
      url(r'^save_user_feedback/$', 'save_user_feedback'),
+     url(r'^view_my_feedback/$', 'view_my_feedback'),
+     url(r'^view_feedback_detail/$', 'view_feedback_detail'),
     
 )

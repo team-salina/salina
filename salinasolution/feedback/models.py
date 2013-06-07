@@ -45,7 +45,10 @@ reply_num은 답글의 갯수를 나타낸다.
 class Feedback(models.Model):
     
     seq = models.AutoField(primary_key = True)
+    
     appuser = models.ForeignKey(AppUser)
+    app = models.ForeignKey(App)
+    
     category = models.CharField(max_length = 50, choices = var.CATEGORIES)
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
@@ -53,7 +56,7 @@ class Feedback(models.Model):
     solved_check = models.BooleanField(default = False)
     reply_num = models.IntegerField(default = 0)
     
-    app = models.ForeignKey(App)
+    
     
     
     
@@ -85,11 +88,25 @@ class Feedback(models.Model):
 '''
 class Reply(models.Model):
     
-    user = models.ForeignKey(AppUser)
-    feedback_id = models.IntegerField()
+    appuser = models.ForeignKey(AppUser)
+    feedback = models.ForeignKey(Feedback)
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
     adopted_check = models.BooleanField(default = False)
+    
+    def save(self, *args, **kwargs):
+    #... other code here
+        self.feedback.reply_num= self.feedback.reply_num + 1
+        self.feedback.save()
+        super(Reply, self).save(*args, **kwargs)
+        
+        
+        
+    def set_adopted(self):
+        self.adopted_check = True
+        self.feedback.solved_check = True
+        self.feedback.save()
+        self.save()
  
  
 '''
@@ -97,8 +114,8 @@ class Reply(models.Model):
 '''
 class FeedbackComment(models.Model):
     
-    user = models.ForeignKey(AppUser)
-    feedback_id = models.IntegerField()
+    appuser = models.ForeignKey(AppUser)
+    feedback = models.ForeignKey(Feedback)
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
 
@@ -107,8 +124,8 @@ reply에 대한 댓글을 나타낸다.
 '''   
 class ReplyComment(models.Model):
     
-    user = models.ForeignKey(AppUser)
-    reply_id = models.IntegerField()
+    appuser = models.ForeignKey(AppUser)
+    reply = models.ForeignKey(Reply)
     contents = models.TextField()
     pub_date = models.DateTimeField(auto_now_add = True)
     
@@ -117,16 +134,22 @@ feedback에 대해서 vote(투표)한 리스트의 사람들을 나타낸다.
 '''
 class FeedbackVote(models.Model):
     
-    user = models.ForeignKey(AppUser)                    
-    feedback_id = models.IntegerField()
+    appuser = models.ForeignKey(AppUser)                   
+    feedback = models.ForeignKey(Feedback)
+    
+    class Meta:
+        unique_together = ('appuser','feedback')
 
 '''
 reply에 대해서 vote(투표)한 리스트의 사람들을 나타낸다.
 '''  
 class ReplyVote(models.Model):
     
-    user = models.ForeignKey(AppUser)
-    reply_id = models.IntegerField()
+    appuser = models.ForeignKey(AppUser)                   
+    reply = models.ForeignKey(Reply)
+    
+    class Meta:
+        unique_together = ('appuser','reply')
 
 
 '''
@@ -135,7 +158,7 @@ class ReplyVote(models.Model):
 class ReplyEvaluation(models.Model):
     
     user = models.ForeignKey(AppUser)
-    reply_id = models.IntegerField()
+    reply = models.ForeignKey(Reply)
     ev_score = models.FloatField()
 
 '''
@@ -145,7 +168,7 @@ praise score는 feedback 테이블을 참조하고 있다.
 '''  
 class PraiseScore(models.Model):
     
-    feedback = models.ForeignKey(Feedback, related_name = 'praisescores')
+    feedback = models.ForeignKey(Feedback)
     praise_score = models.FloatField()
     
 '''

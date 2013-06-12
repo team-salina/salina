@@ -48,21 +48,22 @@ device info는 유저가 사용하는 기기에 대한 총괄적인 정보를 �
 class DeviceInfo(models.Model):
     
     user = models.ForeignKey(AppUser,  primary_key = True)
+    
     os_version = models.CharField(max_length=50)
     device_name = models.CharField(max_length=50)
     country = models.CharField(max_length=50)
     app_version = models.CharField(max_length=50)
-    
     network_type = models.CharField(max_length=50)
     locale_language = models.CharField(max_length=50)
     device_country = models.CharField(max_length=50)
     network_carrier = models.CharField(max_length=50)
-    network_type = models.CharField(max_length=50)
+    device_manufacturer = models.CharField(max_length=50)
+    
+    device_model = models.CharField(max_length=50)
+    
     latitude = models.FloatField()
     longitude  = models.FloatField()
-    device_manufacturer = models.CharField(max_length=50)
-    device_model = models.CharField(max_length=50)
-    app_version = models.CharField(max_length=50)
+    
     
     create_date = models.DateTimeField()
     

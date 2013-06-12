@@ -21,6 +21,7 @@ from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.template.context import RequestContext
 import redis
+import inspect
 
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
@@ -205,19 +206,21 @@ def view_advanced(request):
     if request.method == 'GET':
         
         app_id = request.GET[Var.APP_ID]
-        #focus_var = request.GET[Var.FOCUS_VAR]
-        #composite_var = request.GET(Var.COMPOSITE_VAR)
         
-        query = 'SELECT seq, x, count(device_name) as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'       
+        query = 'SELECT seq, device_name as x, count(device_name) as device_num, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'       
         
         params = [app_id]
         graph_data = Feedback.objects.raw(query)
         
         #focuas var/ comsite var 추가
+        
         return render_to_response('advanced.html', {
                                                  'graph_data': graph_data,
                                                  },
                                   context_instance=RequestContext(request))
+
+    
+        
         
 def view_destination_activity_flow(request):
     print "feedback"
@@ -270,6 +273,37 @@ def view_trigger_function(request):
                                                  'list': list,
                                                  },
                                   context_instance=RequestContext(request))
+        
+        
+def handle_graph_ajax_request(request):
+    
+    if request.method == 'GET':        
+        query = 'SELECT seq, device_name as x, count(device_name) as device_num, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'
+        graph_data = Feedback.objects.raw(query)
+        graph_data =  todict(graph_data)
+        
+        return HttpResponse(json.dumps(graph_data), mimetype="application/json")  
+        
+        
+def todict(obj, classkey=None):
+    if isinstance(obj, dict):
+        for k in obj.keys():
+            obj[k] = todict(obj[k], classkey)
+        return obj
+    elif hasattr(obj, "__iter__"):
+        return [todict(v, classkey) for v in obj]
+    elif hasattr(obj, "__dict__"):
+        data = dict([(key, todict(value, classkey)) 
+            for key, value in obj.__dict__.iteritems() 
+            if not callable(value) and not key.startswith('_')])
+        if classkey is not None and hasattr(obj, "__class__"):
+            data[classkey] = obj.__class__.__name__
+        return data
+    else:
+        return obj
+        
+        
+        
 
 
     

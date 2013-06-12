@@ -14,18 +14,7 @@ ADMINS = (
 LOGIN_URL = '/login'
 
 MANAGERS = ADMINS
-'''
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'C:\\Users\\so\\django\\feedbacksolution\\salinasolution\\sqlite.db',                      # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-    }
-}
-'''
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
@@ -39,6 +28,19 @@ DATABASES = {
          },
     }
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'localhost:3306',
+        'OPTIONS': {
+            'DB': 1,
+            'PASSWORD': 'rlaeud123',
+            'PARSER_CLASS': 'redis.connection.HiredisParser'
+        },
+    },
+}
+
 
 
 

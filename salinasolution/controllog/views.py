@@ -83,40 +83,6 @@ def save_system_feedback(request):
                 elif key == 'Event':
                     print "event"
                     save_trigger_event(dic[key], app_id)
-        
-        '''
-        try:
-            for key in dic_key_list:
-                
-                #Session인 경우 redis에 저장
-                if key == 'Session':
-                    session_list = dic[key]
-                    #print "session list" + str(session_list)
-                    for session in session_list:
-                        #print str(session)
-                        r.rpush(key, session)
-                        app_id = session[Var.APP_ID]
-                        print "app_id : " + app_id
-                #DeviceInfo인 경우 redis에 저장    
-                elif key == 'DeviceInfo':
-                    #print "deviceinfo" + str(dic[key])
-                    r.rpush(key, dic[key])
-                
-                if key == 'ScreenFlow':
-                    #print "screenflow before"
-                    #print "dic : " + str(dic[key])
-                    #print "app_id : " + app_id
-                    save_screen_flow(dic[key], app_id)
-                    #print "screenflow after"
-                
-                #여긴 준영이랑 논의
-                elif key == 'Event':
-                    print "event"
-                    save_trigger_event(dic[key], app_id)
-                
-        except Exception as e:
-             print " save_system_feedback exception : " + str(e) 
-        '''          
                 
         return "success"    
 

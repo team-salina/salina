@@ -20,7 +20,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.core import serializers
 from django.template.context import RequestContext
-#import django.contrib.auth.views.login
+import redis
+
+r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
+
 
 
 # Create your views here.
@@ -205,8 +208,7 @@ def view_advanced(request):
         #focus_var = request.GET[Var.FOCUS_VAR]
         #composite_var = request.GET(Var.COMPOSITE_VAR)
         
-        query = 'SELECT seq, x, count(device_name) as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'
-        
+        query = 'SELECT seq, x, count(device_name) as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'       
         
         params = [app_id]
         graph_data = Feedback.objects.raw(query)
@@ -216,52 +218,61 @@ def view_advanced(request):
                                                  'graph_data': graph_data,
                                                  },
                                   context_instance=RequestContext(request))
+        
+def view_destination_activity_flow(request):
+    print "feedback"
+    if request.method == 'GET' :
+        app_id = request.GET[Var.APP_ID]
+        destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
+        graph_num = request.GET[Var.DESTINATION_ACTIVITY]
+        node_num = 4
+        
+        screen_key = app_id + "_" + destination_activity
+        
+        data_list = []
+        dic_list = []
+        dic = {"activity_name":"","visit_num":0}
+        
+        data_collect_flag = False
+        
+        for i in graph_num :
+            for j in node_num :
+                if r.exists(screen_key) == False:
+                    data_collect_flag = True
+                    break
+                activity_list = r.zrange(screen_key, 0, -1, withscores = True)
+                reverse_activity_list = activity_list.reverse() 
+                #큰것부터 차례로 뽑아야함
+                dic['activity_name'] = reverse_activity_list[i][0]
+                dic['visit_num'] = reverse_activity_list[i][1]
+                    
+                dic_list.append(dic)
+                    
+                screen_key = app_id + "_" + dic['activity_name']
+            
+            data_list.append(dic_list)
+            
+            if data_collect_flag == True:
+                break
+            
 
-
+def view_trigger_function(request):
     
-'''
     if request.method == 'GET':
         app_id = request.GET[Var.APP_ID]
-        #피드백 정보를 디비에서 가져오는 부분
-        question_info = FeedbackInfo().make_tmplt_obj(Var.QUESTION, app_id)
-        suggestion_info = FeedbackInfo().make_tmplt_obj(Var.SUGGESTION, app_id)
-        problem_info = FeedbackInfo().make_tmplt_obj(Var.PROBLEM, app_id)
-        praise_info = FeedbackInfo().make_tmplt_obj(Var.PRAISE, app_id)
-        #get session aggregation from db
-         #세션 정보를 디비에서 가져오는 부분
-        session_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM controllog_session GROUP BY DAY(start_time)')
-        user_info = Session.objects.raw('SELECT id, DAY(start_time) as date, COUNT(start_time) as cnt FROM (( SELECT * FROM controllog_session GROUP BY user_id ) as user_table) GROUP BY DAY(start_time)')
-                                                 
+        destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
+        screen_key = app_id + "_" + destination_activity        
+        
+        list = r.zrange(screen_key, 0, -1, withscores = True)
+        
+        #뭘 넘겨야 할지 결정하기
         return render_to_response('index.html', {
-                                                 'question_info': question_info,
-                                                 'suggestion_info': suggestion_info,
-                                                 'problem_info': problem_info,
-                                                 'praise_info': praise_info,
+                                                 'list': list,
                                                  },
                                   context_instance=RequestContext(request))
-'''  
+
+
     
-'''
-def search_page(request):
-    form = SearchForm()
-    feedbacks = []
-    show_results = False
-    if request.GET['query'].strip():
-        show_results = True
-        query = request.GET['query'].strip()
-        if query:
-            form = SearchForm({'query' : query})
-            feedbacks = \
-                Feedback.objects.filter(contents__icontains=query)[:10]
-    varaibles = RequestContext(request, {'form':form,
-                                         'feedbacks':feedbacks,
-                                         'show_results':show_results,
-                                         'show_tags': True,
-                                         'show_user': True,
-                                         }
-                               )
-                
-    return render_to_response('search.html', varaibles)
-'''    
+
         
  

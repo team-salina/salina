@@ -6,7 +6,9 @@ Created on 2013. 3. 7.
 @author: du hyeong
 '''
 
-    # this variable for categories
+
+
+# this variable for categories
 QUESTION = 'QUESTION'
 SUGGESTION = 'SUGGESTION'
 PROBLEM = 'PROBLEM'
@@ -72,6 +74,11 @@ SYSTEM_SYSTEM_TYPE = 'SYSTEM_SYSTEM_TYPE'
 SYSTEM_USER_TYPE = 'SYSTEM_USER_TYPE'
 
 DESTINATION_ACTIVITY = 'DESTINATION_ACTIVITY'
+
+VIEW_TYPE = 'view_type'
+
+
+
 
 class Dummy: pass
 

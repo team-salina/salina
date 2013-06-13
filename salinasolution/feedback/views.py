@@ -116,6 +116,7 @@ def view_feedback_detail(request):
 
     if request.method == 'GET':
         feedback_id = request.GET[Var.FEEDBACK_ID]
+        view_type = request.GET[Var.VIEW_TYPE]
         
         #feedback 관련된 객체들0
         feedback_info = Feedback.objects.get(seq = feedback_id).feedbackcontext_set.all().select_related()
@@ -137,18 +138,36 @@ def view_feedback_detail(request):
             setattr(reply,"comment_list",comment_list)
             setattr(reply,"comment_count",comment_count)
         
+        template = ''        
         
-        return render_to_response('sdk/feedback_detail.html', {
-                                                 
+        if view_type == 'sdk' :
+            template = 'sdk/feedback_detail.html'
+        elif view_type == 'community':
+            template = 'community/feedback_detail.html'
+        
+        return render_to_response(template, {
                                                  'feedback_info':feedback_info,
                                                  'feedback_comments':feedback_comments,
                                                  'feedback_comments_num':feedback_comments_num,
-                                                 'feedback_replys':feedback_replys
-                                                 
-                                                 
+                                                 'feedback_replys':feedback_replys   
                                                  },
                                   context_instance=RequestContext(request))
         
+        
+def view_feedbacks(request):
+
+    if request.method == 'GET':
+        
+        app_id = request.GET[Var.APP_ID]
+        category = request.GET[Var.CATEGORY]
+        feedbacks = FeedbackContext.objects.all().select_related().filter(feedback__category = category, feedback__app__app_id = app_id)
+        
+        return render_to_response('community/feedbacks.html', {
+                                                 'feedbacks':feedbacks,
+                                                 'app_id':app_id,
+                                                 'category':category,   
+                                                 },
+                                  context_instance=RequestContext(request))
              
 '''
 ####################################################################################

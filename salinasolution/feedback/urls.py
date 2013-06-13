@@ -5,9 +5,9 @@ from django.conf.urls.defaults import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
 # admin.autodiscover()
-
-
-
+'''
+http://61.43.139.106:8000/feedback/view_my_feedback/?app_id=noon_date&device_key=123
+'''
 urlpatterns = patterns('feedback.views',
     # Examples:
     # url(r'^$', 'salinasolution.views.home', name='home'),
@@ -26,5 +26,6 @@ urlpatterns = patterns('feedback.views',
      url(r'^save_user_feedback/$', 'save_user_feedback'),
      url(r'^view_my_feedback/$', 'view_my_feedback'),
      url(r'^view_feedback_detail/$', 'view_feedback_detail'),
+     url(r'^view_feedbacks/$', 'view_feedbacks'),
     
 )

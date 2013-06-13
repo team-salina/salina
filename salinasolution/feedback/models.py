@@ -100,8 +100,6 @@ class Reply(models.Model):
         self.feedback.save()
         super(Reply, self).save(*args, **kwargs)
         
-        
-        
     def set_adopted(self):
         self.adopted_check = True
         self.feedback.solved_check = True

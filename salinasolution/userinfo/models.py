@@ -3,7 +3,7 @@
 from django.db import models
 from salinasolution.debug import debug
 from django.db.models.deletion import CASCADE
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, UserManager
 
 '''
 Created on 2013. 3. 7.

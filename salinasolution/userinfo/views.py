@@ -281,7 +281,6 @@ def handle_graph_ajax_request(request):
         query = 'SELECT seq, device_name as x, count(device_name) as device_num, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'
         graph_data = Feedback.objects.raw(query)
         graph_data =  todict(graph_data)
-        
         return HttpResponse(json.dumps(graph_data), mimetype="application/json")  
         
         

@@ -5,7 +5,7 @@ from salinasolution.debug import debug
 import simplejson as json
 import  salinasolution.var as Var
 from salinasolution.controllog.models import Session, DeviceInfo
-from salinasolution.feedback.models import Feedback, FeedbackContext
+from salinasolution.feedback.models import Feedback, FeedbackContext, Reply
 from salinasolution.userinfo.models import App,  AppUser
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -14,7 +14,8 @@ from salinasolution import pson
 import salinasolution.redisread as redisread
 import redis 
 import salinasolution.ast as ast
-from django.db.models import Count
+from django.http import  HttpResponseRedirect
+
 
 
 TAG = "feedback.views"
@@ -103,6 +104,7 @@ def view_my_feedback(request):
         app_id = request.GET[Var.APP_ID]
         device_key = request.GET[Var.DEVICE_KEY]
         
+        
         #feedbackcontexts = FeedbackContext.objects.filter(feedback__appuser__device_key = device_key).filter(feedback__app__app_id = app_id)
         myfeedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__appuser__pk = device_key).select_related()
         
@@ -138,8 +140,7 @@ def view_feedback_detail(request):
             setattr(reply,"comment_list",comment_list)
             setattr(reply,"comment_count",comment_count)
         
-        template = ''        
-        
+        template = ''   
         if view_type == 'sdk' :
             template = 'sdk/feedback_detail.html'
         elif view_type == 'community':
@@ -153,27 +154,94 @@ def view_feedback_detail(request):
                                                  },
                                   context_instance=RequestContext(request))
         
-        
+
 def view_feedbacks(request):
 
     if request.method == 'GET':
-        
         app_id = request.GET[Var.APP_ID]
         category = request.GET[Var.CATEGORY]
-        feedbacks = FeedbackContext.objects.all().select_related().filter(feedback__category = category, feedback__app__app_id = app_id)
+        type = request.GET['request_type']
+        if type == 'ajax_request':
+            return
         
-        return render_to_response('community/feedbacks.html', {
-                                                 'feedbacks':feedbacks,
-                                                 'app_id':app_id,
-                                                 'category':category,   
+        else :
+            feedbacks = FeedbackContext.objects.all().select_related().filter(feedback__category = category, feedback__app__app_id = app_id)
+            
+            return render_to_response('community/feedbacks.html', {
+                                                     'feedbacks':feedbacks,
+                                                     'app_id':app_id,
+                                                     'category':category,   
+                                                     },
+                                      context_instance=RequestContext(request))
+        
+@csrf_exempt
+def view_write_reply(request):
+    print "asfasdfasdf"
+    if request.method == 'GET':
+        feedback_id = request.GET[Var.FEEDBACK_ID]
+        print feedback_id
+        return render_to_response('community/reply.html', {
+                                                 'feedback_id':feedback_id,
                                                  },
                                   context_instance=RequestContext(request))
-             
+        
+    elif request.method == 'POST':
+        try :
+            reply_contents = request.POST['reply_contents']
+            feedback_id = request.GET[Var.FEEDBACK_ID]
+            user = request.user
+            
+            print feedback_id
+            print user.username
+            
+            feedback = Feedback.objects.get(seq = feedback_id)
+            print feedback.contents
+            appuser = AppUser.objects.get(user = user)
+            
+            reply = Reply(appuser = appuser, feedback = feedback, contents = reply_contents)
+            reply.save()
+                            
+            #feedback 관련된 객체들0
+            feedback_info = Feedback.objects.get(seq = feedback_id).feedbackcontext_set.all().select_related()
+            feedback_info = feedback_info[0]
+            feedback = feedback_info.feedback
+            
+            feedback_vote_num = feedback.feedbackvote_set.all().count()
+            setattr(feedback_info,'vote_num', feedback_vote_num)
+            
+            feedback_comments = feedback.feedbackcomment_set.all().select_related()
+            feedback_comments_num = feedback_comments.count()
+            feedback_replys = feedback.reply_set.all().select_related()
+            
+            for reply in feedback_replys:
+                vote_num=reply.replyvote_set.all().count()
+                setattr(reply,"vote_num",vote_num)
+                comment_list = reply.replycomment_set.all().select_related()
+                comment_count = comment_list.count()
+                setattr(reply,"comment_list",comment_list)
+                setattr(reply,"comment_count",comment_count)
+    
+        except Exception, e:
+            print "exception : " + str(e)        
+        
+        return render_to_response('community/feedback_detail.html', {
+                                                 'feedback_info':feedback_info,
+                                                 'feedback_comments':feedback_comments,
+                                                 'feedback_comments_num':feedback_comments_num,
+                                                 'feedback_replys':feedback_replys   
+                                                 },
+                                  context_instance=RequestContext(request)) 
 '''
 ####################################################################################
 community부분
 ####################################################################################
 '''  
+        
+        
+        
+        
+        
+
         
 
         

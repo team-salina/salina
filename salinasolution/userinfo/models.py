@@ -34,7 +34,7 @@ user_id는 여러기기를 갖고 있는 사용자인 경우, 하나의 사용�
 '''
 class AppUser(models.Model):
     
-    user_id = models.CharField(max_length = 50)
+    user = models.ForeignKey(User)
     device_key = models.CharField(max_length = 100, primary_key = True)
     
     def auto_save(self, user_id, device_key):

@@ -174,23 +174,23 @@ Feedback의 Context를 저장하기 위한 데이타
 '''
 class FeedbackContext(models.Model):
     
-    feedback = models.ForeignKey(Feedback)
-    app_version = models.CharField(max_length = 50)
-    
-    device_model = models.CharField(max_length = 50)
-    device_manufacturer = models.CharField(max_length = 50)
-    device_country = models.CharField(max_length = 50)
+    feedback = models.ForeignKey(Feedback , primary_key = True)
     
     screen_name = models.CharField(max_length = 50)
     function_name = models.CharField(max_length = 50)
     
+    app_version = models.CharField(max_length = 50)
+    os_version = models.CharField(max_length = 50)
+    
     locale_language = models.CharField(max_length = 50)
     locale_country = models.CharField(max_length = 50)
     
-    os_version = models.CharField(max_length = 50)
-    
     network_carrier = models.CharField(max_length = 50)
     network_type = models.CharField(max_length = 50)
+    
+    device_model = models.CharField(max_length = 50)
+    device_manufacturer = models.CharField(max_length = 50)
+    device_country = models.CharField(max_length = 50)
     
     latitude = models.FloatField()
     longitude = models.FloatField()

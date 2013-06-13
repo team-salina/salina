@@ -3,6 +3,8 @@
 from django.conf.urls.defaults import patterns, include, url
 from django.contrib import admin
 import settings
+#import django.contrib.auth.views.login
+#import django.contrib.auth.views.community_login
  
  
  
@@ -17,6 +19,7 @@ urlpatterns = patterns('',
     url(r'^controllog/', include('controllog.urls')),
     url(r'^userinfo/', include('userinfo.urls')),
     url(r'^login/$', 'django.contrib.auth.views.login'),
+    url(r'^community_login/$', 'django.contrib.auth.views.community_login'),
     url(r'^$', 'django.contrib.auth.views.login'),
     
      

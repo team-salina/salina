@@ -22,6 +22,7 @@ from django.core import serializers
 from django.template.context import RequestContext
 import redis
 import inspect
+from django.core.serializers.json import DjangoJSONEncoder
 
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 

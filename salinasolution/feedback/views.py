@@ -15,7 +15,8 @@ import salinasolution.redisread as redisread
 import redis 
 import salinasolution.ast as ast
 from django.http import  HttpResponseRedirect
-
+import mimetypes
+from django.core.serializers.json import DjangoJSONEncoder
 
 
 TAG = "feedback.views"
@@ -103,8 +104,6 @@ def view_my_feedback(request):
     if request.method == 'GET':
         app_id = request.GET[Var.APP_ID]
         device_key = request.GET[Var.DEVICE_KEY]
-        
-        
         #feedbackcontexts = FeedbackContext.objects.filter(feedback__appuser__device_key = device_key).filter(feedback__app__app_id = app_id)
         myfeedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__appuser__pk = device_key).select_related()
         
@@ -153,19 +152,44 @@ def view_feedback_detail(request):
                                                  'feedback_replys':feedback_replys   
                                                  },
                                   context_instance=RequestContext(request))
-        
+'''
+       
+'''       
 
 def view_feedbacks(request):
 
     if request.method == 'GET':
-        app_id = request.GET[Var.APP_ID]
-        category = request.GET[Var.CATEGORY]
-        type = request.GET['request_type']
-        if type == 'ajax_request':
-            return
         
+        try :
+            request_type = request.GET['request_type']
+        except Exception, e:
+            request_type = 'view_feedback'
+            
+        
+        if request_type == 'ajax_request':
+            try :
+                app_id = request.GET[Var.APP_ID]
+                last_seq = request.GET['last_seq']
+                last_seq = int(last_seq) -1
+                              
+                category = request.GET[Var.CATEGORY]
+                feedbacks = FeedbackContext.objects.all().select_related().filter(feedback__category = category, feedback__app__app_id = app_id, feedback__seq__gt = last_seq)
+                #return HttpResponse(json.dumps(Var.todict(feedbacks) ,cls=DjangoJSONEncoder), mimetype="application/json")
+                
+                return render_to_response('community/more_feedback.html', {
+                                                     'feedbacks':feedbacks,
+                                                     'app_id':app_id,
+                                                     'category':category,   
+                                                     },
+                                      context_instance=RequestContext(request))
+            except  Exception, e:
+                print "exception : " + str(e)
         else :
-            feedbacks = FeedbackContext.objects.all().select_related().filter(feedback__category = category, feedback__app__app_id = app_id)
+            app_id = request.GET[Var.APP_ID]
+            category = request.GET[Var.CATEGORY]          
+            
+            feedbacks = FeedbackContext.objects.all().select_related().filter(feedback__category = category, feedback__app__app_id = app_id)[:2]
+            #feedbacks = FeedbackContext.objects.all().select_related().all()
             
             return render_to_response('community/feedbacks.html', {
                                                      'feedbacks':feedbacks,

@@ -30,7 +30,7 @@ urlpatterns = patterns('feedback.views',
      url(r'^view_feedbacks/$', 'view_feedbacks'),
      url(r'^view_write_reply/$', 'view_write_reply'),
      
-     url(r'^get_more_feedbacks/$', 'get_more_feedbacks'),
+     
      
     
 )

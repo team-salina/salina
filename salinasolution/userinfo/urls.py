@@ -30,10 +30,10 @@ urlpatterns = patterns('userinfo.views',
      url(r'^main_admin/about.html', 'view_about'),
      url(r'^main_admin/real_voice.html', 'view_real_voice'),
      url(r'^main_admin/advanced.html', 'view_advanced'),
+     url(r'^main_admin/insight.html', 'view_insight'),
+     
+     
      url(r'^main_admin/handle_graph_ajax_request', 'handle_graph_ajax_request'),
-     
-     
-
 )
 
 

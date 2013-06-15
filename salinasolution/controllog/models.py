@@ -47,8 +47,9 @@ device info는 유저가 사용하는 기기에 대한 총괄적인 정보를 �
 '''  
 class DeviceInfo(models.Model):
     
-    user = models.ForeignKey(AppUser,  primary_key = True)
+    user = models.ForeignKey(AppUser)
     
+    app = models.ForeignKey(App)
     app_version = models.CharField(max_length = 50)
     os_version = models.CharField(max_length = 50)
     
@@ -77,6 +78,9 @@ class DeviceInfo(models.Model):
         
         self.save()
         return self
+    
+    class Meta:
+        unique_together = ('user','app')
     
     
     

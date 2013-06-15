@@ -26,12 +26,9 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
-
-
 # Create your views here.
 
 TAG = "adminpage.views"
-
 
 '''
 개발자 등록하는 부분
@@ -53,17 +50,12 @@ def register_page(request):
             )
             print "register_success"
             return HttpResponseRedirect('/')
-      
-        
     return render_to_response('registration/register.html', {
                                                  },
                                   context_instance=RequestContext(request))    
         
 def view_admin(request):
-    
-    
     manager_app_info  = []
-    
     return render_to_response('developer.html', {'manager_app_info' : manager_app_info
                                                  },
                                   context_instance=RequestContext(request))
@@ -85,9 +77,7 @@ def view_app_home(request):
     #현재는 클라이언트에서 받아오지 않으므로 주석처리
     session_data = []
     user_data = []
-    
     app = ""
-    
     if request.method == 'GET' :
             app_id = request.GET[Var.APP_ID]
             params = [app_id]
@@ -98,18 +88,15 @@ def view_app_home(request):
             session_data = Session.objects.raw(session_query, params)
             user_data = Session.objects.raw(user_query, params)
     '''
-    
     try :  
         if request.method == 'GET' :
             app_id = request.GET[Var.APP_ID]
             params = [app_id]
             session_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE()) as time_table  where app_id = %s GROUP BY HOUR(start_time);"
-            user_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE() GROUP BY user_id) as time_table  where app_id = %s GROUP BY HOUR(start_time);"
-            
+            user_query = "SELECT id, HOUR(start_time) as hour, COUNT(start_time) as cnt FROM (SELECT * FROM controllog_session where start_time > CURDATE() GROUP BY user_id) as time_table  where app_id = %s GROUP BY HOUR(start_time);"            
             app = App.objects.get(pk = app_id)
             session_data = Session.objects.raw(session_query, params)
             user_data = Session.objects.raw(user_query, params)
-            
     except Exception as e:
         print "exception : " + str(e)
     
@@ -126,15 +113,11 @@ def view_app_home(request):
 def view_real_voice(request):
     if request.method == 'GET' :
         app_id = request.GET[Var.APP_ID]
-        params = [app_id]
-        
-        
+        params = [app_id]   
         raw_query = "SELECT * FROM (SELECT * FROM feedback_feedback WHERE app_id = 'noon_date') as feedback, feedback_feedbackcontext WHERE feedback.seq = feedback_feedbackcontext.feedback_id ORDER BY function_name ASC;"
         
-        feedback = Feedback.objects.raw(raw_query)
-        
-        '''    
-        
+        feedback = Feedback.objects.raw(raw_query)        
+        '''            
         feedback=Feedback.objects.filter(app = app_id)
         for feed in feedback :
             feedbackcontext = feed.feedbackcontext_set.all()
@@ -143,8 +126,7 @@ def view_real_voice(request):
         for feed in feedback :
             feedbackcontext = feed.feedbackcontext_set.all()
             print feedbackcontext.app_version
-        '''
-        
+        '''        
         return render_to_response('real_voice.html', {
                                                 'feedback':feedback,
                                                 'app_id':app_id,
@@ -155,16 +137,7 @@ def view_real_voice(request):
 def view_feedback(request):
    
     debug(TAG, "view_admin_method")
-    feedback_detail = None
-    
-    '''
-    #피드백 내용을 가져오는 부눈
-    if request.method == 'GET':
-        category = request.GET[Var.CATEGORY]
-        feedback_detail = Feedback.objects.filter(category = category)
-                                                 
-    '''  
-                                               
+    feedback_detail = None            
     return render_to_response('feedback.html', {
                                                 'feedback_detail':feedback_detail
                                                  },
@@ -173,58 +146,76 @@ def view_feedback(request):
                 
     
     
-def view_register(request):
-    #get feedback aggregation from db
-                                                 
-                                                 
+def view_register(request):              
     return render_to_response('register.html', {
                                                  },
                                   context_instance=RequestContext(request))
     
     
-def view_contact(request):
-    #get feedback aggregation from db
-                                                 
-                                                 
+def view_contact(request):        
     return render_to_response('download.html', {
                                                  },
                                   context_instance=RequestContext(request))
     
-def view_about(request):
-    
-   
-    
-    
-    #get feedback aggregation from db                                                 
-                                                 
+def view_about(request):              
     return render_to_response('about.html', {
                                                  },
                                   context_instance=RequestContext(request))
     
     
-    
 def view_advanced(request):
     if request.method == 'GET':
         
-        app_id = request.GET[Var.APP_ID]
+        try:
+            request_type = request.GET['request_type']
+        except Exception, e:
+            request_type = 'render_request'
         
-        
-        #FeedbackContext.objects.all().select_related().filter(feedback__app__app_id = app_id).annotate(device_cnt=Count('device_model')).aggregate()
-        
-        query = 'SELECT seq, device_model as x, count(device_model) as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_model, solved_check  from feedback_feedback AS feedback, feedback_feedbackcontext AS context where feedback.seq = context.feedback_id) as join_table GROUP BY device_model ORDER BY y asc;'       
-        
-        params = [app_id]
-        graph_data = Feedback.objects.raw(query)
-        
-        #focuas var/ comsite var 추가
-        
-        return render_to_response('advanced.html', {
-                                                 'graph_data': graph_data,
-                                                 },
+        if request_type == 'ajax_request':
+            try:
+                
+                app_id = request.GET[Var.APP_ID]
+                focus = request.GET[Var.FOCUS]
+                composite = request.GET[Var.COMPOSITE]
+                query_type = request.GET['query_type']
+                if query_type == 'user' :
+                    query = 'SELECT seq, ' +  focus +' as x, count('+ focus +') as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT *  from feedback_feedback AS feedback, feedback_feedbackcontext AS context where feedback.seq = context.feedback_id and feedback.category = "'+ composite + '" and feedback.app_id = "'+app_id+'") as join_table GROUP BY '+focus+' ORDER BY y desc;'
+                    print query
+                    
+                    graph_data = Feedback.objects.raw(query)
+                    graph_data =  Var.todict(graph_data)
+                    return HttpResponse(json.dumps(graph_data), mimetype="application/json")
+                elif query_type == 'system':
+                    data_dic = []
+                    
+                    focus_attrs = DeviceInfo.objects.raw('SELECT id, ' + focus + ' as focus_column FROM controllog_deviceinfo WHERE app_id = "' +app_id +  '" GROUP BY ' + focus + ' ORDER BY ' + focus + ' desc;' );
+                    composite_attrs = DeviceInfo.objects.raw('SELECT id, ' + composite + ' as composite_column FROM controllog_deviceinfo WHERE app_id = "' +app_id + '" GROUP BY ' + composite + ' ORDER BY ' + focus + ' desc;');
+                    for focus_attr in focus_attrs:
+                            #query = 'SELECT id, ' + focus + ' AS x, '
+                            query = 'SELECT id, ' + focus + ' AS x, '
+                            for composite_attr in composite_attrs:
+                                query += 'SUM(if(' + composite + ' = "' + composite_attr.composite_column + '" ,1,0)) AS "' + composite_attr.composite_column + '",'
+                            query = query[0:len(query)-1]    
+                            query += ' FROM controllog_deviceinfo where ' + focus + ' = "' + focus_attr.focus_column + '";'
+                            print query
+                            graph_data = DeviceInfo.objects.raw(query)
+                            graph_data =  Var.todict(graph_data)
+                            data_dic.append(graph_data)
+                    return HttpResponse(json.dumps(graph_data), mimetype="application/json")
+            except Exception, e:
+                print str(e)
+        else :
+            app_id = request.GET[Var.APP_ID]
+            return render_to_response('advanced.html', {
+                                                        'app_id': app_id,
+                                                        }, context_instance=RequestContext(request))
+            
+
+def view_insight(request):
+    if request.method == 'GET' :
+        return render_to_response('insight.html', { },
                                   context_instance=RequestContext(request))
 
-    
-        
         
 def view_destination_activity_flow(request):
     print "feedback"
@@ -297,3 +288,4 @@ def handle_graph_ajax_request(request):
 
         
  
+

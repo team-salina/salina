@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IntroActivity" >
+
+    <ImageView 
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/salina_community_intro"
+        android:scaleType="fitXY"
+        android:contentDescription="@string/drawable_salina_community_intro"/>
+
+</LinearLayout>

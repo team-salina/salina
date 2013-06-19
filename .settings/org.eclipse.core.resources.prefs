@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/io/salina/android/community/GCMIntentService.java=UTF-8
+encoding//src/io/salina/android/community/IntroActivity.java=UTF-8
+encoding//src/io/salina/android/community/MainActivity.java=UTF-8
+encoding//src/io/salina/android/community/MyAppsActivity.java=UTF-8
+encoding//src/io/salina/android/community/ServerRequest.java=UTF-8
+encoding//src/io/salina/android/community/WebViewActivity.java=UTF-8
+encoding//src/io/salina/android/community/db/AppsProvider.java=UTF-8
+encoding//src/io/salina/android/community/receiver/AppChangedReceiver.java=UTF-8

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<salina
+    appId="application_id"
+    appVersion="1.0">
+    <screens>
+        <screen name="Intro Activity">
+            <function>Loading</function>
+            <function>Login</function>
+        </screen>
+        
+        <screen name="MyApps">
+            <function>Feedback Label</function>
+            <function>Launch App</function>
+            <function>Move to Community</function>
+        </screen>
+    </screens>
+</salina>

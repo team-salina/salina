@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.salina.android.community"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="13"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="io.salina.android.community.permission.C2D_MESSAGE" />
+
+    <permission
+        android:name="io.salina.android.community.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_salina_logo2"
+        android:label="@string/app_name"
+        android:theme="@style/Sherlock.__Theme.Light" >
+        <activity
+            android:name="io.salina.android.community.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+
+        <receiver
+            android:name="com.google.android.gcm.GCMBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="io.salina.android.community" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="io.salina.android.community.GCMIntentService" />
+
+        <activity
+            android:name="io.salina.android.community.MyAppsActivity"
+            android:label="@string/title_activity_my_apps" >
+        </activity>
+        <activity
+            android:name="io.salina.android.community.IntroActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.salina.android.widget.FeedbackDialogActivity"
+            android:theme="@android:style/Theme.Dialog" />
+
+        <service android:name="io.salina.android.widget.FeedbackLabelService" >
+        </service>
+
+        <activity
+            android:name="io.salina.android.community.WebViewActivity"
+            android:label="@string/title_activity_web_view" android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        </activity>
+        <activity
+            android:name="io.salina.android.widget.FeedbackActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Sherlock.Light" >
+        </activity>
+        <activity
+            android:name="io.salina.android.community.SignUpActivity"
+            android:label="@string/title_activity_sign_up" >
+        
+        </activity>
+        <activity android:name="io.salina.android.www.ContentsActivity"/>
+    </application>
+
+</manifest>

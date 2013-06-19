@@ -1,0 +1,27 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="top|left"
+    tools:context=".MainActivity" >
+
+    <CheckBox 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="푸시 서비스 받기 설정"
+        android:id="@+id/cb_main_push_toggle"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="서버로부터 받은 내용 :"/>
+    
+    <EditText 
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#dedede"
+        android:layout_margin="7dp"
+        android:id="@+id/et_main_push_contents"/>
+    
+</LinearLayout>

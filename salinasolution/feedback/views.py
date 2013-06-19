@@ -5,7 +5,7 @@ from salinasolution.debug import debug
 import simplejson as json
 import  salinasolution.var as Var
 from salinasolution.controllog.models import Session, DeviceInfo
-from salinasolution.feedback.models import Feedback, FeedbackContext, Reply
+from salinasolution.feedback.models import Feedback, FeedbackContext, Reply, ReplyComment, FeedbackComment
 from salinasolution.userinfo.models import App,  AppUser
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
@@ -17,6 +17,7 @@ import salinasolution.ast as ast
 from django.http import  HttpResponseRedirect
 import mimetypes
 from django.core.serializers.json import DjangoJSONEncoder
+from django.contrib.auth.models import User 
 
 
 TAG = "feedback.views"
@@ -111,50 +112,109 @@ def view_my_feedback(request):
                                                  'myfeedbacks': myfeedbacks,
                                                  },
                                   context_instance=RequestContext(request))
+'''
 
-    
+session_key = '8cae76c505f15432b48c8292a7dd0e54'
+
+session = Session.objects.get(session_key=session_key)
+uid = session.get_decoded().get('_auth_user_id')
+user = User.objects.get(pk=uid)
+
+print user.username, user.get_full_name(), user.email
+
+''' 
+@csrf_exempt
 def view_feedback_detail(request):
-
+    view_type = request.GET[Var.VIEW_TYPE]
     if request.method == 'GET':
-        feedback_id = request.GET[Var.FEEDBACK_ID]
-        view_type = request.GET[Var.VIEW_TYPE]
         
-        #feedback 관련된 객체들0
-        feedback_info = Feedback.objects.get(seq = feedback_id).feedbackcontext_set.all().select_related()
-        feedback_info = feedback_info[0]
-        feedback = feedback_info.feedback
+        if (view_type == 'sdk') or (view_type == 'community'): 
+            #feedback 관련된 객체들0
+            feedback_id = request.GET[Var.FEEDBACK_ID]
+            feedback_info = Feedback.objects.get(seq = feedback_id).feedbackcontext_set.all().select_related()
+            feedback_info = feedback_info[0]
+            feedback = feedback_info.feedback
+            
+            device_key = feedback.appuser.pk
+            
+            feedback_vote_num = feedback.feedbackvote_set.all().count()
+            setattr(feedback_info,'vote_num', feedback_vote_num)
+            
+            feedback_comments = feedback.feedbackcomment_set.all().select_related()
+            feedback_comments_num = feedback_comments.count()
+            feedback_replys = feedback.reply_set.all().select_related()
+            
+            for reply in feedback_replys:
+                vote_num=reply.replyvote_set.all().count()
+                setattr(reply,"vote_num",vote_num)
+                comment_list = reply.replycomment_set.all().select_related()
+                comment_count = comment_list.count()
+                setattr(reply,"comment_list",comment_list)
+                setattr(reply,"comment_count",comment_count)
+                print reply.pk
+                
+            
+            template = ''   
+            if view_type == 'sdk' :
+                template = 'sdk/feedback_detail.html'
+                return render_to_response(template, {
+                                                     'feedback_info':feedback_info,
+                                                     'feedback_comments':feedback_comments,
+                                                     'feedback_comments_num':feedback_comments_num,
+                                                     'feedback_replys':feedback_replys,
+                                                     'device_key':device_key   
+                                                     },
+                                      context_instance=RequestContext(request))
+            elif view_type == 'community':
+                
+                template = 'community/feedback_detail.html'
+                '''
+                session_key = request.GET['session_key']
+                session = Session.objects.get(session_key=session_key)
+                uid = session.get_decoded().get('_auth_user_id')
+                user = User.objects.get(pk=uid)
+                print user.username, user.get_full_name(), user.email
+                '''
+                
+                #username 추가해야함
+                return render_to_response(template, {
+                                                     'feedback_info':feedback_info,
+                                                     'feedback_comments':feedback_comments,
+                                                     'feedback_comments_num':feedback_comments_num,
+                                                     'feedback_replys':feedback_replys,
+                                                     'device_key':device_key 
+                                                     },
+                                      context_instance=RequestContext(request))
+            
+            
+            
+        elif (view_type == 'feedback_comment'):
+             
+            feedback_id = request.GET[Var.FEEDBACK_ID]
+            device_key = request.GET[Var.DEVICE_KEY]
+            contents = request.GET[Var.CONTENTS]
+            fc=FeedbackComment.objects.create(appuser_id = device_key, feedback_id = feedback_id, contents = contents)
+            fc_num = FeedbackComment.objects.filter(feedback__pk = feedback_id).count()
+            return HttpResponse(str(fc_num)) 
         
-        feedback_vote_num = feedback.feedbackvote_set.all().count()
-        setattr(feedback_info,'vote_num', feedback_vote_num)
+        elif (view_type == 'reply_comment'):            
+            reply_id = request.GET['reply_id']
+            device_key = request.GET[Var.DEVICE_KEY]
+            contents = request.GET[Var.CONTENTS]
+            rc=ReplyComment.objects.create(appuser_id = device_key, reply_id = reply_id, contents = contents)
+            rc_num = ReplyComment.objects.filter(reply__pk = reply_id).count()
+            return HttpResponse(str(rc_num)) 
         
-        feedback_comments = feedback.feedbackcomment_set.all().select_related()
-        feedback_comments_num = feedback_comments.count()
-        feedback_replys = feedback.reply_set.all().select_related()
+    
         
-        for reply in feedback_replys:
-            vote_num=reply.replyvote_set.all().count()
-            setattr(reply,"vote_num",vote_num)
-            comment_list = reply.replycomment_set.all().select_related()
-            comment_count = comment_list.count()
-            setattr(reply,"comment_list",comment_list)
-            setattr(reply,"comment_count",comment_count)
-        
-        template = ''   
-        if view_type == 'sdk' :
-            template = 'sdk/feedback_detail.html'
-        elif view_type == 'community':
-            template = 'community/feedback_detail.html'
-        
-        return render_to_response(template, {
-                                                 'feedback_info':feedback_info,
-                                                 'feedback_comments':feedback_comments,
-                                                 'feedback_comments_num':feedback_comments_num,
-                                                 'feedback_replys':feedback_replys   
-                                                 },
-                                  context_instance=RequestContext(request))
+            
+            
 '''
        
-'''       
+'''     
+'''
+
+''' 
 
 def view_feedbacks(request):
 
@@ -197,7 +257,17 @@ def view_feedbacks(request):
                                                      'category':category,   
                                                      },
                                       context_instance=RequestContext(request))
-        
+'''
+
+session_key = '8cae76c505f15432b48c8292a7dd0e54'
+
+session = Session.objects.get(session_key=session_key)
+uid = session.get_decoded().get('_auth_user_id')
+user = User.objects.get(pk=uid)
+
+print user.username, user.get_full_name(), user.email
+
+'''   
 @csrf_exempt
 def view_write_reply(request):
     print "asfasdfasdf"
@@ -213,7 +283,11 @@ def view_write_reply(request):
         try :
             reply_contents = request.POST['reply_contents']
             feedback_id = request.GET[Var.FEEDBACK_ID]
-            user = request.user
+            session_key = request.GET['session_key']
+
+            session = Session.objects.get(session_key=session_key)
+            uid = session.get_decoded().get('_auth_user_id')
+            user = User.objects.get(pk=uid)
             
             print feedback_id
             print user.username

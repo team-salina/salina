@@ -23,6 +23,7 @@ from django.template.context import RequestContext
 import redis
 import inspect
 from django.core.serializers.json import DjangoJSONEncoder
+import salinasolution.ast as ast
 
 r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
@@ -30,29 +31,36 @@ r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 
 TAG = "adminpage.views"
 
+
+
 '''
 개발자 등록하는 부분
 '''
 @csrf_protect
 def register_page(request):
     if request.method == 'POST':
-        print "POST"
         print request.POST['password1']
         print request.POST['password2']
         form = RegistrationForm(request.POST)
         print form.errors
         if form.is_valid():
-            print "form valid"
-            user = User.objects.create_user(
+           print "register success"
+           user = User.objects.create_user(
                username = form.cleaned_data['username'],
                password = form.cleaned_data['password1'],
                email = form.cleaned_data['email'] 
             )
-            print "register_success"
-            return HttpResponseRedirect('/')
-    return render_to_response('registration/register.html', {
-                                                 },
-                                  context_instance=RequestContext(request))    
+           return HttpResponseRedirect('/')
+       
+    else :
+        form = RegistrationForm()
+        
+    variables = RequestContext(request, {
+        'form':form
+    })    
+            
+    return render_to_response('registration/register.html', variables)  
+  
         
 def view_admin(request):
     manager_app_info  = []
@@ -165,7 +173,6 @@ def view_about(request):
     
 def view_advanced(request):
     if request.method == 'GET':
-        
         try:
             request_type = request.GET['request_type']
         except Exception, e:
@@ -208,50 +215,105 @@ def view_advanced(request):
             app_id = request.GET[Var.APP_ID]
             return render_to_response('advanced.html', {
                                                         'app_id': app_id,
+                                                        
                                                         }, context_instance=RequestContext(request))
             
 
 def view_insight(request):
     if request.method == 'GET' :
+        result = Var.get_default_result()
+        #return HttpResponse(result)
+        
         return render_to_response('insight.html', { },
                                   context_instance=RequestContext(request))
-
+        
         
 def view_destination_activity_flow(request):
     print "feedback"
     if request.method == 'GET' :
         app_id = request.GET[Var.APP_ID]
         destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
+        #보여줘야 할 그래프의 갯수
         graph_num = request.GET[Var.DESTINATION_ACTIVITY]
-        node_num = 4
+        #그려줄 노드의 개
+        request_type = ''
+        node_num = 0
         
-        screen_key = app_id + "_" + destination_activity
+        try :
+            request_type = request.GET['request_type']
+            node_num = request.GET['node_num']
+        except Exception, e:
+            #node num이 없는 경우 default 4로 지정
+            node_num = 4
+            request_type = ''
+            
         
-        data_list = []
-        dic_list = []
+        screen_key = app_id + "_" + destination_activity       
+        
+        graph_attr = {}
+        graph_list = []
+        graph = []
         dic = {"activity_name":"","visit_num":0}
-        
-        data_collect_flag = False
-        
-        for i in graph_num :
-            for j in node_num :
-                if r.exists(screen_key) == False:
-                    data_collect_flag = True
-                    break
-                activity_list = r.zrange(screen_key, 0, -1, withscores = True)
-                reverse_activity_list = activity_list.reverse() 
-                #큰것부터 차례로 뽑아야함
-                dic['activity_name'] = reverse_activity_list[i][0]
-                dic['visit_num'] = reverse_activity_list[i][1]
+        #data_collect_flag = False
+        # 애초에 데이터가 없으면 return
+        ''' 
+        if r.exists(screen_key) == False:
+            return
+        '''
+        #해당 스크린에 대한 data가 존재한다면
+        if request_type == 'activity_flow': 
+            for i in graph_num :
+                screen_key = app_id + "_" + destination_activity
+                dic['activity_name'] = destination_activity
+                dic['visit_num'] = 0
+                graph.append(dic)
+                
+                for j in node_num :
+                    #해당 화면이 더이상 없을때는 해당 그래프에 노드를 추가시키는 작업을 중지
+                    if r.exists(screen_key) == False:
+                        #data_collect_flag = True
+                        break
+                    activity_list = r.zrange(screen_key, 0, -1, withscores = True)
+                    reverse_activity_list = activity_list.reverse() 
+                    #큰것부터 차례로 뽑아야함
+                    #처음 그래프를 가져올때는 무조건 
+                    #list에 대이터가 없는 경우 예외처리
+                    if j == 0:
+                        #screen_key는 존재하나 data가 없는 경우
+                        if (len(reverse_activity_list) - 1) >= i:
+                            dic['activity_name'] = reverse_activity_list[i][0]
+                            dic['visit_num'] = reverse_activity_list[i][1]
+                        else :
+                            break
+                    #두번째 이상부터는 무조건 처음 데이터를 가져와야됨 그게 가장 많이 지나간 경로이므로
+                    else :
+                        dic['activity_name'] = reverse_activity_list[0][0]
+                        dic['visit_num'] = reverse_activity_list[0][1]    
                     
-                dic_list.append(dic)
+                    #현재 액티비티가 리스트에 존재하지 않는다면
+                    if dic['activity_name'] in graph_attr == False:
+                        graph_attr[dic['activity_name']] = len(graph_attr)
                     
-                screen_key = app_id + "_" + dic['activity_name']
+                    graph.append(dic)
+                    screen_key = app_id + "_" + dic['activity_name']
+                #graph에 데이터가 없다면 추가않함
+                if len(graph) != 0:
+                   graph_list.append(graph)
+                   
+            #client를 위한  json 데이터 생성
+            nodeDataArray = []
+            keys = graph_attr.keys()
+            #activity name -> key
+            for key in keys:
+                nodeData = {"key" : graph_attr[key], "category":"Source", "text" : key}
+                nodeDataArray.append(nodeData)
+                        
+            return HttpResponse(json.dump(graph_list), mimetype="application/json") 
+        
+        else :
+            result = Var.get_default_result()
+            return HttpResponse(json.dump(result), mimetype="application/json")
             
-            data_list.append(dic_list)
-            
-            if data_collect_flag == True:
-                break
             
 
 def view_trigger_function(request):
@@ -277,7 +339,8 @@ def handle_graph_ajax_request(request):
         graph_data = Feedback.objects.raw(query)
         graph_data =  Var.todict(graph_data)
         return HttpResponse(json.dumps(graph_data), mimetype="application/json")  
-        
+    
+
         
 
         

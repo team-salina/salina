@@ -1,6 +1,7 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
+#from django.contrib.auth.views import login
 '''
 Created on 2013. 3. 7.
 
@@ -21,16 +22,16 @@ urlpatterns = patterns('userinfo.views',
      #register_page
      #url(r'^login/$', 'django.contrib.auth.views.login'),
      #url(r'^main_admin/login.html', 'django.contrib.auth.views.login'),
-     url(r'^main_admin/register.html', 'register_page'),
-     url(r'^main_admin/index.html', 'view_admin'),
-     url(r'^main_admin/developer.html', 'view_developer'),
-     url(r'^main_admin/app-home.html', 'view_app_home'),
-     url(r'^main_admin/feedback.html', 'view_feedback'),
-     url(r'^main_admin/download.htm', 'view_contact'),
-     url(r'^main_admin/about.html', 'view_about'),
-     url(r'^main_admin/real_voice.html', 'view_real_voice'),
-     url(r'^main_admin/advanced.html', 'view_advanced'),
-     url(r'^main_admin/insight.html', 'view_insight'),
+     url(r'^register.html', 'register_page'),
+     url(r'^index.html', 'view_admin'),
+     url(r'^developer.html', 'view_developer'),
+     url(r'^app-home.html', 'view_app_home'),
+     url(r'^feedback.html', 'view_feedback'),
+     url(r'^download.htm', 'view_contact'),
+     url(r'^about.html', 'view_about'),
+     url(r'^real_voice.html', 'view_real_voice'),
+     url(r'^advanced.html', 'view_advanced'),
+     url(r'^insight.html', 'view_insight'),
      
      
      url(r'^main_admin/handle_graph_ajax_request', 'handle_graph_ajax_request'),

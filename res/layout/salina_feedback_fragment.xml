@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:orientation="horizontal">
+        
+        <TextView
+            android:id="@+id/salina_feedback_fragment_tvUnit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="13dp"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentRight="true"
+            android:textSize="10pt"
+            android:text="점"/>
+        
+        <TextView
+	        android:id="@+id/salina_feedback_fragment_tvScore"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_toLeftOf="@+id/salina_feedback_fragment_tvUnit"
+	        android:typeface="sans"
+	        android:textStyle="italic"
+	        android:background="@android:drawable/list_selector_background"
+	        android:clickable="true"
+	        android:text="5.0"
+	        android:textSize="15pt" />
+        
+		<TextView
+	        android:id="@+id/salina_feedback_fragment_tvComment"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginLeft="15dp"
+	        android:textSize="8pt"
+	        android:text="comment"/>
+	    
+    </RelativeLayout>
+    
+    <EditText
+        android:id="@+id/salina_feedback_fragment_etContents"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:inputType="textMultiLine"
+        android:layout_margin="10dp"
+        android:gravity="top"
+        android:hint="이곳에 자유롭게 의견을 작성해 주세요."/>
+</LinearLayout>

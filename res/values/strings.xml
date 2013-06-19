@@ -15,5 +15,7 @@
 	<string name="have_a_problem">Do you have a problem?</string>
 	<string name="have_a_praise">Do you have a praise for us?</string>
 	<string name="salina_fd_btSend">Send a Feedback</string>
+	
+	<string name="salina_app_id">salina app id</string>
 
 </resources>

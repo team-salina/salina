@@ -1,5 +1,4 @@
 eclipse.preferences.version=1
-encoding//src/org/salina/android/Salina.java=UTF-8
-encoding//src/org/salina/android/rest/RestClient.java=UTF-8
-encoding//src/org/salina/android/widget/FeedbackDialogActivity.java=UTF-8
+encoding//src/io/salina/android/rest/RestClient.java=UTF-8
+encoding//src/io/salina/android/widget/FeedbackActivity.java=UTF-8
 encoding/<project>=UTF-8

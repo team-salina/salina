@@ -288,7 +288,7 @@ public class IntroActivity extends Activity {
 					new Thread(new Runnable(){
 						public void run() {							
 							RestClient rest = new RestClient();
-							String loginResult = rest.post("http://61.43.139.106:8000/community_login/?login_type=mobile", loginInfo);
+							String loginResult = rest.postConvertJson("http://61.43.139.106:8000/community_login/?login_type=mobile", loginInfo);
 							
 							boolean isSuccess = false;
 							

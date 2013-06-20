@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.nnoco.fakenoondate"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="9"
+        android:targetSdkVersion="17" />
+    
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="com.nnoco.fakenoondate.FakeNoonDateActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+	        android:name="org.salina.android.widget.FeedbackDialogActivity"
+	        android:theme="@android:style/Theme.Dialog" />
+	    <activity android:name="io.salina.android.www.ContentsActivity"/>
+	
+	    <service android:name="io.salina.android.widget.FeedbackLabelService" >
+	    </service>
+	
+	    <activity
+	        android:name="io.salina.android.widget.FeedbackActivity"
+	        android:label="@string/app_name"
+	        android:theme="@style/Theme.Sherlock.Light" >
+	    </activity>
+    </application>
+
+</manifest>

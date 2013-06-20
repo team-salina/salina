@@ -1,0 +1,19 @@
+<salina
+    appId="noon_date">
+    <screens>
+        <screen name="Intro Activity" activity=".IntroActivity">
+            <functions>
+	            <function>Loading</function>
+	            <function>Login</function>
+	        </functions>
+        </screen>
+        
+        <screen name="MyApps" activity=".AyAppsActivity">
+            <functions>
+	            <function>Feedback Label</function>
+	            <function>Launch App</function>
+	            <function>Move to Community</function>
+	       	</functions>
+        </screen>
+    </screens>
+</salina>

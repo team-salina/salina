@@ -14,6 +14,11 @@
 
     <application android:allowBackup="true" android:icon="@drawable/ic_salina_logo2" android:label="@string/app_name" android:theme="@style/Sherlock.__Theme.Light">
         <activity android:label="@string/app_name" android:name="io.salina.android.community.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
 
         <receiver android:name="com.google.android.gcm.GCMBroadcastReceiver" android:permission="com.google.android.c2dm.permission.SEND">
@@ -30,11 +35,7 @@
         <activity android:label="@string/title_activity_my_apps" android:name="io.salina.android.community.MyAppsActivity">
         </activity>
         <activity android:label="@string/app_name" android:name="io.salina.android.community.IntroActivity" android:screenOrientation="portrait" android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+            
         </activity>
         <activity android:name="org.salina.android.widget.FeedbackDialogActivity" android:theme="@android:style/Theme.Dialog"/>
 

@@ -23,8 +23,8 @@ import android.util.Log;
 
 /**
  * 
- * @author cusmaker_Ä£È¯°æ
- * url°ú ÆÄ¶ó¹ÌÅÍ, ÇÚµé·¯¸¦ ÆÄ¶ó¹ÌÅÍ·Î ´øÁ®ÁÖ¸é ÇØ´ç ¿äÃ»À» ½º·¹µå·Î µ¹·Á °á°ú¸¦ ¹ÝÈ¯ÇÑ´Ù.
+ * @author cusmaker_Ä£È¯ï¿½ï¿½
+ * urlï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½, ï¿½Úµé·¯ï¿½ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½Í·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ ï¿½Ø´ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½È¯ï¿½Ñ´ï¿½.
  */
 public class ServerRequest extends Thread{
 	private HttpClient http = null;
@@ -35,7 +35,7 @@ public class ServerRequest extends Thread{
 	private Handler mHandler = null;
 	
 	
-	private HashMap<Object, Object> param = null;	//ÆÄ¶ó¹ÌÅÍ ÀÓ½Ãº¯¼ö
+	private HashMap<Object, Object> param = null;	//ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½Ó½Ãºï¿½ï¿½ï¿½
 	
 	/**
 	 * @param url
@@ -51,18 +51,18 @@ public class ServerRequest extends Thread{
 	
 
 	/**
-	 * ½º·¹µù Ã³¸®ºÎºÐ¿¡¼­ ¿äÃ»±âÇÑ°ú ÆÄ¶ó¹ÌÅÍÁ¶ÇÕ ±×¸®°í ÇØ´çÁÖ¼Ò·Î ¿äÃ»À» ³¯·ÁÁØ´Ù. ¿äÃ» ¿Ï·áÈÄ ÁöÁ¤µÈ ÇÚµé·¯°¡ ³ª¸ÓÁö¸¦ Ã³¸®ÇÑ´Ù.
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½ÎºÐ¿ï¿½ï¿½ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ñ°ï¿½ ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½×¸ï¿½ï¿½ï¿½ ï¿½Ø´ï¿½ï¿½Ö¼Ò·ï¿½ ï¿½ï¿½Ã»ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø´ï¿½. ï¿½ï¿½Ã» ï¿½Ï·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµé·¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ñ´ï¿½.
 	 */
 	public void run() {
 		// TODO Auto-generated method stub
 		try{
 			http = new DefaultHttpClient();
-			//ÀÀ´ä½Ã°£ Ã³¸® ·çÆ¾
+			//ï¿½ï¿½ï¿½ï¿½Ã°ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½Æ¾
 			HttpParams params = http.getParams();
 			HttpConnectionParams.setConnectionTimeout(params, 10000);
 			HttpConnectionParams.setSoTimeout(params, 10000);
 			
-			Log.d("test","¿äÃ» URL : "+url);
+			Log.d("test","ï¿½ï¿½Ã» URL : "+url);
 			post = new HttpPost(url);
 			setParameter(param);
 			http.execute(post , mResHandler);
@@ -73,7 +73,7 @@ public class ServerRequest extends Thread{
 			bundle.putString("result", "fail");
 			message.setData(bundle);
 			mHandler.sendMessage(message);
-			Log.d("test","¿äÃ» ½ÇÆÐ");
+			Log.d("test","ï¿½ï¿½Ã» ï¿½ï¿½ï¿½ï¿½");
 			Log.d("test",e.toString());
 			// TODO: handle exception
 		}
@@ -81,15 +81,15 @@ public class ServerRequest extends Thread{
 	
 	/**
 	 * @param param
-	 * ÆÄ¶ó¹ÌÅÍ Á¶¸³ÇÔ¼ö
+	 * ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½
 	 * @throws UnsupportedEncodingException 
 	 */
 	public void setParameter(HashMap<Object , Object> param) throws UnsupportedEncodingException{
 		if(param == null){
-			Log.d("test","ÆÄ¶ó¹ÌÅÍ¾øÀ½");
+			Log.d("test","ï¿½Ä¶ï¿½ï¿½ï¿½Í¾ï¿½ï¿½ï¿½");
 			return ;
 		}
-		List<NameValuePair> nameValueParis = null;	//ÆÄ¶ó¹ÌÅÍ¸¦ ´ã´Â ¸®½ºÆ®
+		List<NameValuePair> nameValueParis = null;	//ï¿½Ä¶ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 		
 		String hashKey = null;
 		Iterator<Object> iter = null;	
@@ -99,7 +99,7 @@ public class ServerRequest extends Thread{
 		
 		while(iter.hasNext()){
 			hashKey = (String)iter.next();
-			Log.d("test","ÆÄ¶ó¹ÌÅÍ Á¶¸³Áß...   " + hashKey + " : " + param.get(hashKey).toString());
+			Log.d("test","ï¿½Ä¶ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½...   " + hashKey + " : " + param.get(hashKey).toString());
 			nameValueParis.add(new BasicNameValuePair(hashKey , param.get(hashKey).toString()));
 		}
 		UrlEncodedFormEntity entityRequest = new UrlEncodedFormEntity(nameValueParis, "UTF-8");

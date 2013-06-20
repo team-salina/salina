@@ -1,7 +1,9 @@
 package io.salina.android.community;
 
+import io.salina.android.Config;
+import io.salina.android.rest.RestClient;
+
 import java.io.IOException;
-import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -11,6 +13,7 @@ import org.apache.http.util.EntityUtils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,6 +27,15 @@ public class GCMIntentService extends GCMBaseIntentService{
 //		super(senderId);
 //		
 //	}
+	
+	/**
+	 * for intrinsicLock Synchronized
+	 */
+	private static Object[] sIntrinsicLock = new Object[0];
+	
+	private static final String DEVICE_KEY = "device_key";
+	
+	private String mDeviceKey = "";
 	
 	public GCMIntentService() {
 		super(MainActivity.PROJECT_ID);
@@ -116,18 +128,74 @@ public class GCMIntentService extends GCMBaseIntentService{
 	 * GCM에 정상적으로 등록되었을 경우 발생하는 메서드
 	 */
 	@Override
-	protected void onRegistered(Context arg0, String arg1) {
-		Log.d("Salina Community", "등록 ID :" + arg1);
+	protected void onRegistered(Context arg0, final String regId) {
+		Log.d("Salina Community", "등록 ID :" + regId);
 
 //		HashMap<Object , Object> param = new HashMap<Object , Object>();
 //		param.put("regid", arg1);
 //		serverRequest_insert = new ServerRequest("http://61.43.139.106:8000/feedback/question/", param, mResHandler, mHandler);
 //		serverRequest_insert.start();
 		
+		setDeviceKey(this);
+		// 서버로 RegID와 Device Key 전송
+		final RestClient client = new RestClient();
+		new Thread(new Runnable(){
+			public void run() {
+				synchronized(mDeviceKey) {
+					
+					String result = client.post("http://61.43.139.106/userinfo/register_reg_id/",
+							String.format("reg_id=%s&device_key=%s", regId, mDeviceKey));
+					
+					Log.d(Config.LOG_TAG, "GCM Request Result : " + result);
+				}
+			}
+		}).start();
+		
 		Message msg = Message.obtain();
 		msg.what = 159;
-		msg.obj = arg1;
+		msg.obj = regId;
 		MainActivity.mHandler.sendMessage(msg);
+	}
+	
+	/**
+	 * 장비 식별을 위한 Device Key를 조회.
+	 * 처음으로 피드백을 전송하는 경우 Device Key가 초기화되어있지 않기 때문에
+	 * 서버로부터 새로운 Device Key를 발급 받는다.
+	 */
+	/*package*/ void setDeviceKey(Context context) {
+		// Preference에 저장된 Device Key가 있는지 확인
+		final SharedPreferences pref = context.getSharedPreferences(Config.SALINA_PREF_NAME, Context.MODE_PRIVATE);
+		
+		String prefDeviceKey = pref.getString(DEVICE_KEY, "");
+		
+		if ("".equals(prefDeviceKey)) {
+			Thread thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					synchronized(mDeviceKey) {
+						RestClient rc = new RestClient();
+						
+						String gotDeviceKey = rc.get(RestClient.URL_GET_DEVICE_KEY);
+						
+						if(gotDeviceKey.equals(RestClient.SEND_FAILURE_MESSAGE)) return; 
+						
+						if (Config.IS_LOGGABLE) {
+							Log.v(Config.LOG_TAG, String.format("get device key : %s", gotDeviceKey));
+						}
+						
+						pref.edit()
+							.putString(DEVICE_KEY, gotDeviceKey)
+							.commit();
+						
+						mDeviceKey = gotDeviceKey;
+					}
+				}
+			});
+			thread.start();
+			
+		} else {
+			mDeviceKey = prefDeviceKey;
+		}
 	}
 
 	/**

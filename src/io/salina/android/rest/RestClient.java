@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
@@ -15,6 +16,7 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -23,6 +25,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
+import org.apache.http.util.EntityUtils;
 
 import android.util.Log;
 
@@ -55,7 +58,7 @@ public class RestClient {
 	 * modified 2013. 5. 29
 	 * description : 각 카테고리별로 나누어 전송하지 않고 하나의 URL을 사용해서 전송함
 	 */
-	public static final String URL_USER_FEEDBACK = "http://61.43.139.106:8000/feedback/save_user_feedback/";
+	public static final String URL_USER_FEEDBACK = "http://61.43.139.106/feedback/save_user_feedback/";
 	
 	/**
 	 * System Feedback URL
@@ -63,7 +66,7 @@ public class RestClient {
 	 * modifed 2013. 5. 30
 	 * description : 시스템 피드백 전송 URL
 	 */
-	public static final String URL_SYSTEM_FEEDBACK = "http://61.43.139.106:8000/controllog/save_system_feedback/";
+	public static final String URL_SYSTEM_FEEDBACK = "http://61.43.139.106/controllog/save_system_feedback/";
 	
 	
 	/**
@@ -92,7 +95,7 @@ public class RestClient {
 	/**
 	 * 서버로부터 DeviceKey를 발급받기 위해 사용하는 URL
 	 */
-	public static final String URL_GET_DEVICE_KEY = "http://61.43.139.106:8000/controllog/device_key/";
+	public static final String URL_GET_DEVICE_KEY = "http://61.43.139.106/controllog/device_key/";
 	
 	public static final String SEND_FAILURE_MESSAGE = "send failure";
 
@@ -114,10 +117,25 @@ public class RestClient {
 		return request(post);
 	}
 	
-	public String post(String url, Object data) {
+	public String postConvertJson(String url, Object data) {
 		HttpPost post = new HttpPost(url);
 		
 		post.setEntity(objectToEntity(data));
+		post.setHeader("Content-type", "application/json");
+		
+		return request(post);
+	}
+	
+	public String post(String url, String data) {
+		HttpPost post = new HttpPost(url);
+		HttpEntity entity = null;
+		try {
+			entity = new StringEntity(data, "utf-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		post.setEntity(entity);
 		post.setHeader("Content-type", "application/json");
 		
 		return request(post);

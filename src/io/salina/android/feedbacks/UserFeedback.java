@@ -77,9 +77,13 @@ public class UserFeedback {
 	private Context mContext;
 	
 	public UserFeedback(Context context, String category, String contents, String screenName, String functionName) {
+		this(context,category,contents,screenName,functionName, -1);
+	}
+	
+	public UserFeedback(Context context, String category, String contents, String screenName, String functionName, float score) {
 		this.uuid = UUID.randomUUID().toString();
 		
-		this.feedback = new Feedback(context, category, contents);
+		this.feedback = new Feedback(context, category, contents, score);
 		
 		this.feedbackContext = FeedbackContext.getInstance(context, screenName, functionName);
 		
@@ -128,7 +132,10 @@ public class UserFeedback {
 			public void run() {
 				RestClient restClient = new RestClient();
 				
-				String result = restClient.post(RestClient.URL_USER_FEEDBACK, feedbackDataMap);
+				Map<String, UserFeedback> fbMap = new HashMap<String, UserFeedback>();
+				fbMap.put("user_feedback", UserFeedback.this);
+				
+				String result = restClient.postConvertJson(RestClient.URL_USER_FEEDBACK, fbMap);
 				
 				if (RestClient.SEND_FAILURE_MESSAGE != result) {
 					// 업로드 작업이 완료되면 콜백 메서드 호출
@@ -212,17 +219,26 @@ public class UserFeedback {
 		@SerializedName(Keys.CONTENTS)
 		public String contents;
 		
+		@SerializedName(Keys.SCORE)
+		public float score;
+		
 		Feedback(Context context, String category, String contents) {
-			this(context, category, contents, null);
+			this(context, category, contents, null, -1);
 			
 		}
 		
-		Feedback(Context context, String category, String contents, String userId) {
+		Feedback(Context context, String category, String contents, float score) {
+			this(context, category, contents, null, score);
+			
+		}
+		
+		Feedback(Context context, String category, String contents, String userId, float score) {
 			this.category = category;
 			this.contents = contents;
 			setDeviceKey(context);
 			this.appId = AppInfo.getInstance(context).getAppId();
 			this.writeTime = SalinaUtils.getDateFormat(Calendar.getInstance().getTime(), DATE_FORMAT);
+			this.score = score;
 			
 			// set User Id
 			if (null != userId) {
@@ -342,6 +358,8 @@ public class UserFeedback {
 			static final String WRITE_TIME = "write_time";
 			
 			static final String CONTENTS = "contents";
+			
+			static final String SCORE = "praise_score";
 		}
 	}
 	

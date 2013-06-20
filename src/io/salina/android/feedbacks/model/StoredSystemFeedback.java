@@ -18,16 +18,16 @@ public class StoredSystemFeedback {
 	/**
 	 * System Feedback Bulk Data
 	 */
-	@SerializedName(StoredSystemFeedbackDbColumns.TABLE_NAME)
+	@SerializedName(StoredSystemFeedbackDbColumns.SYSTEM_FEEDBACK)
 	private SystemFeedback systemFeedback;
 	
 	//============================================================//
 	// Constructs
 	//============================================================//
-	public StoredSystemFeedback (SystemFeedback systemFeedback) {
-		this.systemFeedback = systemFeedback;
+	public StoredSystemFeedback (SystemFeedback systemFeedback2) {
+		this.systemFeedback = systemFeedback2;
 	}
-	
+
 	//============================================================//
 	// Getters and Setters
 	//============================================================//
@@ -51,7 +51,7 @@ public class StoredSystemFeedback {
 		/**
 		 * Table Name
 		 */
-		public static final String TABLE_NAME = "transport_datas";
+		public static final String TABLE_NAME = "stored_system_feedbacks";
 		
 		/**
 		 * <p>Field : {@link StoredSystemFeedback#systemFeedback}</p>

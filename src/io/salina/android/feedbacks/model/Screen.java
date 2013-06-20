@@ -5,15 +5,17 @@ import java.util.List;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.ElementList;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Screen {
 	@Attribute(name="name")
 	private String name;
 	
-	@Attribute(name="class")
-	private String clazz;
+	@Attribute(name="activity")
+	private String activity;
 	
-	@ElementList
-	private List<String> functions;
+	@ElementList(name="functions")
+	private List<String> function;
 
 	public String getName() {
 		return name;
@@ -23,19 +25,19 @@ public class Screen {
 		this.name = name;
 	}
 
-	public String getClazz() {
-		return clazz;
+	public String getActivity() {
+		return activity;
 	}
 
-	public void setClazz(String clazz) {
-		this.clazz = clazz;
+	public void setActivity(String activity) {
+		this.activity = activity;
 	}
 
-	public List<String> getFunctions() {
-		return functions;
+	public List<String> getFunction() {
+		return function;
 	}
 
-	public void setFunctions(List<String> functions) {
-		this.functions = functions;
+	public void setFunction(List<String> functions) {
+		this.function = functions;
 	}
 }

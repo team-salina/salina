@@ -1,6 +1,11 @@
 package io.salina.android.widget;
 
+import io.salina.android.Config;
 import io.salina.android.R;
+import io.salina.android.feedbacks.UserFeedback;
+import io.salina.android.feedbacks.model.AppInfo;
+import io.salina.android.feedbacks.model.Screen;
+import io.salina.android.rest.RestClient;
 import io.salina.android.www.ContentsActivity;
 
 import java.io.IOException;
@@ -17,9 +22,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
@@ -93,11 +98,15 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 	
 	private Handler mHandler;
 	
+	private static SelectedValues selectedValues;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_salina_feedback);
+		
+		selectedValues = new SelectedValues();
 		
 		init(savedInstanceState);
 	}
@@ -108,7 +117,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		mTabHost = (TabHost)findViewById(android.R.id.tabhost);
 		mTabHost.setup();
 		
-		mTabManager = new TabManager(this, mTabHost, R.id.realtabcontent);
+		mTabManager = new TabManager(this, mTabHost, R.id.realtabcontent, selectedValues);
 		
 		mTabManager.addTab(mTabHost.newTabSpec(QUESTION_TAG).setIndicator(QUESTION_INDICATOR),
 				ContentsFragment.class, newFragmentArguments("무엇이든 물어보세요", false));
@@ -118,6 +127,8 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 				ContentsFragment.class, newFragmentArguments("무슨 문제가 생겼나요?", false));
 		mTabManager.addTab(mTabHost.newTabSpec(EVALUATION_TAG).setIndicator(EVALUATION_INDICATOR),
 				ContentsFragment.class, newFragmentArguments("어떤 것이 마음에 드셨나요?", true));
+		
+		
 		
 		if (savedInstanceState != null) {
 			mTabHost.setCurrentTabByTag(savedInstanceState.getString("tab"));
@@ -184,7 +195,15 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 						public void run() {
 							final ProgressDialog progress = ProgressDialog.show(mContext, "", "피드백을 보내는 중입니다.");
 							
-							mHandler.postDelayed(new Runnable(){
+							UserFeedback feedback = new UserFeedback(mContext, 
+									selectedValues.category, 
+									mTabManager.getFeedbackContents(), 
+									selectedValues.screen, 
+									selectedValues.function, 
+									selectedValues.score);
+							
+							feedback.send(mHandler, new Runnable() {
+								// 성공시 수행할 콜백
 								public void run() {
 									progress.dismiss();
 									
@@ -215,16 +234,22 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 									});
 									builder.create().show();
 								}
-							}, 1000);
+								// 실패시 실행할 콜백
+							}, new Runnable() {
+								public void run() {
+									Toast.makeText(mContext, "피드백을 보내지 못했습니다. 네트워크 연결을 확인해 주세요.", Toast.LENGTH_LONG).show();
+									
+									progress.dismiss();
+								}
+							});
 						}
 					});
 				}
 			});
 		}
 		
-		Bundle bundle = getIntent().getBundleExtra(EXTRA_BUNDLE_KEY);
 		
-		initSpinner(bundle);
+		initSpinner();
 		
 		mSpnScreens.setAdapter(mScreensAdapter);
 		
@@ -238,18 +263,14 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		return mTabManager.getFeedbackContents();
 	}
 	
-	private void initSpinner(Bundle bundle) {
-		if (null == bundle){
-			// 기본 선택값 추가
-			mScreensAdapter = new ArrayAdapter<String>(this,
-					android.R.layout.simple_list_item_1, new String[]{"피드백 관련 스크린"});
-			return;
-		}
+	private void initSpinner() {		
+		AppInfo appInfo = AppInfo.getInstance(this);
+		List<Screen> screenList = appInfo.getScreens();
 		
 		// MetaData Map 재구성 - Bundle to map
 		mMetaDataMap = new HashMap<String, ArrayList<String>>();
-		for (String screen : bundle.keySet()) {
-			mMetaDataMap.put(screen, new ArrayList<String>(Arrays.asList(bundle.getStringArray(screen))));
+		for (Screen screen : screenList) {
+			mMetaDataMap.put(screen.getName(), new ArrayList<String>(screen.getFunction()));
 		}
 
 		String[] screens = new String[mMetaDataMap.keySet().size()];
@@ -268,9 +289,14 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 					int position, long arg3) {
 				String screen = mScreensAdapter.getItem(position);
 				
+				selectedValues.screen = screen;
+				if (Config.IS_LOGGABLE) {
+					Log.d(Config.LOG_TAG, "selected screen changed : " + screen);
+				}
+				
 				Log.d("item", "screen : " + screen + " " + String.valueOf(mMetaDataMap.get(screen)));
 				
-				CharSequence[] functions = new CharSequence[mMetaDataMap.get(screen).size()];
+				final CharSequence[] functions = new CharSequence[mMetaDataMap.get(screen).size()];
 				mMetaDataMap.get(screen).toArray(functions);
 
 				AlertDialog.Builder builder = new AlertDialog.Builder(
@@ -279,7 +305,10 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 				builder.setItems(functions, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-
+						selectedValues.function = (String) functions[which];
+						if (Config.IS_LOGGABLE) {
+							Log.d(Config.LOG_TAG, "selected function changed : " + selectedValues.function);
+						}
 					}
 				});
 				
@@ -298,107 +327,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 			}
 		});
 	}
-	
-	public static Map<String, List<String>> getSalinaAppInfo(Context context, int xmlId) {
-		XmlPullParser parser = context.getResources().getXml(xmlId);
-		int event;
-		int attrCount;
-		String attrName;
-		String attrValue;
-		boolean screenFlag = false;
-		boolean functionFlag = false;
-		String screenName = "";
-		String functionName = "";
-		
-		Map<String, List<String>> map = new HashMap<String, List<String>>();
-		ArrayList<String> functions = null;
-		
-		String tagName;
-		try {
-			while((event=parser.next()) != XmlPullParser.END_DOCUMENT) {
-				switch(event) {
-				case XmlPullParser.START_TAG:
-					attrCount = parser.getAttributeCount();
-					
-					tagName = parser.getName();
-					
-					Log.d("parse xml", "START_TAG : " + tagName);
-					
-					// Tag 이름이 Screen 인 경우
-					if(tagName.equals(SCREEN)) {
-						screenFlag = true;
-						functions = new ArrayList<String>();
-						
-						for(int i = 0 ; i < attrCount ; i++){
-							attrName = parser.getAttributeName(i);
-							attrValue = parser.getAttributeValue(i);
-							
-							if(attrName.equals(NAME)) {
-								screenName = attrValue;
-							}
-							
-							Log.d("parse xml", "ATTR, VALUE : " + attrName + ", " + attrValue);
-						}
-					} else if (tagName.equals(FUNCTION)) {
-						functionFlag = true;
-					}
-					break;
-					
-				case XmlPullParser.TEXT:
-					Log.d("parse xml", "TEXT : " + parser.getText());
-					
-					if(screenFlag) {
-						functions.add(parser.getText());
-					}
-					break;
-					
-				case XmlPullParser.END_TAG:
-					tagName = parser.getName();
-					Log.d("parse xml", "END_TAG : " + tagName);
-					
-					if(SCREEN.equals(tagName)) {
-						screenFlag = false;
-						
-						map.put(screenName, functions);
-						
-					} else if (FUNCTION.equals(tagName)) {
-						functionFlag = false;
-					}
-					
-					break;
-				}
-			}
-		} catch (XmlPullParserException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		Log.d("parse xml", map.toString());
-		
-		return map;
-	}
-	
-	public static Bundle getBundle(Map<String, List<String>> metaDataMap) {
-		Bundle bundle = new Bundle();
-		
-		String[] functions;
-		
-		for(Map.Entry<String, List<String>> entry : metaDataMap.entrySet()) {
-			functions = new String[entry.getValue().size()];
-			entry.getValue().toArray(functions);
-			bundle.putStringArray(entry.getKey(), functions);
-		}
-
-		return bundle;
-	}
-	
-	public static Bundle getBundle(Context context, int xmlId) {
-		return getBundle(getSalinaAppInfo(context, xmlId));
-	}
-	
+			
 	private Bundle newFragmentArguments(String comment, boolean showScore) {
 		Bundle args = new Bundle();
 		args.putString(COMMENT_ARGS_KEY, comment);
@@ -425,6 +354,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		String function;
 		float score;
 		String category;
+		public String contents;
 	}
 	
 	
@@ -435,6 +365,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		private final HashMap<String, TabInfo> mTabs = new HashMap<String, TabInfo>();
 		
 		TabInfo mLastTab;
+		private SelectedValues mSelectedValues;
 		
 		static final class TabInfo {
 			private final String tag;
@@ -465,11 +396,12 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 			}
 		}
 		
-		public TabManager(FragmentActivity activity, TabHost tabHost, int containerId) {
+		public TabManager(FragmentActivity activity, TabHost tabHost, int containerId, SelectedValues selectedValues) {
 			mActivity = activity;
 			mTabHost = tabHost;
 			mContainerId = containerId;
 			mTabHost.setOnTabChangedListener(this);
+			mSelectedValues = selectedValues;
 		}
 		
 		public void addTab(TabHost.TabSpec tabSpec, Class<?> clz, Bundle args) {
@@ -508,6 +440,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		@Override
 		public void onTabChanged(String tabId) {
 			TabInfo newTab = mTabs.get(tabId);
+			
 			if (mLastTab != newTab) {
 				FragmentTransaction ft = mActivity.getSupportFragmentManager().beginTransaction();
 				if (mLastTab != null) {
@@ -529,6 +462,14 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 				mLastTab = newTab;
 				ft.commit();
 				mActivity.getSupportFragmentManager().executePendingTransactions();
+
+				// 선택값 처리
+				selectedValues.category = newTab.tag;
+				
+				if(Config.IS_LOGGABLE) {
+					Log.d(Config.LOG_TAG, "selected category changed : " + mSelectedValues.category);
+				}
+
 			}
 		}
 	}
@@ -543,7 +484,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		 */
 		private boolean mShowScore;
 		
-		private EditText mEtFeedbackContents;
+		EditText mEtFeedbackContents;
 		private TextView mTvScore;
 		
 		private RatingBar mRbScoreForDialog;
@@ -583,6 +524,10 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		public void onCreate(Bundle savedInstanceState) {
 			super.onCreate(savedInstanceState);
 			
+			if(Config.IS_LOGGABLE) {
+				Log.d(Config.LOG_TAG, "fragment created");
+			}
+			
 			Bundle args = getArguments();
 			
 			mComment = args != null ? args.getString(COMMENT_ARGS_KEY) : "";
@@ -598,6 +543,10 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
+			
+			if(Config.IS_LOGGABLE) {
+				Log.d(Config.LOG_TAG, "fragment create view");
+			}
 			View v = inflater.inflate(R.layout.salina_feedback_fragment, container, false);
 			TextView tvComment = (TextView)v.findViewById(R.id.salina_feedback_fragment_tvComment);
 			mTvScore = (TextView)v.findViewById(R.id.salina_feedback_fragment_tvScore);
@@ -637,6 +586,7 @@ public class FeedbackActivity extends SherlockFragmentActivity {
 										String strRating = String.format("%.1f", rating);
 										mTvScore.setText(strRating);
 										
+										selectedValues.score = rating;
 										// 다이얼로그 닫음
 										mScoreDialog.dismiss();
 									}

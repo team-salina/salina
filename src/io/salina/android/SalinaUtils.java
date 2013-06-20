@@ -7,6 +7,10 @@ import java.util.Locale;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
+import com.google.gson.Gson;
 
 /**
  * Salina Static Utility Class
@@ -15,6 +19,8 @@ import android.content.pm.PackageManager;
  */
 public class SalinaUtils {
 	public static String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+	
+	private static Gson gsonObject;
 	
 	public static String getDateFormatNow() {
 		return getDateFormat(Calendar.getInstance().getTime(), DATE_FORMAT);
@@ -39,5 +45,26 @@ public class SalinaUtils {
 		int res = context.checkCallingOrSelfPermission(permission);
 		
 		return (res == PackageManager.PERMISSION_GRANTED);
+	}
+	
+	public static boolean isNetworkAvailable(Context context) {
+		ConnectivityManager cManager; 
+		NetworkInfo mobile; 
+		NetworkInfo wifi; 
+		 
+		cManager=(ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE); 
+		mobile = cManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE); 
+		wifi = cManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI); 
+		 
+		
+		return mobile.isConnected() || wifi.isConnected();
+	}
+	
+	public static String convertJsonString(Object obj) {
+		if(null == gsonObject) {
+			gsonObject = new Gson();
+		}
+		
+		return gsonObject.toJson(obj);
 	}
 }

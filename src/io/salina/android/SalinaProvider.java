@@ -1,10 +1,10 @@
 package io.salina.android;
 
+import io.salina.android.feedbacks.SystemFeedback.SystemFeedbacksDbColumns;
 import io.salina.android.feedbacks.model.DeviceInfo.DeviceInfosDbColumns;
 import io.salina.android.feedbacks.model.Event.EventsDbColumns;
 import io.salina.android.feedbacks.model.Session.SessionsDbColumns;
 import io.salina.android.feedbacks.model.StoredSystemFeedback.StoredSystemFeedbackDbColumns;
-import io.salina.android.feedbacks.model.SystemFeedback.SystemFeedbacksDbColumns;
 
 import java.io.File;
 import java.util.Arrays;
@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import android.app.DownloadManager.Query;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -32,7 +33,7 @@ import android.util.Log;
  * @author nnoco
  *
  */
-/* package */ final class SalinaProvider {
+public final class SalinaProvider {
 	/*
 	 * 사용자가 작성하는 DB 파일과 충돌을 피하기 위해 salina 패키지의 네임스페이스를 이용
 	 */
@@ -480,7 +481,7 @@ import android.util.Log;
 			}
 			
 			// TODO 테이블 만드는 부분 추가해야함.
-			db.execSQL(String.format("CREATE TABLE"));
+			db.execSQL(String.format("CREATE TABLE '%s' ('%s' TEXT);", StoredSystemFeedbackDbColumns.TABLE_NAME, StoredSystemFeedbackDbColumns.SYSTEM_FEEDBACK));
 		}
 		
 		@Override

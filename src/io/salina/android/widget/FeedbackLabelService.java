@@ -252,10 +252,7 @@ public class FeedbackLabelService extends Service {
 		if(!ViewStatus.sIsMoving) {
 			Intent fbDialog = new Intent(this, FeedbackActivity.class);
 			fbDialog.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			
-			Bundle args = FeedbackActivity.getBundle(this, R.xml.salina_app_info);
-			fbDialog.putExtra(FeedbackActivity.EXTRA_BUNDLE_KEY, args);
-			
+						
 			startActivity(fbDialog);
 		}
 		

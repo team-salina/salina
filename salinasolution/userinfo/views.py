@@ -32,6 +32,11 @@ r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 TAG = "adminpage.views"
 
 
+def view_home(request):
+    return render_to_response('registration/home.html', RequestContext(request, {
+    }))
+    
+
 
 '''
 개발자 등록하는 부분
@@ -116,27 +121,111 @@ def view_app_home(request):
                                                   },
                                   context_instance=RequestContext(request))
     
+'''       
+        has_category = request.GET.has_key(Var.CATEGORY)
+        has_screen = request.GET.has_key('screen')
+        has_function = request.GET.has_key('function')
+
+        if has_category :
+            category = request.GET[Var.CATEGORY]
+            if has_screen:
+                return
+            #    
+            else :
+                screen_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).values('screen_name').annotate(scount=Count('screen_name')).order_by('scount')
+                
+                feedbacklist=Feedback.objects.filter(app__pk = app_id, category = category)
+                
+                return render_to_response('app-home.html', {  
+                                                   'screen_infos'
+                                                  },
+                                  context_instance=RequestContext(request))
+                
+                
+                   
+        #맨처음    
+        else :
+            question_num= Feedback.objects.filter(app__pk = app_id, category = Var.QUESTION).count()
+            suggestion_num= Feedback.objects.filter(app__pk = app_id, category = Var.SUGGESTION).count()
+            problem_num= Feedback.objects.filter(app__pk = app_id, category = Var.PROBLEM).count()
+            praise_num= Feedback.objects.filter(app__pk = app_id, category = Var.PRAISE).count()
+            
+            return render_to_response('app-home.html', {  
+                                                   'question_num':question_num,
+                                                  'suggestion_num':suggestion_num,
+                                                   'problem_num':problem_num,
+                                                   'praise_num':praise_num,
+                                                  },
+                                  context_instance=RequestContext(request))
+'''      
+    
 
 @login_required
 def view_real_voice(request):
     if request.method == 'GET' :
+        #무조건 두가지 값이 존재한다.
         app_id = request.GET[Var.APP_ID]
-        params = [app_id]   
-        raw_query = "SELECT * FROM (SELECT * FROM feedback_feedback WHERE app_id = 'noon_date') as feedback, feedback_feedbackcontext WHERE feedback.seq = feedback_feedbackcontext.feedback_id ORDER BY function_name ASC;"
+        has_request_type = request.GET.has_key('request_type')
+        if has_request_type:
+            request_type = request.GET['request_type']
+            if request_type == 'screen':
+                category = request.GET[Var.CATEGORY]
+                screen_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).values('screen_name').annotate(scount=Count('screen_name')).order_by('scount')
+                return render_to_response('app-home.html', {  
+                                                       'screen_infos':screen_infos,
+                                                      },
+                                      context_instance=RequestContext(request))
+            elif request_type == 'function':
+                category = request.GET[Var.CATEGORY]
+                screen_name = request.GET['screen_name']
+                function_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).values('function_name').annotate(scount=Count('function_name')).order_by('scount')
+                return render_to_response('app-home.html', {  
+                                                       'function_infos':function_infos,
+                                                      },
+                                      context_instance=RequestContext(request)) 
+            elif request_type == 'feedback':
+                category = request.GET[Var.CATEGORY]
+                has_screen_name = request.GET.has_key['screen_name']
+                has_function_name = request.GET.has_key['function_name']
+                
+                if has_screen_name:
+                    screen_name = request.GET['screen_name']
+                    if has_function_name :
+                        function_name = request.GET['function_name']
+                        feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, function_name = function_name, screen_name = screen_name).select_related()
+                    else :
+                        feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).select_related()
+                else :
+                    feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).select_related()
+                    
+                return render_to_response('app-home.html', {  
+                                                   'feedbacks':feedbacks,
+                                                  },
+                                  context_instance=RequestContext(request))
+        else :
+            return render_to_response('real_voice.html', {  
+                                                   'app_id':app_id,
+                                                  },
+                                  context_instance=RequestContext(request))
+            
         
-        feedback = Feedback.objects.raw(raw_query)        
-        '''            
-        feedback=Feedback.objects.filter(app = app_id)
-        for feed in feedback :
-            feedbackcontext = feed.feedbackcontext_set.all()
-            print feedbackcontext[0].function_name
+          
         
-        for feed in feedback :
-            feedbackcontext = feed.feedbackcontext_set.all()
-            print feedbackcontext.app_version
-        '''        
-        return render_to_response('real_voice.html', {
-                                                'feedback':feedback,
+            
+                
+            
+            
+            
+            
+            
+            
+            
+      
+        
+
+        
+              
+    return render_to_response('real_voice.html', {
                                                 'app_id':app_id,
                                                  },
                                   context_instance=RequestContext(request))
@@ -185,6 +274,7 @@ def view_advanced(request):
                 focus = request.GET[Var.FOCUS]
                 composite = request.GET[Var.COMPOSITE]
                 query_type = request.GET['query_type']
+                graph_data = ''
                 if query_type == 'user' :
                     query = 'SELECT seq, ' +  focus +' as x, count('+ focus +') as y, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT *  from feedback_feedback AS feedback, feedback_feedbackcontext AS context where feedback.seq = context.feedback_id and feedback.category = "'+ composite + '" and feedback.app_id = "'+app_id+'") as join_table GROUP BY '+focus+' ORDER BY y desc;'
                     print query
@@ -194,7 +284,7 @@ def view_advanced(request):
                     return HttpResponse(json.dumps(graph_data), mimetype="application/json")
                 elif query_type == 'system':
                     data_dic = []
-                    
+                    print 'system'
                     focus_attrs = DeviceInfo.objects.raw('SELECT id, ' + focus + ' as focus_column FROM controllog_deviceinfo WHERE app_id = "' +app_id +  '" GROUP BY ' + focus + ' ORDER BY ' + focus + ' desc;' );
                     composite_attrs = DeviceInfo.objects.raw('SELECT id, ' + composite + ' as composite_column FROM controllog_deviceinfo WHERE app_id = "' +app_id + '" GROUP BY ' + composite + ' ORDER BY ' + focus + ' desc;');
                     for focus_attr in focus_attrs:
@@ -332,13 +422,7 @@ def view_trigger_function(request):
                                   context_instance=RequestContext(request))
         
         
-def handle_graph_ajax_request(request):
-    
-    if request.method == 'GET':        
-        query = 'SELECT seq, device_name as x, count(device_name) as device_num, SUM(if(solved_check = 1,1,0)) as solved, SUM(if(solved_check = 0,1,0)) as unsolved FROM (SELECT seq, device_name, solved_check  from feedback_feedback AS feedback, controllog_deviceinfo AS log where feedback.appuser_id = log.user_id) as join_table GROUP BY device_name;'
-        graph_data = Feedback.objects.raw(query)
-        graph_data =  Var.todict(graph_data)
-        return HttpResponse(json.dumps(graph_data), mimetype="application/json")  
+  
     
 
         

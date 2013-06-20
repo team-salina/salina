@@ -11,8 +11,6 @@ def get_default_result():
     str = """
 { "nodeDataArray": [
 
-
-
     { "key": 1, "text": "B" },
     { "key": 2, "text": "C" },
     { "key": 3, "text": "D" },
@@ -84,17 +82,17 @@ def todict(obj, classkey=None):
 
 
 # this variable for categories
-QUESTION = 'QUESTION'
-SUGGESTION = 'SUGGESTION'
-PROBLEM = 'PROBLEM'
-PRAISE = 'PRAISE'
+QUESTION = 'question'
+SUGGESTION = 'suggestion'
+PROBLEM = 'probelm'
+PRAISE = 'evaluation'
     
     
 CATEGORIES = (
                   (QUESTION, 'question'),
                   (SUGGESTION, 'suggestion'),
                   (PROBLEM, 'problem'),
-                  (PRAISE, 'praise'),
+                  (PRAISE, 'evaluation'),
                   )
     
     # this variable for key_mapping

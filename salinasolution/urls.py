@@ -1,6 +1,7 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, include, url
+#from salinasolution.userinfo.views.view_home
 from django.contrib import admin
 import settings
 #import django.contrib.auth.views.login
@@ -21,7 +22,7 @@ urlpatterns = patterns('',
     url(r'^userinfo/', include('userinfo.urls')),
     url(r'^login/$', 'django.contrib.auth.views.login'),
     url(r'^community_login/$', 'django.contrib.auth.views.community_login'),
-    url(r'^$', 'django.contrib.auth.views.login'),
+    url(r'^$', 'salinasolution.userinfo.views.view_home'),
     
      
 )

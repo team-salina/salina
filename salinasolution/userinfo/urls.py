@@ -33,8 +33,6 @@ urlpatterns = patterns('userinfo.views',
      url(r'^advanced.html', 'view_advanced'),
      url(r'^insight.html', 'view_insight'),
      
-     
-     url(r'^main_admin/handle_graph_ajax_request', 'handle_graph_ajax_request'),
 )
 
 

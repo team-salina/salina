@@ -53,17 +53,17 @@ def save_user_feedback(request):
         dic_key_list = dic.keys()
         print dic_key_list
         for key in dic_key_list:
-                if key == 'Feedback':
-                    instance = pson.make_instance_by_name(key)
-                    instance = pson.dic_to_obj(dic[key], instance)
-                    instance = instance.auto_save()
-                    feedback = instance
+            if key == 'Feedback':
+                instance = pson.make_instance_by_name(key)
+                instance = pson.dic_to_obj(dic[key], instance)
+                instance = instance.auto_save()
+                feedback = instance
                     
-                elif key == 'FeedbackContext':
-                    instance = FeedbackContext()
-                    instance = pson.dic_to_obj(dic[key], instance)
-                    instance.feedback = feedback
-                    instance.save()
+            elif key == 'FeedbackContext':
+                instance = FeedbackContext()
+                instance = pson.dic_to_obj(dic[key], instance)
+                instance.feedback = feedback
+                instance.save()
         '''
         try :    
             for key in dic_key_list:
@@ -80,10 +80,10 @@ def save_user_feedback(request):
                     instance.save()    
         except Exception as e:
             print e
-        '''
-        return "success"
-         
-    return "fail" 
+        
+            return HttpResponse("success")
+        ''' 
+        return HttpResponse("success") 
 
 '''
 ####################################################################################

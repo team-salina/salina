@@ -1,12 +1,11 @@
  #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from django.db.models import Count
+from django.db.models import Count, Avg
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from salinasolution.debug import debug
 from salinasolution.userinfo.models import AppUser, App
-from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote,\
-    FeedbackContext
+from salinasolution.feedback.models import Feedback, FeedbackComment, FeedbackVote, PraiseScore, Reply, ReplyComment, ReplyEvaluation, ReplyVote,   FeedbackContext
 from salinasolution.controllog.models import  DeviceInfo, Session
 import salinasolution.var as Var
 from salinasolution.templetobj import FeedbackInfo
@@ -136,10 +135,11 @@ def view_app_home(request):
         print "exception : " + str(e)
     
     '''
-    return render_to_response('app-home.html', {  
+    return render_to_response('real_voice.html', {  
                                                    'user_data':user_data,
                                                   'session_data':session_data,
-                                                   'app':app
+                                                   'app':app,
+                                                   'app_id':app_id,
                                                   },
                                   context_instance=RequestContext(request))
     
@@ -184,53 +184,77 @@ def view_app_home(request):
 
 @login_required
 def view_real_voice(request):
-    if request.method == 'GET' :
-        #무조건 두가지 값이 존재한다.
-        app_id = request.GET[Var.APP_ID]
-        has_request_type = request.GET.has_key('request_type')
-        if has_request_type:
-            request_type = request.GET['request_type']
-            if request_type == 'screen':
-                category = request.GET[Var.CATEGORY]
-                screen_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).values('screen_name').annotate(scount=Count('screen_name')).order_by('scount')
-                return render_to_response('admin_more_info/more_screens.html', {  
-                                                       'screen_infos':screen_infos,
+    try :
+        if request.method == 'GET' :
+            #무조건 두가지 값이 존재한다.
+            app_id = request.GET[Var.APP_ID]
+            has_request_type = request.GET.has_key('request_type')
+            if has_request_type:
+                request_type = request.GET['request_type']
+                if request_type == 'screen':
+                    category = request.GET[Var.CATEGORY]
+                    if category == 'evaluation':
+                        screens = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).annotate(evaluation_avg=Avg('feedback__praise_score')).order_by('score_avg').reverse().values('score_avg','screen_name')
+                    else :
+                        screens = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).values('screen_name').annotate(scount=Count('screen_name')).order_by('scount').reverse()
+                    
+                    return render_to_response('admin_more_info/more_screens.html', {  
+                                                               'screens':screens,
+                                                               'app_id':app_id,
+                                                              },
+                                              context_instance=RequestContext(request))
+                elif request_type == 'function':
+                    category = request.GET[Var.CATEGORY]
+                    screen_name = request.GET['screen_name']
+                    functions = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).values('function_name').annotate(scount=Count('function_name')).order_by('scount').reverse()
+                    return render_to_response('admin_more_info/more_functions.html', {  
+                                                           'functions':functions,
+                                                           'app_id':app_id,
+                                                          },
+                                          context_instance=RequestContext(request)) 
+                elif request_type == 'feedback':
+                    
+                    category = request.GET[Var.CATEGORY]
+                    has_screen_name = request.GET.has_key('screen_name')
+                    has_function_name = request.GET.has_key('function_name')
+                    feedbacks = FeedbackContext()
+                    if has_screen_name:
+                        screen_name = request.GET['screen_name']
+                        print screen_name
+                        if has_function_name :
+                            function_name = request.GET['function_name']
+                            feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, function_name = function_name, screen_name = screen_name).select_related()
+                        else :
+                            feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).select_related()
+                            
+                    else :
+                        feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).select_related()
+                        
+                    for feedback_info in feedbacks:
+                        vote_num = FeedbackVote.objects.filter(feedback = feedback_info.feedback).count()
+                        print "asfasfdsafasdfdsafasdfasddasfdasfasdfadsf"
+                        reply_num = Reply.objects.filter(feedback = feedback_info.feedback).count()
+                        setattr(feedback_info.feedback, "vote_num", vote_num)
+                        setattr(feedback_info.feedback, "reply_num", reply_num)
+                    
+                    for feedback_info in feedbacks:
+                        print feedback_info.feedback.vote_num
+                        print feedback_info.feedback.reply_num
+                          
+                              
+                    return render_to_response('admin_more_info/more_feedbacks.html', {  
+                                                           'feedbacks':feedbacks,
+                                                           'app_id':app_id,
+                                                          },
+                                      context_instance=RequestContext(request))
+            #아무것도 없을때                
+            else :
+                return render_to_response('real_voice.html', {  
+                                                       'app_id':app_id,
                                                       },
                                       context_instance=RequestContext(request))
-            elif request_type == 'function':
-                category = request.GET[Var.CATEGORY]
-                screen_name = request.GET['screen_name']
-                function_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).values('function_name').annotate(scount=Count('function_name')).order_by('scount')
-                return render_to_response('admin_more_info/more_functions.html', {  
-                                                       'function_infos':function_infos,
-                                                      },
-                                      context_instance=RequestContext(request)) 
-            elif request_type == 'feedback':
-                category = request.GET[Var.CATEGORY]
-                has_screen_name = request.GET.has_key['screen_name']
-                has_function_name = request.GET.has_key['function_name']
-                
-                if has_screen_name:
-                    screen_name = request.GET['screen_name']
-                    if has_function_name :
-                        function_name = request.GET['function_name']
-                        feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, function_name = function_name, screen_name = screen_name).select_related()
-                    else :
-                        feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).select_related()
-                else :
-                    feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).select_related()
-                    
-                return render_to_response('app-home.html', {  
-                                                   'feedbacks':feedbacks,
-                                                  },
-                                  context_instance=RequestContext(request))
-                
-        #아무것도 없을때                
-        else :
-            return render_to_response('real_voice.html', {  
-                                                   'app_id':app_id,
-                                                  },
-                                  context_instance=RequestContext(request))
+    except Exception, e:
+        print str(e)
         
               
  

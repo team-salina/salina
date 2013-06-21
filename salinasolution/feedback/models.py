@@ -55,6 +55,7 @@ class Feedback(models.Model):
     
     solved_check = models.BooleanField(default = False)
     reply_num = models.IntegerField(default = 0)
+    praise_score = models.FloatField()
     
     
     
@@ -78,11 +79,9 @@ class Feedback(models.Model):
         return feed
     
     def auto_save(self):
+        
         try :
-            print "asdfsadfdsaf"
-            print self.app
-            print type(self.app)
-            feed = Feedback(appuser_id = self.device_key, category = self.category, contents = self.contents, app_id = self.app_id)
+            feed = Feedback(appuser_id = self.device_key, category = self.category, contents = self.contents, app_id = self.app_id, praise_score = float(self.praise_score))
             feed.save()
             return feed 
         except Exception, e:

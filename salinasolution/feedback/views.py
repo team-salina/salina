@@ -4,13 +4,13 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from salinasolution.debug import debug
 import simplejson as json
 import  salinasolution.var as Var
-from salinasolution.controllog.models import Session, DeviceInfo
+from salinasolution.controllog.models import  DeviceInfo
 from salinasolution.feedback.models import Feedback, FeedbackContext, Reply, ReplyComment, FeedbackComment
 from salinasolution.userinfo.models import App,  AppUser
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from salinasolution import pson
+from salinasolution import pson, mygcm
 import salinasolution.redisread as redisread
 import redis 
 import salinasolution.ast as ast
@@ -18,6 +18,11 @@ from django.http import  HttpResponseRedirect
 import mimetypes
 from django.core.serializers.json import DjangoJSONEncoder
 from django.contrib.auth.models import User 
+from django.contrib.auth import REDIRECT_FIELD_NAME, login as auth_login
+from django.contrib.auth import login, logout
+from django.contrib.sessions.models import Session
+
+
 
 
 TAG = "feedback.views"
@@ -101,8 +106,13 @@ community부분
 ####################################################################################
 '''    
 
+        
+
+
+
 def view_my_feedback(request):
     if request.method == 'GET':
+        
         app_id = request.GET[Var.APP_ID]
         device_key = request.GET[Var.DEVICE_KEY]
         #feedbackcontexts = FeedbackContext.objects.filter(feedback__appuser__device_key = device_key).filter(feedback__app__app_id = app_id)
@@ -112,17 +122,7 @@ def view_my_feedback(request):
                                                  'myfeedbacks': myfeedbacks,
                                                  },
                                   context_instance=RequestContext(request))
-'''
 
-session_key = '8cae76c505f15432b48c8292a7dd0e54'
-
-session = Session.objects.get(session_key=session_key)
-uid = session.get_decoded().get('_auth_user_id')
-user = User.objects.get(pk=uid)
-
-print user.username, user.get_full_name(), user.email
-
-''' 
 @csrf_exempt
 def view_feedback_detail(request):
     view_type = request.GET[Var.VIEW_TYPE]
@@ -189,29 +189,58 @@ def view_feedback_detail(request):
             
             
         elif (view_type == 'feedback_comment'):
-             
-            feedback_id = request.GET[Var.FEEDBACK_ID]
-            device_key = request.GET[Var.DEVICE_KEY]
-            contents = request.GET[Var.CONTENTS]
-            fc=FeedbackComment.objects.create(appuser_id = device_key, feedback_id = feedback_id, contents = contents)
-            fc_num = FeedbackComment.objects.filter(feedback__pk = feedback_id).count()
-            return HttpResponse(str(fc_num)) 
+            try:
+                device_key = ''
+                feedback_id = request.GET[Var.FEEDBACK_ID]
+                contents = request.GET[Var.CONTENTS]
+                #device_key가 존재하면 sdk 에서 다는것
+                if request.GET.has_key('device_key'):
+                    device_key = request.GET['device_key']
+                #community 인경우
+                else :
+                    user = request.user
+                    appuser = AppUser.objects.get(user = user)
+                    device_key = appuser.device_key
+                    
+                
+                fc=FeedbackComment.objects.create(appuser_id = device_key, feedback_id = feedback_id, contents = contents)
+                fc_num = FeedbackComment.objects.filter(feedback__pk = feedback_id).count()
+                
+                feedback=Feedback.objects.get(pk = feedback_id)
+                mygcm.send_push(feedback.appuser.reg_id, fc)
+                
+                return HttpResponse(str(fc_num)) 
+            except Exception, e:
+                print str(e) 
         
-        elif (view_type == 'reply_comment'):            
+        elif (view_type == 'reply_comment'):
+            device_key = ''
+            #device_key가 존재하면 sdk 에서 다는것
+            if request.GET.has_key('device_key'):
+                device_key = request.GET['device_key']
+            #community 인경우
+            else :
+                user = request.user
+                appuser = AppUser.objects.get(user = user)
+                device_key = appuser.device_key
+                                         
             reply_id = request.GET['reply_id']
-            device_key = request.GET[Var.DEVICE_KEY]
             contents = request.GET[Var.CONTENTS]
-            rc=ReplyComment.objects.create(appuser_id = device_key, reply_id = reply_id, contents = contents)
+            
+            rc=ReplyComment.objects.create(appuser_device_key = device_key, reply_id = reply_id, contents = contents)
             rc_num = ReplyComment.objects.filter(reply__pk = reply_id).count()
+            
+            reply = Reply.objects.get(feedback__pk = feedback)
+            mygcm.send_push(reply.feedback.appuser.reg_id, rc)
             return HttpResponse(str(rc_num)) 
         
     
-        
-            
-            
-'''
+
+    
        
-'''     
+            
+            
+    
 '''
 
 ''' 
@@ -283,12 +312,9 @@ def view_write_reply(request):
         try :
             reply_contents = request.POST['reply_contents']
             feedback_id = request.GET[Var.FEEDBACK_ID]
-            session_key = request.GET['session_key']
-
-            session = Session.objects.get(session_key=session_key)
-            uid = session.get_decoded().get('_auth_user_id')
-            user = User.objects.get(pk=uid)
             
+
+            user = request.user            
             print feedback_id
             print user.username
             
@@ -318,6 +344,10 @@ def view_write_reply(request):
                 comment_count = comment_list.count()
                 setattr(reply,"comment_list",comment_list)
                 setattr(reply,"comment_count",comment_count)
+            
+            
+            
+            mygcm.send_push(feedback.appuser.reg_id, reply)
     
         except Exception, e:
             print "exception : " + str(e)        
@@ -354,5 +384,6 @@ community부분
         
         
         
+
 
 

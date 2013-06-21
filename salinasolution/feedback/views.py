@@ -40,50 +40,50 @@ user feedback을 저장하는 부분
 def save_user_feedback(request):
     
     print "save_user_feedback"
-    if request.method == 'POST':
-        print "post"
-        
-        feedback = Feedback()
-        
-        dic = str(json.loads(request.raw_post_data))
-        dic = ast.literal_eval(dic)
-        dic = dic["user_feedback"]
-        
-        
-        dic_key_list = dic.keys()
-        print dic_key_list
-        for key in dic_key_list:
-            if key == 'Feedback':
-                instance = pson.make_instance_by_name(key)
-                instance = pson.dic_to_obj(dic[key], instance)
-                instance = instance.auto_save()
-                feedback = instance
-                    
-            elif key == 'FeedbackContext':
-                instance = FeedbackContext()
-                instance = pson.dic_to_obj(dic[key], instance)
-                instance.feedback = feedback
-                instance.save()
-        '''
-        try :    
-            for key in dic_key_list:
-                if key == 'Feedback':
-                    instance = pson.make_instance_by_name(key)
-                    instance = pson.dic_to_obj(dic[key], instance)
-                    instance = instance.auto_save()
-                    feedback = instance
-                    
-                elif key == 'FeedbackContext':
-                    instance = FeedbackContext()
-                    instance = pson.dic_to_obj(dic[key], instance)
-                    instance.feedback = feedback
-                    instance.save()    
-        except Exception as e:
-            print e
-        
+    try:
+        if request.method == 'POST':
+            print "post"
+            
+            feedback = Feedback()
+            
+            print json.loads(request.raw_post_data)        
+            dic = str(json.loads(request.raw_post_data))
+            dic = ast.literal_eval(dic)
+            dic = dic["user_feedback"]
+            
+            key = 'Feedback'
+            instance = pson.make_instance_by_name(key)
+            instance = pson.dic_to_obj(dic[key], instance)
+            instance = instance.auto_save()
+            feedback = instance
+            print  feedback   
+            key = 'FeedbackContext'    
+            instance = FeedbackContext()
+            instance = pson.dic_to_obj(dic[key], instance)
+            instance.feedback = feedback
+            instance.save()
+            '''
+            try :    
+                for key in dic_key_list:
+                    if key == 'Feedback':
+                        instance = pson.make_instance_by_name(key)
+                        instance = pson.dic_to_obj(dic[key], instance)
+                        instance = instance.auto_save()
+                        feedback = instance
+                        
+                    elif key == 'FeedbackContext':
+                        instance = FeedbackContext()
+                        instance = pson.dic_to_obj(dic[key], instance)
+                        instance.feedback = feedback
+                        instance.save()    
+            except Exception as e:
+                print e
+            
+                return HttpResponse("success")
+            ''' 
             return HttpResponse("success")
-        ''' 
-        return HttpResponse("success") 
+    except Exception, e:
+        print str(e) 
 
 '''
 ####################################################################################

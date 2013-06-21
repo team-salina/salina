@@ -78,9 +78,15 @@ class Feedback(models.Model):
         return feed
     
     def auto_save(self):
-        feed = Feedback(user = AppUser().auto_save(self.user_id, self.device_key), category = self.category, contents = self.contents, app_id = self.app_id)
-        feed.save()
-        return feed 
+        try :
+            print "asdfsadfdsaf"
+            print self.app
+            print type(self.app)
+            feed = Feedback(appuser_id = self.device_key, category = self.category, contents = self.contents, app_id = self.app_id)
+            feed.save()
+            return feed 
+        except Exception, e:
+            print str(e)
     
 '''
  feedback 테이블을 foreignkey로 참조하고 있다. (하나의 feedback에 대해서 여러개의  답글(reply)가 있을 수 있기 때문에)
@@ -192,8 +198,8 @@ class FeedbackContext(models.Model):
     device_manufacturer = models.CharField(max_length = 50)
     device_country = models.CharField(max_length = 50)
     
-    latitude = models.FloatField()
-    longitude = models.FloatField()
+    latitude = models.FloatField(null = True)
+    longitude = models.FloatField(null = True)
     
     def auto_save_(self, feedback):
         self.feedback = feedback

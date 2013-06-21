@@ -3,7 +3,7 @@
 from django.db import models
 from salinasolution.debug import debug
 from django.db.models.deletion import CASCADE
-from django.contrib.auth.models import User, UserManager
+from django.contrib.auth.models import User
 
 '''
 Created on 2013. 3. 7.
@@ -28,13 +28,16 @@ class App(models.Model):
     version = models.CharField(max_length = 50)    
     
 '''
+e24956c9-360c-4afb-8bb8-ce8e40ba46a1
+APA91bG5reJFE8Khr0m1lgqcfNeyXPGa_ft2zxNk6LR7GGuc9i4T6PwAfO0uA4DHWJNUZJ6nRY3z48bOfQAMQ2rRXXZuRT10cKMoVGG7VVffzpXy0NGDUEeO-GchSbFe4NzUiQxzIVhx_sRapSJjk31iXRJKS8E1fQ 
 user(애플리케이션 사용자에 대한 정보를 나타낸 테이블이다.)
 device_key는 각 기기마다 잇는 유일한 정보를 나타내고,  
 user_id는 여러기기를 갖고 있는 사용자인 경우, 하나의 사용자라는 걸 파악하기 위해 사용할 open id이다.
 '''
 class AppUser(models.Model):
     
-    user = models.ForeignKey(User)
+    reg_id = models.CharField(max_length = 300, null = True)
+    user = models.ForeignKey(User, null = True)
     device_key = models.CharField(max_length = 100, primary_key = True)
     
     def auto_save(self, user_id, device_key):

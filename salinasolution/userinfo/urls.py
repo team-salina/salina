@@ -32,6 +32,7 @@ urlpatterns = patterns('userinfo.views',
      url(r'^real_voice.html', 'view_real_voice'),
      url(r'^advanced.html', 'view_advanced'),
      url(r'^insight.html', 'view_insight'),
+     url(r'^register_reg_id', 'register_reg_id'),
      
 )
 

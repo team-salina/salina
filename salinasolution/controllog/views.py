@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from salinasolution.debug import debug
 from salinasolution.feedback.models import Feedback
 from salinasolution.controllog.models import Session
-from salinasolution.userinfo.models import App
+from salinasolution.userinfo.models import App, AppUser
 from django.core import serializers
 from django.http import HttpResponse
 import os
@@ -37,8 +37,10 @@ system feedback을 저장하는 부분
 '''
 
 def send_device_key(request):
-    value = str(uuid.uuid4())
-    return HttpResponse(value)
+    device_key = str(uuid.uuid4())
+    appuser = AppUser(device_key = device_key)
+    appuser.save()
+    return HttpResponse(device_key)
 
 #controllog를 저장하는 부분
 @csrf_exempt
@@ -56,8 +58,7 @@ def save_system_feedback(request):
         print dic_key_list
         
         
-        for key in dic_key_list:
-                
+        for key in dic_key_list:                
                 #Session인 경우 redis에 저장
                 if key == 'Session':
                     session_list = dic[key]
@@ -69,16 +70,11 @@ def save_system_feedback(request):
                         print "app_id : " + app_id
                 #DeviceInfo인 경우 redis에 저장    
                 elif key == 'DeviceInfo':
-                    #print "deviceinfo" + str(dic[key])
                     r.rpush(key, dic[key])
                 
                 if key == 'ScreenFlow':
-                    #print "screenflow before"
-                    #print "dic : " + str(dic[key])
-                    #print "app_id : " + app_id
                     save_screen_flow(dic[key], app_id)
-                    #print "screenflow after"
-                
+                    #print "screenflow after"                
                 #여긴 준영이랑 논의
                 elif key == 'Event':
                     print "event"

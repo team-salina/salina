@@ -30,6 +30,28 @@ r = redis.StrictRedis(host = 'localhost', port=Var.REDIS_PORT_NUM, db=0)
 # Create your views here.
 
 TAG = "adminpage.views"
+@csrf_exempt
+def register_reg_id(request):
+    print "asfasdfsdafdasfasdf"
+    try:
+        if request.method == 'POST':
+            
+            
+            reg_id = request.POST['reg_id']
+            device_key = request.POST['device_key']
+            print len(reg_id) 
+            print  device_key
+            
+            appuser=AppUser.objects.get(device_key = device_key)
+            appuser.reg_id = reg_id 
+            appuser.save()
+            
+            return HttpResponse("success")
+        else :
+            return HttpResponse("fail")
+    except Exception, e:
+        print str(e)
+        
 
 
 def view_home(request):
@@ -171,7 +193,7 @@ def view_real_voice(request):
             if request_type == 'screen':
                 category = request.GET[Var.CATEGORY]
                 screen_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category).values('screen_name').annotate(scount=Count('screen_name')).order_by('scount')
-                return render_to_response('app-home.html', {  
+                return render_to_response('admin_more_info/more_screens.html', {  
                                                        'screen_infos':screen_infos,
                                                       },
                                       context_instance=RequestContext(request))
@@ -179,7 +201,7 @@ def view_real_voice(request):
                 category = request.GET[Var.CATEGORY]
                 screen_name = request.GET['screen_name']
                 function_infos = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).values('function_name').annotate(scount=Count('function_name')).order_by('scount')
-                return render_to_response('app-home.html', {  
+                return render_to_response('admin_more_info/more_functions.html', {  
                                                        'function_infos':function_infos,
                                                       },
                                       context_instance=RequestContext(request)) 
@@ -202,33 +224,16 @@ def view_real_voice(request):
                                                    'feedbacks':feedbacks,
                                                   },
                                   context_instance=RequestContext(request))
+                
+        #아무것도 없을때                
         else :
             return render_to_response('real_voice.html', {  
                                                    'app_id':app_id,
                                                   },
                                   context_instance=RequestContext(request))
-            
-        
-          
-        
-            
-                
-            
-            
-            
-            
-            
-            
-            
-      
-        
-
         
               
-    return render_to_response('real_voice.html', {
-                                                'app_id':app_id,
-                                                 },
-                                  context_instance=RequestContext(request))
+ 
 
         
 def view_feedback(request):

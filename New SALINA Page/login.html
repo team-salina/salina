@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>SALINA - Mobile Feedback Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Twitter bootstrap theme">
+  <meta name="author" content="prettystrap">
+
+  <!-- Le styles -->
+  <link href="{{STATIC_URL}}assets/less/style.min.css" rel="stylesheet"> 
+    <link href="{{STATIC_URL}}assets/less/application.css" rel="stylesheet"> 
+
+  <!--Import Google Fonts -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,600' rel='stylesheet' type='text/css'>
+
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+      </script>
+      <![endif]-->
+      <!-- Le fav  -->
+      <link rel="shortcut icon" href="{{STATIC_URL}}assets/ico/favicon.ico">
+
+      <script src="{{STATIC_URL}}assets/js/jquery-1.9.1.min.js"></script>
+      <script>
+      if (typeof jQuery == 'undefined') {
+        document.write(unescape("%3Cscript src='assets/js/jquery-1.9.1.min.js' type='text/javascript'%3E%3C/script%3E"));
+      }
+      </script>
+
+
+    <!--Has to be in head, to lazy load images.
+    Minimize in production. -->
+
+    <script src="{{STATIC_URL}}assets/js/lazyload.js"></script>
+    <script src="{{STATIC_URL}}assets/js/jRespond.js"></script>
+    <script src="{{STATIC_URL}}assets/js/spin.js"></script>
+    <script src="{{STATIC_URL}}assets/js/bootstrap.min.js"></script>
+    <script src="{{STATIC_URL}}assets/js/lightbox.min.js"></script>
+    <script src="{{STATIC_URL}}assets/js/bootstrap.min.js"></script>
+
+    <!-- Main js fail. -->
+    <script src="{{STATIC_URL}}assets/js/main.js"></script>
+
+    <style type="text/css">
+    .comment {
+      color: white;
+      margin-left:5px;
+      float:left;
+      padding-top:12px;
+    }
+    </style>
+
+  </head>
+
+  <body id="top" data-spy="scroll" data-target=".navbar">
+
+   <!-- Brand and Navigation -->
+   <header class="navbar navbar-fixed-top">
+    <div class="inner-page">
+      <img class="pull-left salina-logo" src="{{STATIC_URL}}assets/img/colored_logo_white.png"><span class="comment">Listen Your Customer </span>
+      <a class="btn-nav" data-toggle="collapse" data-target=".nav-collapse">
+        <i class="icon-reorder"></i>
+      </a>
+      <!--
+      <div class="nav-collapse collapse">
+        <ul class="nav navigation" id="menu">
+          <li class="active"><a title="Home page" class="scroll brand-1" href="#home">Home</a></li>
+          <li><a title="Check out our awesome services" href="#features" class=" scroll brand-4">Features</a></li>
+          <li><a title="Themes assets" href="#assets" class="scroll brand-3">Download</a></li>
+          <li><a title="Who we are" href="#about" class="scroll fadeto brand-4"> About us</a></li>
+          <li><a title="Get in touch!" href="#contact" class="scroll brand-2">Register as a developer</a></li>
+          <li><a title="External page sample" href="sample-page.html" class=" brand-4">Tutorial</a></li>
+        </ul>
+              
+      </div> -->
+    </div> 
+  </header>
+    <!-- Home Page -->
+  <div id="home" class="page color-1">
+    <div class="inner-page">
+   
+<div class="span4 offset4">
+        <div class="padded">
+    <div class="login box" style="margin-top: 80px;">
+
+      <div class="box-header">
+        <span class="title">Login</span>
+      </div>
+
+      <div class="box-content padded">
+        {% if form.errors %}
+                <p>사용자 이름과 비밀번호가 일치하지 않습니다. 다시 시도해보세요.</p>
+              {% endif %}
+        <form class="separate-sections" method="post" action=".">
+          <div class="input-prepend">
+          <span class="add-on" href="#">
+            <i class="icon-user"></i>
+          </span>
+           <!-- <input type="text" placeholder="username"> -->
+           {{form.username}}
+          </div>
+
+          <div class="input-prepend">
+          <span class="add-on" href="#">
+            <i class="icon-key"></i>
+          </span>
+            <!--<input type="password" placeholder="password">-->
+            {{form.password}}
+          </div>
+
+          <div>
+                              <input type="hidden" name="next" value="/userinfo/developer.html" />
+            <input class="btn btn-blue btn-block" type="submit" value="Login" >
+              
+            
+          </div>
+{% csrf_token %} 
+        </form>
+
+        <div>
+          <a href="sign_up.html">
+              Don't have an account? <strong>Sign Up</strong>
+          </a>
+        </div>
+      </div>
+
+    </div>
+    </div>  
+  </div>
+    <div class="row-fluid inner-page">
+ 
+    </div>
+  </div>
+</div>
+<!--
+ <div class="container">
+  
+<div class="span4 offset4">
+
+
+  <div class="padded">
+    <div class="login box" style="margin-top: 80px;">
+
+      <div class="box-header">
+        <span class="title">Login</span>
+      </div>
+
+      <div class="box-content padded">
+        <form class="separate-sections">
+          <div class="input-prepend">
+          <span class="add-on" href="#">
+            <i class="icon-user"></i>
+          </span>
+            <input type="text" placeholder="username">
+          </div>
+
+          <div class="input-prepend">
+          <span class="add-on" href="#">
+            <i class="icon-key"></i>
+          </span>
+            <input type="password" placeholder="password">
+          </div>
+
+          <div>
+            <a class="btn btn-blue btn-block" href="../dashboard/dashboard.html">
+                Login <i class="icon-signin"></i>
+            </a>
+          </div>
+
+        </form>
+
+        <div>
+          <a href="sign_up.html">
+              Don't have an account? <strong>Sign Up</strong>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+</div>-->
+
+<!-- The footer, social media icons, and copyright -->        
+<footer class="page color-5">
+  <div class="inner-page row-fluid">
+    <div class="span6 social">
+      <a href="#contact"><i class="icon-twitter"></i></a>
+      <a href="#contact"><i class="icon-github-sign"></i></a>    
+      <a href="#contact"><i class="icon-facebook-sign"></i></a>
+      <a href="#contact"><i class="icon-google-plus-sign"></i></a>
+    </div>
+    <div class="span6 text-right copyright">
+      &copy; 2013 <a  href="http://prettystrap.com"  title="twitter bootstrap themes">prettystrap.com</a> | all rights reserved |  <a href="#top"   title="Got to top" class="scroll">To top <i class="icon-caret-up"></i></a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

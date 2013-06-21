@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Salina - Mobile Application Feedback Solution</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="{{STATIC_URL}}assets/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) { /* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+<link href="{{STATIC_URL}}assets/css/bootstrap-responsive.css"
+	rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="{{STATIC_URL}}assets/js/html5shiv.js"></script>
+      <![endif]-->
+
+<!-- Fav and touch icons -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon" href="{{STATIC_URL}}assets/ico/favicon.png">
+</head>
+
+<body onload="init()">
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="brand" style="font-size: 35px" href="app-home.html">Salina
+					<br /> <b class="brand" style="font-size: 15px">mobile app
+						feedback solution </b>
+				</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="new-app-home.html">Dash Board</a></li>
+						<li><a href="Basic Statistics.html">Basic Statistics</a></li>
+						<li><a href="Advanced Statistics.html">Advanced
+								Statistics</a></li>
+						<li class="active"><a href="Salina Insight.html">Salina
+								Insight</a></li>
+						<li><a href="Feedback Manage.html">Feedback Manage</a></li>
+					</ul>
+					<p class="navbar-text pull-right">
+						Logged in as <a href="#" class="navbar-link">Username</a>
+					</p>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-fluid"
+		style="margin-top: 40px; margin-left: 50px">
+		<div class="row-fluid">
+			<div class="span2">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li><a href="Salina Insight.html">Screen Path</a></li>
+						<li class="active"><a href="Salina Insight-1.html">분석 및
+								도달률 통계 </a></li>
+					</ul>
+				</div>
+				<!--/.well -->
+			</div>
+			<!--/span-->
+			<div class="span8">
+				<div class="hero-unit">
+					<h3>사용자의 특정 Activity까지의 사용 경로</h3>
+					<div id="sample">
+						<div style="width: 100%; white-space: nowrap;">
+
+							<span
+								style="display: inline-block; vertical-align: top; padding: 5px; width: 100px">
+								<div id="palette"
+									style="background-color: Snow; border: solid 1px gray; height: 480px solid; visibility: hidden;">
+								</div>
+							</span>
+
+							<!--<span style="display: inline-block; vertical-align: top; padding: 5px; width:85%">-->
+
+							<div id="myDiagram"
+								style="background-color: Snow; border: solid 1px gray; height: 480px"></div>
+							<!--   </span> -->
+						</div>
+
+
+						<button onclick="relayout()">Re-layout Diagram</button>
+						<button onclick="save()">Save</button>
+						<button onclick="load()">Load</button>
+						Diagram Model saved in JSON format: <br />
+						<textarea id="mySavedModel" style="width: 100%; height: 300px">
+{ "nodeDataArray": [
+
+
+
+    { "key": 1, "text": "MainActivity" },
+    { "key": 2, "text": "C" },
+    { "key": 3, "text": "D" },
+    { "key": 4, "text": "E" },
+    { "key": 5, "text": "F" },
+    { "key": 6,  "text": "G!" },
+    { "key": 7, "text": "H!" },
+    { "key": 8, "text": "H+" },
+
+    
+    { "key": 16, "text": "Q!" }
+
+
+  ],
+  "linkDataArray": [
+
+    { "from":  0, "to": 1 },
+    { "from":  1, "to": 2 },
+    { "from":  2, "to": 3 },
+    { "from":  3, "to": 4 },
+    { "from":  4, "to": 16 },
+
+    { "from":  5, "to": 6 },
+    { "from":  6, "to": 7 },
+    { "from":  7, "to": 8 },
+    { "from":  8, "to": 16 }
+
+
+  ]
+}
+</textarea>
+
+
+					</div>
+
+					<!-- <p><a href="#" class="btn btn-primary btn-large">Learn more &raquo;</a></p> -->
+				</div>
+
+			</div>
+			<!--/span-->
+		</div>
+		<!--/row-->
+
+		<hr class="featurette-divider">
+
+		<footer>
+			<p>&copy; Company 2013 Salina - Mobile Application Feedback
+				Solution.</p>
+		</footer>
+
+	</div>
+	<!--/.fluid-container-->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="{{STATIC_URL}}assets/js/jquery.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-transition.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-alert.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-modal.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-dropdown.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-scrollspy.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-tab.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-tooltip.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-popover.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-button.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-collapse.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-carousel.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-typeahead.js"></script>
+	<script src="{{STATIC_URL}}assets/js/holder/holder.js"></script>
+	<script src="{{STATIC_URL}}assets/js/highcharts.js"></script>
+	<script src="{{STATIC_URL}}assets/js/highcharts-more.js"></script>
+	<script src="{{STATIC_URL}}assets/js/modules/exporting.js"></script>
+	<script src="{{STATIC_URL}}assets/js/modules/go.js"></script>
+
+	<script type="text/javascript" id="code">
+	 function init() {
+		    if (window.goSamples) goSamples();  // init for these samples -- you don't need to call this
+		    var $ = go.GraphObject.make;  // for conciseness in defining templates
+
+		    var yellowgrad = $(go.Brush, go.Brush.Linear, { 0: "rgb(254, 201, 0)", 1: "rgb(254, 162, 0)" });
+		    var greengrad = $(go.Brush, go.Brush.Linear, { 0: "#98FB98", 1: "#9ACD32" });
+		    var bluegrad = $(go.Brush, go.Brush.Linear, { 0: "#B0E0E6", 1: "#87CEEB" });
+		    var redgrad = $(go.Brush, go.Brush.Linear, { 0: "#C45245", 1: "#7D180C" });
+		    var whitegrad = $(go.Brush, go.Brush.Linear, { 0: "#F0F8FF", 1: "#E6E6FA" });
+
+		    var bigfont = "bold 13pt Helvetica, Arial, sans-serif";
+		    var smallfont = "bold 11pt Helvetica, Arial, sans-serif";
+
+		    // Common text styling
+		    function textStyle() {
+		      return {
+		        margin: 6,
+		        wrap: go.TextBlock.WrapFit,
+		        textAlign: "center",
+		        editable: true,
+		        font: bigfont
+		      }
+		    }
+
+		    myDiagram = $(go.Diagram, "myDiagram");
+
+		    var defaultAdornment =
+		      $(go.Adornment, go.Panel.Spot,
+		        $(go.Panel, go.Panel.Auto,
+		          $(go.Shape, { fill: null, stroke: "blue", strokeWidth: 2 }),
+		          $(go.Placeholder)),
+		        // the button to create a "next" node, at the top-right corner
+		        $("Button",
+		          { alignment: go.Spot.TopRight,
+		            click: addNodeAndLink },  // this function is defined below
+		          $(go.Shape, "PlusLine", { desiredSize: new go.Size(6, 6) })
+		        )
+		      );
+
+		    // define the Node template
+		    myDiagram.nodeTemplate =
+		      $(go.Node, go.Panel.Auto,
+		        { selectionAdornmentTemplate: defaultAdornment },
+		        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+		        // define the node's outer shape, which will surround the TextBlock
+		        $(go.Shape, "Rectangle",
+		          { fill: yellowgrad, stroke: "black",
+		            portId: "", fromLinkable: true, toLinkable: true, cursor: "pointer" }),
+		        $(go.TextBlock,
+		          { margin: 6,
+		            font: bigfont,
+		            editable: true,
+		            text: 'Page' },
+		          new go.Binding("text", "text").makeTwoWay()));
+
+		    myDiagram.nodeTemplateMap.add("Source",
+		      $(go.Node, go.Panel.Auto,
+		        $(go.Shape, "RoundedRectangle",
+		          { fill: bluegrad,
+		            portId: "", fromLinkable: true, cursor: "pointer"  }),
+		        $(go.TextBlock, textStyle(),
+		          { text: 'Source' },
+		          new go.Binding("text", "text").makeTwoWay())
+		        ));
+
+		    myDiagram.nodeTemplateMap.add("DesiredEvent",
+		      $(go.Node, go.Panel.Auto,
+		        $(go.Shape, "RoundedRectangle",
+		          { fill: greengrad, portId: "", toLinkable: true }),
+		        $(go.TextBlock, textStyle(),
+		          { text: 'Success!' },
+		          new go.Binding("text", "text").makeTwoWay())
+		        ));
+
+		    // Undesired events have a special adornment that allows adding additional "reasons"
+		    var UndesiredEventAdornment =
+		      $(go.Adornment, go.Panel.Spot,
+		        $(go.Panel, go.Panel.Auto,
+		          $(go.Shape, { fill: null, stroke: "blue", strokeWidth: 2 }),
+		          $(go.Placeholder)),
+		        // the button to create a "next" node, at the top-right corner
+		        $("Button",
+		          { alignment: go.Spot.BottomRight,
+		            click: addReason },  // this function is defined below
+		          $(go.Shape, "TriangleDown", { desiredSize: new go.Size(10, 10) })
+		        )
+		      );
+
+		    var reasonTemplate = $(go.Panel, go.Panel.Horizontal,
+		      $(go.TextBlock, {
+		        margin: new go.Margin(4,0,0,0),
+		        maxSize: new go.Size(200, NaN),
+		        wrap: go.TextBlock.WrapFit,
+		        stroke: 'whitesmoke',
+		        text: 'Reason',
+		        editable: true,
+		        font: smallfont },
+		        new go.Binding('text', 'text').makeTwoWay())
+		    );
+
+
+		    myDiagram.nodeTemplateMap.add("UndesiredEvent",
+		      $(go.Node, go.Panel.Auto,
+		        { selectionAdornmentTemplate: UndesiredEventAdornment },
+		        $(go.Shape, "RoundedRectangle",
+		          { fill: redgrad, portId: "", toLinkable: true }),
+		        $(go.Panel, go.Panel.Vertical, {defaultAlignment: go.Spot.TopLeft},
+
+		          $(go.TextBlock, textStyle(),
+		            { stroke: 'whitesmoke',
+		              text: 'Drop',
+		              minSize: new go.Size(80, NaN) },
+		            new go.Binding("text", "text").makeTwoWay()),
+
+		          $(go.Panel, go.Panel.Vertical,
+		            { name: 'ReasonList', defaultAlignment: go.Spot.TopLeft,
+		              itemTemplate: reasonTemplate },
+		            new go.Binding("itemArray", "reasonsList").makeTwoWay()
+		          )
+		        )
+		        ));
+
+		    myDiagram.nodeTemplateMap.add("Comment",
+		      $(go.Node, go.Panel.Auto,
+		        new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+		        $(go.Shape, "Rectangle",
+		          { portId: "", fill: whitegrad, fromLinkable: true }),
+		        $(go.TextBlock,
+		          { margin: 9,
+		            maxSize: new go.Size(200, NaN),
+		            wrap: go.TextBlock.WrapFit,
+		            editable: true,
+		            text: 'A comment',
+		            font: smallfont },
+		          new go.Binding("text", "text").makeTwoWay())
+		        // no ports, because no links are allowed to connect with a comment
+		        ));
+
+		    // clicking the button on an UndesiredEvent node inserts a new text object into the panel
+		    function addReason(e, obj) {
+		      var adorn = obj.part;
+		      if (adorn === null) return;
+		      e.handled = true;
+		      //var list = adorn.adornedPart.findObject('ReasonList');
+		      var arr = adorn.adornedPart.data.reasonsList;
+		      // and add it to the Array of port data
+		      myDiagram.startTransaction('add reason');
+		      myDiagram.model.addArrayItem(arr, {});
+		      myDiagram.commitTransaction('add reason');
+		    }
+
+		    // clicking the button of a default node inserts a new node to the right of the selected node,
+		    // and adds a link to that new node
+		    function addNodeAndLink(e, obj) {
+		      var adorn = obj.part;
+		      if (adorn === null) return;
+		      e.handled = true;
+		      var diagram = adorn.diagram;
+		      diagram.startTransaction("Add State");
+		      // get the node data for which the user clicked the button
+		      var fromNode = adorn.adornedPart;
+		      var fromData = fromNode.data;
+		      // create a new "State" data object, positioned off to the right of the adorned Node
+		      var toData = { text: "new" };
+		      var p = fromNode.location;
+		      toData.loc = p.x + 200 + " " + p.y;  // the "loc" property is a string, not a Point object
+		      // add the new node data to the model
+		      var model = diagram.model;
+		      model.addNodeData(toData);
+		      // create a link data from the old node data to the new node data
+		      var linkdata = {};
+		      linkdata[model.linkFromKeyProperty] = model.getKeyForNodeData(fromData);
+		      linkdata[model.linkToKeyProperty] = model.getKeyForNodeData(toData);
+		      // and add the link data to the model
+		      model.addLinkData(linkdata);
+		      // select the new Node
+		      var newnode = diagram.findNodeForData(toData);
+		      diagram.select(newnode);
+		      diagram.commitTransaction("Add State");
+		    }
+
+		    // replace the default Link template in the linkTemplateMap
+		    myDiagram.linkTemplate =
+		      $(go.Link,  // the whole link panel
+		        { curve: go.Link.Bezier, toShortLength: 15 },
+		        new go.Binding("curviness", "curviness"),
+		        $(go.Shape,  // the link shape
+		          { isPanelMain: true,
+		            stroke: "#2F4F4F", strokeWidth: 2.5 }),
+		        $(go.Shape,  // the arrowhead
+		          { toArrow: "kite", fill: '#2F4F4F',
+		            stroke: null, scale: 2 }),
+				$(go.Panel, go.Panel.Auto,
+				  $(go.Shape,  // the link shape
+					{ fill: "", stroke: null }),
+				  $(go.TextBlock, "",  // the label
+					{ textAlign: "center",
+					  editable: true,
+					  font: "10pt helvetica, arial, sans-serif",
+					  stroke: "white",
+					  margin: 4 },
+					new go.Binding("text", "text").makeTwoWay()))
+		    );
+
+		    myDiagram.linkTemplateMap.add("Comment",
+		      $(go.Link, { selectable: false },
+		        $(go.Shape, { strokeWidth: 2, stroke: "darkgreen" })));
+
+		    // have mouse wheel events zoom in and out instead of scroll up and down
+		    myDiagram.toolManager.mouseWheelBehavior = go.ToolManager.WheelZoom;
+		    myDiagram.allowDrop = true;
+
+
+		    var palette = new go.Palette("palette");  // create a new Palette in the HTML DIV element "palette"
+		    // share the template map with the Palette
+		    palette.nodeTemplateMap = myDiagram.nodeTemplateMap;
+		    palette.autoScale = go.Diagram.Uniform;
+
+		    palette.model.nodeDataArray = [
+		      { category: 'Source' },
+		      { }, // default node
+		      { category: 'DesiredEvent' },
+		      { category: 'UndesiredEvent', reasonsList: [{}] },
+		      { category: 'Comment' }
+		    ];
+
+		    // read in the JSON-format data from the "mySavedModel" element
+		    myDiagram.initialAutoScale = go.Diagram.Uniform;
+		    myDiagram.toolManager.linkingTool.direction = go.LinkingTool.ForwardsOnly;
+		    myDiagram.initialContentAlignment = go.Spot.Center;
+		    myDiagram.layout = $(go.LayeredDigraphLayout, { isOngoing: false, layerSpacing: 50 });
+		    load();
+
+
+		  }
+
+		  function relayout() {
+		    myDiagram.layoutDiagram(true);
+		  }
+		  // Show the diagram's model in JSON format
+		  function save() {
+		    var str = myDiagram.model.toJson();
+		    document.getElementById("mySavedModel").value = str;
+		  }
+		  function load() {
+		    var str = document.getElementById("mySavedModel").value;
+		    myDiagram.model = go.Model.fromJson(str);
+		    myDiagram.undoManager.isEnabled = true;
+		  }
+	</script>
+
+</body>
+</html>

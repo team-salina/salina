@@ -1,0 +1,530 @@
+<!doctype html>
+<html>
+<head>
+
+  <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800">
+  <link rel="stylesheet" href="admin-assets/stylesheets/user_feedback.css">
+
+
+  <meta charset="utf-8">
+
+  <!-- Always force latest IE rendering engine or request Chrome Frame -->
+  <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+
+  <!-- Use title if it's in the page YAML frontmatter -->
+  <title>Core Admin Theme</title>
+
+  <link href="admin-assets/stylesheets/application.css" media="screen" rel="stylesheet" type="text/css" />
+
+  <!--[if lt IE 9]>
+  <script src="admin-assets/javascripts/vendor/html5shiv.js" type="text/javascript"></script>
+  <script src="admin-assets/javascripts/vendor/excanvas.js" type="text/javascript"></script>
+  <![endif]-->
+
+  <script src="admin-assets/javascripts/application.js" type="text/javascript"></script>
+   <script src="admin-assets/js/jquery.js" type="text/javascript"></script>
+</head>
+
+
+
+<body>
+<div class="navbar navbar-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container-fluid">
+
+      <a class="brand" href="#">Core Admin</a>
+
+      <!-- the new toggle buttons -->
+
+      <ul class="nav pull-right">
+
+        <li class="toggle-primary-sidebar hidden-desktop" data-toggle="collapse" data-target=".nav-collapse-primary"><button type="button" class="btn btn-navbar"><i class="icon-th-list"></i></button></li>
+
+        <li class="hidden-desktop" data-toggle="collapse" data-target=".nav-collapse-top"><button type="button" class="btn btn-navbar"><i class="icon-align-justify"></i></button></li>
+
+      </ul>
+
+      
+          
+
+          <div class="nav-collapse nav-collapse-top collapse">
+
+            <ul class="nav full pull-right">
+              <li class="dropdown user-avatar">
+
+                <!-- the dropdown has a custom user-avatar class, this is the small avatar with the badge -->
+
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <span>
+                    <img class="menu-avatar" src="admin-assets/images/avatars/avatar1.jpg" /> <span>John Smith <i class="icon-caret-down"></i></span>
+                    <span class="badge badge-dark-red">5</span>
+                  </span>
+                </a>
+
+                <ul class="dropdown-menu">
+
+                  <!-- the first element is the one with the big avatar, add a with-image class to it -->
+
+                  <li class="with-image">
+                    <div class="avatar">
+                      <img src="admin-assets/images/avatars/avatar1.jpg" />
+                    </div>
+                    <span>John Smith</span>
+                  </li>
+
+                  <li class="divider"></li>
+
+                  <li><a href="#"><i class="icon-user"></i> <span>Profile</span></a></li>
+                  <li><a href="#"><i class="icon-cog"></i> <span>Settings</span></a></li>
+                  <li><a href="#"><i class="icon-envelope"></i> <span>Messages</span> <span class="label label-dark-red pull-right">5</span></a></li>
+                  <li><a href="#"><i class="icon-off"></i> <span>Logout</span></a></li>
+                </ul>
+              </li>
+            </ul>
+
+            <form class="navbar-search pull-right">
+              <input type="text" class="search-query animated" placeholder="Search">
+              <i class="icon-search"></i>
+            </form>
+
+            <ul class="nav pull-right">
+              <li class="active"><a href="#" title="Go home"><i class="icon-home"></i> Home</a></li>
+              <li><a href="#" title="Manage users"><i class="icon-user"></i> Users</a></li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dropdown <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Some link</a></li>
+                  <li><a href="#">One more separated link</a></li>
+                </ul>
+              </li>
+
+
+            </ul>
+
+          </div>
+      
+
+    </div>
+  </div>
+</div><div class="sidebar-background">
+  <div class="primary-sidebar-background"></div>
+</div>
+
+<div class="primary-sidebar">
+
+  <!-- Main nav -->
+  <ul class="nav nav-collapse collapse nav-collapse-primary">
+
+    
+
+        
+
+            <li class="">
+              <span class="glow"></span>
+              <a href="admin-assets/pages/dashboard/dashboard.html">
+                  <i class="icon-dashboard icon-2x"></i>
+                  <span>Dashboard</span>
+              </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dark-nav active">
+
+              <span class="glow"></span>
+
+              
+
+              <a class="accordion-toggle  " data-toggle="collapse" href="#wH2k83SENB">
+                  <i class="icon-beaker icon-2x"></i>
+                    <span>
+                      UI Lab
+                      <i class="icon-caret-down"></i>
+                    </span>
+
+              </a>
+
+              <ul id="wH2k83SENB" class="collapse in">
+                
+                    <li class="">
+                      <a href="buttons.html">
+                          <i class="icon-hand-up"></i> Buttons
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="general.html">
+                          <i class="icon-beaker"></i> General elements
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="icons.html">
+                          <i class="icon-info-sign"></i> Icons
+                      </a>
+                    </li>
+                
+                    <li class="active">
+                      <a href="grid.html">
+                          <i class="icon-th-large"></i> Grid
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="tables.html">
+                          <i class="icon-table"></i> Tables
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="widgets.html">
+                          <i class="icon-plus-sign-alt"></i> Widgets
+                      </a>
+                    </li>
+                
+              </ul>
+
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="">
+              <span class="glow"></span>
+              <a href="admin-assets/pages/forms/forms.html">
+                  <i class="icon-edit icon-2x"></i>
+                  <span>Forms</span>
+              </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="">
+              <span class="glow"></span>
+              <a href="admin-assets/pages/charts/charts.html">
+                  <i class="icon-bar-chart icon-2x"></i>
+                  <span>Charts</span>
+              </a>
+            </li>
+
+        
+
+    
+
+        
+
+            <li class="dark-nav ">
+
+              <span class="glow"></span>
+
+              
+
+              <a class="accordion-toggle collapsed " data-toggle="collapse" href="#BJeFSfm8XX">
+                  <i class="icon-link icon-2x"></i>
+                    <span>
+                      Others
+                      <i class="icon-caret-down"></i>
+                    </span>
+
+              </a>
+
+              <ul id="BJeFSfm8XX" class="collapse ">
+                
+                    <li class="">
+                      <a href="admin-assets/pages/other/wizard.html">
+                          <i class="icon-magic"></i> Wizard
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="admin-assets/pages/other/login.html">
+                          <i class="icon-user"></i> Login Page
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="admin-assets/pages/other/sign_up.html">
+                          <i class="icon-user"></i> Sign Up Page
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="admin-assets/pages/other/full_calendar.html">
+                          <i class="icon-calendar"></i> Full Calendar
+                      </a>
+                    </li>
+                
+                    <li class="">
+                      <a href="admin-assets/pages/other/error404.html">
+                          <i class="icon-ban-circle"></i> Error 404 page
+                      </a>
+                    </li>
+                
+              </ul>
+
+            </li>
+
+        
+
+    
+
+  </ul>
+
+  <div class="hidden-tablet hidden-phone">
+    <div class="text-center" style="margin-top: 60px">
+      <div class="easy-pie-chart-percent" style="display: inline-block" data-percent="89"><span>89%</span></div>
+      <div style="padding-top: 20px"><b>CPU Usage</b></div>
+    </div>
+
+    <hr class="divider" style="margin-top: 60px">
+
+    <div class="sparkline-box side">
+
+      <div class="sparkline-row">
+        <h4 class="gray"><span>Orders</span> 847</h4>
+        <div class="sparkline big" data-color="gray"><!--6,20,9,11,3,5,21,20,29,5,18,5--></div>
+      </div>
+
+      <hr class="divider">
+      <div class="sparkline-row">
+        <h4 class="dark-green"><span>Income</span> $43.330</h4>
+        <div class="sparkline big" data-color="darkGreen"><!--4,24,25,19,18,6,5,4,29,9,9,3--></div>
+      </div>
+
+      <hr class="divider">
+      <div class="sparkline-row">
+        <h4 class="blue"><span>Reviews</span> 223</h4>
+        <div class="sparkline big" data-color="blue"><!--18,13,12,15,18,3,7,6,23,9,8,10--></div>
+      </div>
+
+      <hr class="divider">
+    </div>
+  </div>
+
+
+</div>
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row-fluid">
+
+      <div class="area-top clearfix">
+        <div class="pull-left header">
+          <h3 class="title">
+            <i class="icon-th-large"></i>
+            Advanced View
+          </h3>
+          <h5>
+            View on user feedbacks x system feedback 
+          </h5>
+        </div>
+
+        <ul class="inline pull-right sparkline-box">
+
+          <li class="sparkline-row">
+            <h4 class="blue"><span>Questions</span> 847</h4>
+            <div class="sparkline big" data-color="blue"><!--3,26,23,4,105,13,26,9,12,19,22,19--></div>
+          </li>
+
+          <li class="sparkline-row">
+            <h4 class="green"><span>Suggestions</span> 223</h4>
+            <div class="sparkline big" data-color="green"><!--15,26,14,20,26,21,5,14,13,14,12,6--></div>
+          </li>
+
+          <li class="sparkline-row">
+            <h4 class="red"><span>Problems</span> 7930</h4>
+            <div class="sparkline big"><!--26,29,11,24,21,14,10,9,9,6,22,20--></div>
+          </li>
+
+          <li class="sparkline-row">
+            <h4 class="red"><span>Evaluations</span> 7930</h4>
+            <div class="sparkline big" data-role="red"><!--26,29,11,24,21,14,10,9,9,6,22,20--></div>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid padded">
+    <div class="row-fluid">
+    
+          <div class="span2">
+            <div class="well sidebar-nav">
+              <ul class="nav nav-list">
+                <li class="nav-header" style="padding-top:20px;color:#E77471;font-size:30px;height:40px"><center>Focus to</center></li>
+                <hr style="margin-top:0px;margin-bottom:10px;border-top: 1px solid #eeeeee; border-bottom: 1px solid #999999;">
+                <li class="nav-header" style="color:#888888;font-size:20px;height:30px">User Feedback</li>
+                <li><a href="#">Questions</a></li>
+                <li><a href="#">Suggestions</a></li>
+                <li><a href="#">Problems</a></li>
+                <li><a href="#">Evaluation</a></li>
+
+                <li class="nav-header" style="color:#F88017;font-size:20px;height:30px">System FeedBack</li>
+                <li class="active"><a href="#">Device Model</a></li>
+                <li><a href="#">Device Manufacture</a></li>
+                <li><a href="#">Platform</a></li>
+                <li><a href="#">Platform Version</a></li>
+                <li><a href="#">App Version</a></li>
+                <li><a href="#">Country</a></li>
+                <li><a href="#">Network Type</a></li>
+
+              </ul>
+            </div><!--/.well -->
+          </div><!--/span-->
+          <div class="span2">
+            <div class="well sidebar-nav">
+              <ul class="nav nav-list">
+                <li class="nav-header" style="padding-top:20px;color:#3B9C9C;font-size:30px;height:40px"><center>Composite to</center></li>
+                <hr style="margin-top:0px;margin-bottom:10px;border-top: 1px solid #eeeeee; border-bottom: 1px solid #999999;">
+                <li class="nav-header" style="color:#000000;font-size:20px;height:30px">User Feedback</li>
+                <li><a href="#">Questions</a></li>
+                <li><a href="#">Suggestions</a></li>
+                <li class="active"><a href="#">Problems</a></li>
+                <li><a href="#">Evaluation</a></li>
+
+                <li class="nav-header" style="color:#F88017;font-size:20px;height:30px">System FeedBack</li>
+                <li><a href="#">Device Model</a></li>
+                <li><a href="#">Device Manufacture</a></li>
+                <li><a href="#">Platform</a></li>
+                <li><a href="#">Platform Version</a></li>
+                <li><a href="#">App Version</a></li>
+                <li><a href="#">Country</a></li>
+                <li><a href="#">Network Type</a></li>
+              </ul>
+            </div><!--/.well -->
+          </div>
+          <div class="span7">
+            <div class="hero-unit">
+              <h2 class="featurette-heading" style="font-size:35px">
+                Device Model X Problem 그래프  <br><span class="muted" style="font-size:25px">디바이스별 문제해결,미해결  </span>
+                <a href="#"><button class="btn btn-danger" type="button">상세보기</button></a>
+              </h2>
+              <!--Error&Bugs Graph-->
+              <script type="text/javascript" src="./assets/js/jquery.js"></script>
+              <script type="text/javascript">
+              $(function () {
+                var chart;
+                $(document).ready(function() {
+                  chart = new Highcharts.Chart({
+                    chart: {
+                      renderTo: 'container3',
+                      type: 'column'
+                    },
+                    title: {
+                      text: 'Device Model X Problem'
+                    },
+                    xAxis: {
+                      categories: ['Galaxy S3', 'Iphone 5', 'Nexus']
+                    },
+                    yAxis: {
+                      min: 0,
+                      title: {
+                        text: 'Count'
+                      }
+                    },
+                    tooltip: {
+                      formatter: function() {
+                        return ''+
+                        this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+                      }
+                    },
+                    plotOptions: {
+                      column: {
+                        stacking: 'count'
+                      }
+                    },
+                    series: [{
+                      name: 'Unsolved',
+                      data: [5, 3, 10]
+                    }, {
+                      name: 'Solving',
+                      data: [2, 2, 2]
+                    }, {
+                      name: 'Solved',
+                      data: [3, 4, 1]
+                    }]
+                  });
+});
+
+});
+</script>
+
+<div id="container3" style="min-width: 400px; height: 400px; margin: 0 auto" data-highcharts-chart="0"><div class="highcharts-container" id="highcharts-0" style="position: relative; overflow: hidden; width: 828px; height: 400px; text-align: left; line-height: normal; z-index: 0; font-family: 'Lucida Grande', 'Lucida Sans Unicode', Verdana, Arial, Helvetica, sans-serif; font-size: 12px;"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="828" height="400"><desc>Created with Highcharts 3.0.0</desc><defs><clipPath id="highcharts-1"><rect rx="0" ry="0" fill="none" x="0" y="0" width="9999" height="400"></rect></clipPath><clipPath id="highcharts-2"><rect fill="none" x="0" y="0" width="751" height="296"></rect></clipPath></defs><rect rx="5" ry="5" fill="#FFFFFF" x="0" y="0" width="828" height="400"></rect><g class="highcharts-button" style="cursor:default;" title="Chart context menu" stroke-linecap="round" transform="translate(794,10)"><title>Chart context menu</title><rect rx="2" ry="2" fill="white" x="0.5" y="0.5" width="24" height="22" stroke="none" stroke-width="1"></rect><path fill="#E0E0E0" d="M 6 6.5 L 20 6.5 M 6 11.5 L 20 11.5 M 6 16.5 L 20 16.5" stroke="#666" stroke-width="3" zIndex="1"></path><text x="0" y="13" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;color:black;fill:black;" zIndex="1"></text></g><g class="highcharts-grid" zIndex="1"></g><g class="highcharts-grid" zIndex="1"><path fill="none" d="M 67 288.5 L 818 288.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 67 238.5 L 818 238.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 67 189.5 L 818 189.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 67 139.5 L 818 139.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 67 90.5 L 818 90.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 67 40.5 L 818 40.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path><path fill="none" d="M 67 336.5 L 818 336.5" stroke="#C0C0C0" stroke-width="1" zIndex="1" opacity="1"></path></g><g class="highcharts-axis" zIndex="2"><path fill="none" d="M 567.5 337 L 567.5 342" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 817.5 337 L 817.5 342" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 316.5 337 L 316.5 342" stroke="#C0D0E0" stroke-width="1" opacity="1"></path><path fill="none" d="M 67.5 337 L 67.5 342" stroke="#C0D0E0" stroke-width="1"></path><path fill="none" d="M 67 336.5 L 818 336.5" stroke="#C0D0E0" stroke-width="1" zIndex="7" visibility="visible"></path></g><g class="highcharts-axis" zIndex="2"><text x="24.640625" y="188.5" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;color:#4d759e;font-weight:bold;fill:#4d759e;" zIndex="7" text-anchor="middle" transform="rotate(270 24.640625 188.5)" visibility="visible"><tspan x="24.640625">Count</tspan></text></g><g class="highcharts-series-group" zIndex="3"><g class="highcharts-series highcharts-tracker highcharts-tracker" visibility="visible" zIndex="0.1" transform="translate(67,40) scale(1 1)" style="" clip-path="url(#highcharts-2)"><rect fill="#2f7ed8" x="65.5" y="98.5" width="120" height="99" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect><rect fill="#2f7ed8" x="315.5" y="118.5" width="120" height="60" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect><rect fill="#2f7ed8" x="565.5" y="39.5" width="120" height="198" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect></g><g class="highcharts-markers" visibility="visible" zIndex="0.1" transform="translate(67,40)"></g><g class="highcharts-series highcharts-tracker highcharts-tracker" visibility="visible" zIndex="0.1" transform="translate(67,40) scale(1 1)" style="" clip-path="url(#highcharts-2)"><rect fill="#0d233a" x="65.5" y="197.5" width="120" height="40" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect><rect fill="#0d233a" x="315.5" y="178.5" width="120" height="39" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect><rect fill="#0d233a" x="565.5" y="237.5" width="120" height="40" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect></g><g class="highcharts-markers" visibility="visible" zIndex="0.1" transform="translate(67,40)"></g><g class="highcharts-series highcharts-tracker highcharts-tracker" visibility="visible" zIndex="0.1" transform="translate(67,40) scale(1 1)" style="" clip-path="url(#highcharts-2)"><rect fill="#8bbc21" x="65.5" y="237.5" width="120" height="59" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect><rect fill="#8bbc21" x="315.5" y="217.5" width="120" height="79" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect><rect fill="#8bbc21" x="565.5" y="277.5" width="120" height="19" stroke="#FFFFFF" stroke-width="1" rx="0" ry="0"></rect></g><g class="highcharts-markers" visibility="visible" zIndex="0.1" transform="translate(67,40)"></g></g><text x="414" y="25" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:16px;color:#274b6d;fill:#274b6d;" text-anchor="middle" class="highcharts-title" zIndex="4"><tspan x="414">Device Model X Problem</tspan></text><g class="highcharts-legend" zIndex="7" transform="translate(300,360)"><rect rx="5" ry="5" fill="none" x="0.5" y="0.5" width="226" height="24" stroke="#909090" stroke-width="1" visibility="visible"></rect><g zIndex="1" clip-path="url(#highcharts-1)"><g><g class="highcharts-legend-item" zIndex="1" transform="translate(8,3)"><text x="21" y="15" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;cursor:pointer;color:#274b6d;fill:#274b6d;" text-anchor="start" zIndex="2"><tspan x="21">Unsolved</tspan></text><rect rx="2" ry="2" fill="#2f7ed8" x="0" y="4" width="16" height="12" zIndex="3"></rect></g><g class="highcharts-legend-item" zIndex="1" transform="translate(90.171875,3)"><text x="21" y="15" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;cursor:pointer;color:#274b6d;fill:#274b6d;" text-anchor="start" zIndex="2"><tspan x="21">Solving</tspan></text><rect rx="2" ry="2" fill="#0d233a" x="0" y="4" width="16" height="12" zIndex="3"></rect></g><g class="highcharts-legend-item" zIndex="1" transform="translate(161.09375,3)"><text x="21" y="15" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;cursor:pointer;color:#274b6d;fill:#274b6d;" text-anchor="start" zIndex="2"><tspan x="21">Solved</tspan></text><rect rx="2" ry="2" fill="#8bbc21" x="0" y="4" width="16" height="12" zIndex="3"></rect></g></g></g></g><g class="highcharts-axis-labels" zIndex="7"><text x="192.16666666666669" y="351" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:230px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="middle" opacity="1"><tspan x="192.16666666666669">Galaxy S3</tspan></text><text x="442.50000000000006" y="351" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:230px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="middle" opacity="1"><tspan x="442.50000000000006">Iphone 5</tspan></text><text x="692.8333333333334" y="351" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:230px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="middle" opacity="1"><tspan x="692.8333333333334">Nexus</tspan></text></g><g class="highcharts-axis-labels" zIndex="7"><text x="59" y="343.115625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">0</tspan></text><text x="59" y="293.615625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">2.5</tspan></text><text x="59" y="244.115625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">5</tspan></text><text x="59" y="194.615625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">7.5</tspan></text><text x="59" y="145.115625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">10</tspan></text><text x="59" y="95.615625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">12.5</tspan></text><text x="59" y="46.115625" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:11px;width:356px;color:#666;cursor:default;line-height:14px;fill:#666;" text-anchor="end" opacity="1"><tspan x="59">15</tspan></text></g><g class="highcharts-tooltip" zIndex="8" style="cursor:default;padding:0;white-space:nowrap;" visibility="hidden"><rect rx="3" ry="3" fill="none" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85" isShadow="true" stroke="black" stroke-opacity="0.049999999999999996" stroke-width="5" transform="translate(1, 1)"></rect><rect rx="3" ry="3" fill="none" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85" isShadow="true" stroke="black" stroke-opacity="0.09999999999999999" stroke-width="3" transform="translate(1, 1)"></rect><rect rx="3" ry="3" fill="none" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85" isShadow="true" stroke="black" stroke-opacity="0.15" stroke-width="1" transform="translate(1, 1)"></rect><rect rx="3" ry="3" fill="rgb(255,255,255)" x="0.5" y="0.5" width="16" height="16" fill-opacity="0.85"></rect><text x="8" y="21" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:12px;color:#333333;fill:#333333;" zIndex="1"></text></g><text x="818" y="395" style="font-family:&quot;Lucida Grande&quot;, &quot;Lucida Sans Unicode&quot;, Verdana, Arial, Helvetica, sans-serif;font-size:9px;cursor:pointer;color:#909090;fill:#909090;" text-anchor="end" zIndex="8"><tspan x="818">Highcharts.com</tspan></text></svg></div></div>
+</div>
+</div><!--/span-->
+
+</div>
+</div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  function setListSize($element) {
+    // 화면에 보여지는 뷰의 높이
+    var docHeight = $(window).height();
+    var gap = 100; // 하단으로부터의 높이
+    var elementTop = $element.position().top;
+
+    $element.css("height", docHeight - elementTop - gap);
+  }
+
+  $(document).ready(function() {
+    var docHeight = $(window).height();
+    var $screenBox = $(".ufb-screens-list");
+    var $functionBox = $(".ufb-functions-list");
+
+    setListSize($screenBox);
+    setListSize($functionBox);
+
+    $(window).on("resize", function(event) {
+      setListSize($screenBox);
+      setListSize($functionBox);
+    })
+
+    
+    $(".ufb-screens-list li").on("click", function(event) {
+      $(".ufb-screens-list li").removeClass("selected");
+      $(this).addClass("selected");
+    });
+
+    for(var i=0;i<40;i++){
+      if(i!=0) {
+        $(".ufb-functions-list ul").append('<li><p>Function' + (i+1) +'&nbsp;</p></li>');
+      } else {
+        $(".ufb-functions-list ul").append('<li class="selected"><p>Function' + (i+1) + '&nbsp;</p></li>');
+      }
+    }
+
+    $(".ufb-functions-list li").on("click", function(event) {
+      $(".ufb-functions-list li").removeClass("selected");
+      $(this).addClass("selected");
+    });
+
+    for(var i=0 ; i<15 ;i++) {
+      $("#feedbacks").append('<tr>\
+                  <td style="width:100px;">koltwgi</td>\
+                  <td style="width:700px;">이거이거 요래요래 조래조래 했으면 좋겠다능</td>\
+                  <td style="width:180px;">2013. 6. 17 PM 15:42</td>\
+                  <td>0</td>\
+                </tr>');
+    }
+    
+
+  });
+</script>
+</body>
+</html>

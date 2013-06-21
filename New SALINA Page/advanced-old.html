@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Salina - Mobile Application Feedback Solution</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="">
+<meta name="author" content="">
+
+<!-- Le styles -->
+<link href="{{STATIC_URL}}assets/css/bootstrap.css" rel="stylesheet">
+<style type="text/css">
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+.sidebar-nav {
+	padding: 9px 0;
+}
+
+@media ( max-width : 980px) { /* Enable use of floated navbar text */
+	.navbar-text.pull-right {
+		float: none;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+}
+</style>
+<link href="{{STATIC_URL}}assets/css/bootstrap-responsive.css"
+	rel="stylesheet">
+
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="{{STATIC_URL}}assets/js/html5shiv.js"></script>
+      <![endif]-->
+
+<!-- Fav and touch icons -->
+<link rel="apple-touch-icon-precomposed" sizes="144x144"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-144-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="114x114"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-114-precomposed.png">
+<link rel="apple-touch-icon-precomposed" sizes="72x72"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-72-precomposed.png">
+<link rel="apple-touch-icon-precomposed"
+	href="{{STATIC_URL}}assets/ico/apple-touch-icon-57-precomposed.png">
+<link rel="shortcut icon" href="{{STATIC_URL}}assets/ico/favicon.png">
+</head>
+
+<body>
+
+	<div class="navbar navbar-inverse navbar-fixed-top">
+		<div class="navbar-inner">
+			<div class="container">
+				<button type="button" class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="brand" style="font-size: 35px" href="app-home.html">Salina
+					<br /> <b class="brand" style="font-size: 15px">mobile app
+						feedback solution </b>
+				</a>
+				<div class="nav-collapse collapse">
+					<ul class="nav">
+						<li><a href="new-app-home.html">Dash Board</a></li>
+						<li><a href="Basic Statistics.html">Basic Statistics</a></li>
+						<li class="active"><a href="Advanced Statistics.html">Advanced
+								Statistics</a></li>
+						<li><a href="Salina Insight.html">Salina Insight</a></li>
+						<li><a href="Feedback Manage.html">Feedback Manage</a></li>
+					</ul>
+					<p class="navbar-text pull-right">
+						Logged in as <a href="#" class="navbar-link">Username</a>
+					</p>
+				</div>
+				<!--/.nav-collapse -->
+			</div>
+		</div>
+	</div>
+
+
+	<div class="container-fluid"
+		style="margin-top: 40px; margin-left: 50px">
+		<div class="row-fluid">
+			<div class="span2">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li class="nav-header"
+							style="padding-top: 20px; color: #E77471; font-size: 30px; height: 40px"><center>Focus
+								to</center></li>
+						<hr
+							style="margin-top: 0px; margin-bottom: 10px; border-top: 1px solid #eeeeee; border-bottom: 1px solid #999999;">
+						<!-- 
+                <li class="nav-header" style="color:#888888;font-size:20px;height:30px">User Feedback</li>
+                <li><a href="#">Questions</a></li>
+                <li><a href="#">Suggestions</a></li>
+                <li><a href="#">Problems</a></li>
+                <li><a href="#">Evaluation</a></li>
+				 -->
+						<li class="nav-header"
+							style="color: #F88017; font-size: 20px; height: 30px">System FeedBack</li>
+						
+						<li><a href="#" data-focus="screen_name" data-feature="data-feature">screen name</a></li>
+						<li><a href="#" data-focus="function_name" data-feature="data-feature">function name</a></li>
+						
+						<li><a href="#" data-focus="app_version" data-feature="data-feature">app version</a></li>
+						<li><a href="#" data-focus="os_version" data-feature="data-feature">os Version</a></li>
+						
+						<li><a href="#" data-focus="locale_language" data-feature="data-feature">locale language</a></li>
+						<li><a href="#" data-focus="locale_country" data-feature="data-feature">locale country</a></li>
+						
+						<li><a href="#" data-focus="network_type" data-feature="data-feature">network type</a></li>
+						<li><a href="#" data-focus="network_carrier" data-feature="data-feature">network carrier</a></li>
+						
+						<li><a href="#" data-focus="device_model" data-feature="data-feature">device model</a></li>						
+						<li><a href="#" data-focus="device_manufacturer" data-feature="data-feature">device manufacturer</a></li>
+						<li><a href="#" data-focus="device_country" data-feature="data-feature">device country</a></li>
+
+
+					</ul>
+				</div>
+				<!--/.well -->
+			</div>
+			<!--/span-->
+			<div class="span2">
+				<div class="well sidebar-nav">
+					<ul class="nav nav-list">
+						<li class="nav-header"
+							style="padding-top: 20px; color: #3B9C9C; font-size: 30px; height: 40px"><center>Composite to</center></li>
+						<hr
+							style="margin-top: 0px; margin-bottom: 10px; border-top: 1px solid #eeeeee; border-bottom: 1px solid #999999;">
+						<li class="nav-header"
+							style="color: #000000; font-size: 20px; height: 30px">User Feedback</li>
+
+						<li><a href="#" data-composite="QUESTION" data-feature="data-feature" data-category="user">Questions</a></li>
+						<li><a href="#" data-composite="SUGGESTION" data-feature="data-feature" data-category="user">Suggestions</a></li>
+						<li><a href="#" data-composite="PROBLEM" data-feature="data-feature" data-category="user">Problems</a></li>
+						<li><a href="#" data-composite="EVALUATION" data-feature="data-feature" data-category="user">Evaluations</a></li>
+
+						<li class="nav-header" style="color: #F88017device_manufacturer; font-size: 20px; height: 30px">System FeedBack</li>
+						
+						<li><a href="#" data-composite="screen_name" data-feature="data-feature" data-category="system">screen name</a></li>
+						<li><a href="#" data-composite="function_name" data-feature="data-feature" data-category="system">function name</a></li>
+						
+						<li><a href="#" data-composite="app_version" data-feature="data-feature" data-category="system">app version</a></li>
+						<li><a href="#" data-composite="os_version" data-feature="data-feature" data-category="system">os Version</a></li>
+						
+						<li><a href="#" data-composite="locale_language" data-feature="data-feature" data-category="system">locale language</a></li>
+						<li><a href="#" data-composite="locale_country" data-feature="data-feature" data-category="system">locale country</a></li>
+						
+						<li><a href="#" data-composite="network_type" data-feature="data-feature" data-category="system">network type</a></li>
+						<li><a href="#" data-composite="network_carrier" data-feature="data-feature" data-category="system">network carrier</a></li>
+						
+						<li><a href="#" data-composite="device_model" data-feature="data-feature" data-category="system">device model</a></li>						
+						<li><a href="#" data-composite="device_manufacturer" data-feature="data-feature" data-category="system">device manufacturer</a></li>
+						<li><a href="#" data-composite="device_country" data-feature="data-feature" data-category="system">device country</a></li>
+					</ul>
+				</div>
+				<!--/.well -->
+			</div>
+			<div class="span7">
+				<div class="hero-unit">
+					<h2 class="featurette-heading" style="font-size: 35px">
+						Device Model X Problem 그래프 <br />
+						<span class="muted" style="font-size: 25px">디바이스별 문제해결,미해결
+						</span> <a href="#"><button class="btn btn-danger" type="button">상세보기</button></a>
+					</h2>
+					<!--Error&Bugs Graph-->
+					<script type="text/javascript" src="{{STATIC_URL}}assets/js/jquery.js"></script>
+					<script type="text/javascript">
+              
+          		$(document).ready(function() {
+          			
+
+					var appId = "{{app_id}}";
+        			var category = "{{category}}"
+	          		
+	          		$("[data-focus]").on("click", function(event){
+	
+	          			focus = $(this).attr("data-focus")
+
+	        		});
+	
+	        		$("[data-composite]").on("click", function(event){
+						composite = $(this).attr("data-composite")
+						query_type = $(this).attr("data-category")
+						
+						
+						
+	        			
+	        		 });
+	        		
+					$("[data-feature]").click(function(event){
+						
+						if(focus != undefined && composite != undefined) {
+							$.ajax({
+								"url": "/userinfo/main_admin/advanced.html/",
+								"data" : { "focus" : focus,	"composite" : composite,	"app_id" : appId, "request_type" : "ajax_request", "query_type" : query_type}
+							}).done(function(data) {
+				          		
+				          		
+					        	
+					        	if (query_type == 'user') {
+					        		
+					        		var xValue=new Array();
+						        	var yValue=new Array();
+						        	var unsolvedValue=new Array();
+						        	var solvedValue=new Array();
+						        	
+								
+									for (var i = 0; i < data.length; i++) {
+										
+										xValue[i] = data[i].x
+										unsolvedValue[i] = data[i].unsolved;
+										solvedValue[i] = data[i].solved;
+									}
+									
+									 $(function () {
+						            	  
+							                var chart;
+							                  chart = new Highcharts.Chart({
+							                    chart: {
+							                      renderTo: 'container3',
+							                      type: 'column'
+							                    },
+							                    title: {
+							                      text: focus + ' X '+ composite
+							                    },
+							                    xAxis: {
+							                      categories: xValue
+							                    },
+							                    yAxis: {
+							                      min: 0,
+							                      title: {
+							                        text: 'Count'
+							                      }
+							                    },
+							                    tooltip: {
+							                      formatter: function() {
+							                        return ''+
+							                        this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+							                      }
+							                    },
+							                    plotOptions: {
+							                      column: {
+							                        stacking: 'count'
+							                      }
+							                    },
+							                    series: [{
+							                      name: 'Unsolved',
+							                      data: unsolvedValue
+							                    }, {
+							                      name: 'Solved',
+							                      data: solvedValue
+							                    }]
+							                  });
+											});	 
+							
+					        		}else if(query_type = 'system') {
+					        			
+					        			var xValue=new Array();
+							        	var returnValue= getProcessedData(data);
+					        			
+					        			$(function () {
+							            	  
+							                var chart;
+							                  chart = new Highcharts.Chart({
+							                    chart: {
+							                      renderTo: 'container3',
+							                      type: 'column'
+							                    },
+							                    title: {
+							                      text: focus + ' X '+ composite
+							                    },
+							                    xAxis: {
+							                      categories: returnValue.xAxis
+							                    },
+							                    yAxis: {
+							                      min: 0,
+							                      title: {
+							                        text: 'Count'
+							                      }
+							                    },
+							                    tooltip: {
+							                      formatter: function() {
+							                        return ''+
+							                        this.series.name +': '+ this.y +' ('+ Math.round(this.percentage) +'%)';
+							                      }
+							                    },
+							                    plotOptions: {
+							                      column: {
+							                        stacking: 'count'
+							                      }
+							                    },
+							                    series :returnValue.series
+							                  });
+											});	 
+										
+					        		}
+					        	});
+					
+						}
+					
+							
+					});          
+				});
+          		function getProcessedData(json) {
+          			console.log(json);
+          			var ajaxdata = json;
+
+
+          			var keys;
+
+          			var series = [];
+          			var xAxis = [];
+
+          			var seriesKey = {};
+
+          			var graphdata;
+
+
+          			for(var i=0 ; i < ajaxdata.length ; i++) {
+          				graphdata = ajaxdata[i];
+          				keys = Object.keys(graphdata);
+
+          				for(var k=0 ; k < keys.length ; k++){ 
+          					if(keys[k] == "x") {
+          						// xAxis에 추가
+          						xAxis.push(graphdata[keys[k]]);
+          					}
+          					else if(keys[k] != "id") {
+          						if(!seriesKey[keys[k]]) {
+          							seriesKey[keys[k]] = [];
+          						}
+
+          						seriesKey[keys[k]].push(graphdata[keys[k]]);
+          					}
+          				}
+          			}
+
+          			// series 재조합
+          			keys = Object.keys(seriesKey);
+
+          			var temp;
+          			for(var i=0 ; i < keys.length ; i++) {
+          				temp = {};
+          				temp["name"] = keys[i];
+          				temp["data"] = seriesKey[keys[i]];
+          				series.push(temp);
+          			}
+
+          			console.log("xAxis:");
+          			console.log(xAxis);
+          			console.log("series: ");
+          			console.log(series);
+          			
+
+          			return {"xAxis" : xAxis, "series" : series};
+          		}
+          	
+</script>
+
+					<div id="container3"
+						style="min-width: 400px; height: 400px; margin: 0 auto"></div>
+				</div>
+			</div>
+			<!--/span-->
+		</div>
+		<!--/row-->
+
+		<hr class="featurette-divider">
+
+		<footer>
+			<p>&copy; Company 2013 Salina - Mobile Application Feedback Solution.</p>
+		</footer>
+
+	</div>
+	<!--/.fluid-container-->
+
+	<!-- Le javascript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+	<script src="{{STATIC_URL}}assets/js/jquery.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-transition.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-alert.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-modal.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-dropdown.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-scrollspy.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-tab.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-tooltip.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-popover.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-button.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-collapse.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-carousel.js"></script>
+	<script src="{{STATIC_URL}}assets/js/bootstrap-typeahead.js"></script>
+	<script src="{{STATIC_URL}}assets/js/holder/holder.js"></script>
+	<script src="{{STATIC_URL}}assets/js/highcharts.js"></script>
+	<script src="{{STATIC_URL}}assets/js/highcharts-more.js"></script>
+	<script src="{{STATIC_URL}}assets/js/modules/exporting.js"></script>
+	<script src="{{STATIC_URL}}assets/js/modules/go.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+ <title>Salina - Mobile Application Feedback Solution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Le styles -->
+  <link href="{{STATIC_URL}}assets/css/bootstrap.css" rel="stylesheet">
+  <style type="text/css">
+  body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+  }
+  .sidebar-nav {
+    padding: 9px 0;
+  }
+
+  @media (max-width: 980px) {
+    /* Enable use of floated navbar text */
+    .navbar-text.pull-right {
+      float: none;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+  }
+  </style>
+  <link href="{{STATIC_URL}}assets/css/bootstrap-responsive.css" rel="stylesheet">
+
+  <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script  src="{{STATIC_URL}}assets/js/html5shiv.js"></script>
+      <![endif]-->
+
+      <!-- Fav and touch icons -->
+      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{STATIC_URL}}assets/ico/apple-touch-icon-144-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{STATIC_URL}}assets/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{STATIC_URL}}assets/ico/apple-touch-icon-72-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" href="{{STATIC_URL}}assets/ico/apple-touch-icon-57-precomposed.png">
+      <link rel="shortcut icon" href="{{STATIC_URL}}assets/ico/favicon.png">
+    </head>
+    <body>
+
+      <div class="navbar navbar-inverse navbar-fixed-top" >
+        <div class="navbar-inner">
+          <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="brand" style="font-size:35px" href="app-home.html">Salina <br/> <b class = "brand" style="font-size:15px">mobile app feedback solution </b> </a>
+            <div class="nav-collapse collapse">
+              <ul class="nav">
+                <li><a href="new-app-home.html">Dash Board</a></li>
+                <li class="active"><a href="Basic Statistics.html">Basic Statistics</a></li>
+                <li><a href="/userinfo/main_admin/advanced.html?app_id={{app_id}}">Advanced</a></li>
+                <li><a href="Salina Insight.html">Salina Insight</a></li>
+                <li><a href="Feedback Manage.html">Feedback Manage</a></li>
+              </ul>
+              <p class="navbar-text pull-right">
+                Logged in as <a href="#" class="navbar-link">Username</a>
+              </p>
+            </div><!--/.nav-collapse -->
+          </div>
+        </div>
+      </div>
+
+
+      <div  class="container-fluid" style="margin-top:40px; margin-left:50px">
+        <div class="row-fluid">
+          <div class="span2">
+            <div class="well sidebar-nav">
+              <ul class="nav nav-list">
+                <li class="nav-header" style="color:#000000;font-size:20px;height:30px">User Feedback</li>
+                <li><a href="#">Overview</a></li>
+                <li class="active"><a href="#">Questions</a></li>
+                <li><a href="#">Suggestions</a></li>
+                <li><a href="#">Problems</a></li>
+                <li><a href="#">Evaluation</a></li>
+                <li><a href="#">Leader Boards</a></li>
+                <li class="nav-header" style="color:#F88017;font-size:20px;height:30px">System FeedBack</li>
+                <li><a href="#">Users & Sessions</a></li>
+                <li><a href="#">New VS Returning</a></li>
+                <li><a href="#">Device</a></li>
+                <li><a href="#">Platform</a></li>
+                <li><a href="#">App Version</a></li>
+                <li><a href="#">Country</a></li>
+                <li><a href="#">Network Type</a></li>
+                <li><a href="#">Events</a></li>
+              </ul>
+            </div><!--/.well -->
+          </div><!--/span-->
+          <div class="span9" style="margin-right:30px">
+            <ul class="nav nav-tabs">
+              <li class="active" >
+                <a href="#"> <img  src="{{STATIC_URL}}assets/img/q.jpg"><strong >&nbsp;&nbsp;질문</strong></a>
+              </li>
+              <li><a href="#"> <img  src="{{STATIC_URL}}assets/img/s.jpg"><strong>&nbsp;&nbsp;건의</strong></a></li>
+              <li><a href="#"> <img  src="{{STATIC_URL}}assets/img/p.jpg"><strong>&nbsp;&nbsp;문제</strong></a></li>
+              <li><a href="#"> <img  src="{{STATIC_URL}}assets/img/h.jpg"><strong>&nbsp;&nbsp;칭찬</strong></a></li>
+            </ul>
+            <div class="hero-unit">
+              <h3> Today's </h3>
+              <table class="table">
+                <tr class="success">
+                  <td><strong>오늘의 질문</strong> </td>
+                  <td><strong>1,203</strong></td>
+                </tr>
+                <tr class="warning">
+                  <td><strong>답변을 기다리는 질문</strong></td>
+                  <td><strong>3,341</strong></td>
+                </tr>
+                <tr class="info">
+                  <td><strong>해결된 질문</strong></td>
+                  <td><strong>940</strong></td>
+                </tr>
+              </table>
+            </div>
+
+            <ul class="nav nav-tabs">
+              <li class="active">
+                <a href="#"><strong>새로운 질문</strong></a>
+              </li>
+              <li><a href="#"><strong>답변을 기다리는 Q&A</strong></a></li>
+              <li><a href="#"><strong>해결된 Q&A</strong></a></li>
+            </ul>
+            <ul class="nav nav-tabs nav-stacked">
+             <li><a href="#">질문 드립니다..</a></li>
+             <li><a href="#">사용법 관련 질문 입니다 !!! </a></li>
+             <li><a href="#">개발자님 궁금한게 있습니다 !! </a></li>
+             <li><a href="#">저기요...</a></li>
+             <li><a href="#">아 이거 이상한데-0-</a></li>
+             <li><a href="#">질문 </a></li>
+             <li><a href="#">1002번 노선도에서요 ~</a></li>
+             <li><a href="#">이해가 안되는게.. </a></li>
+             <li><a href="#">605번 버스 왜 안와요 ? </a></li>
+             <li><a href="#">아 진짜 개발자  </a></li>
+
+
+           </ul>
+           <div class="pagination">
+            <ul>
+              <li class="disabled"><a href="#">&laquo;</a></li>
+              <li class="active"><a href="#">1</a></li>
+              <li class="active"><a href="#">2</a></li>
+              <li class="active"><a href="#">3</a></li>
+              <li class="active"><a href="#">4</a></li>
+              <li class="active"><a href="#">5</a></li>
+              <li class="disabled"><a href="#">»</a></li>
+            </ul>
+          </div>
+        </div>
+      
+          </div><!--/span-->
+        </div><!--/row-->
+
+        <hr class="featurette-divider">
+
+      <footer>
+        <p>&copy; Company 2013 Salina - Mobile Application Feedback Solution.</p>
+      </footer>
+
+      </div><!--/.fluid-container-->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script  src="{{STATIC_URL}}assets/js/jquery.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-transition.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-alert.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-modal.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-dropdown.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-scrollspy.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-tab.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-tooltip.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-popover.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-button.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-collapse.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-carousel.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/bootstrap-typeahead.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/holder/holder.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/highcharts.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/highcharts-more.js"></script>
+    <script  src="{{STATIC_URL}}assets/js/modules/exporting.js"></script>
+
+  </body>
+  </html>

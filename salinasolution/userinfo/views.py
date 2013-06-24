@@ -184,9 +184,12 @@ def view_app_home(request):
 
 @login_required
 def view_real_voice(request):
+    '''
     try :
         if request.method == 'GET' :
             #무조건 두가지 값이 존재한다.
+            request.GET['screen_name'] = '오늘의 카드'
+            request.GET['function_name'] = '프로필 카드 선택'
             app_id = request.GET[Var.APP_ID]
             has_request_type = request.GET.has_key('request_type')
             if has_request_type:
@@ -212,17 +215,19 @@ def view_real_voice(request):
                                                            'app_id':app_id,
                                                           },
                                           context_instance=RequestContext(request)) 
-                elif request_type == 'feedback':
-                    
+                elif request_type == 'feedback':                    
                     category = request.GET[Var.CATEGORY]
                     has_screen_name = request.GET.has_key('screen_name')
                     has_function_name = request.GET.has_key('function_name')
                     feedbacks = FeedbackContext()
+                    
                     if has_screen_name:
                         screen_name = request.GET['screen_name']
                         print screen_name
                         if has_function_name :
+                            print "asdfadsfadsfasdfadsfdasfffsdafasdfasdfasdfasdfasdfasdf"
                             function_name = request.GET['function_name']
+                            print "asdfadsfadsfasdfadsfdasfffsdafasdfasdfasdfasdfasdfasdf"
                             feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, function_name = function_name, screen_name = screen_name).select_related()
                         else :
                             feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = category, screen_name = screen_name).select_related()
@@ -254,9 +259,60 @@ def view_real_voice(request):
                                                       },
                                       context_instance=RequestContext(request))
     except Exception, e:
-        print str(e)
-        
-              
+    '''
+    try :
+        print "Asfasdfdsafasddsafdsafdasfdsafdasfsdadsadsafsdaf"
+        category = request.GET[Var.CATEGORY]
+        app_id = request.GET[Var.APP_ID]
+        has_request_type = request.GET.has_key('request_type')
+        if has_request_type :
+            request_type = request.GET['request_type']
+            print "req type " + request_type
+            if request_type == 'screen':
+                
+                print "asdfasdfdasasddsafasdfsdafasdfasdf"
+                screens = FeedbackContext.objects.filter(feedback__app__pk = app_id).values('screen_name').annotate(scount=Count('screen_name')).order_by('scount').reverse()
+                return render_to_response('admin_more_info/more_screens.html', {  
+                                                                       'screens':screens,
+                                                                       'app_id':app_id,
+                                                                      },
+                                                      context_instance=RequestContext(request))
+            elif request_type == 'function':
+                print "ASfasfdsasadfasfsadfasfasdfasdfsdaasdf"
+                functions = FeedbackContext.objects.filter(feedback__app__pk = app_id).values('function_name').annotate(scount=Count('function_name')).order_by('scount').reverse()
+                
+                return render_to_response('admin_more_info/more_functions.html', {  
+                                                                   'functions':functions,
+                                                                   'app_id':app_id,
+                                                                  },
+                                                  context_instance=RequestContext(request))
+                 
+            elif request_type == 'feedback':
+                feedbacks = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = 'suggestion').select_related()
+                print feedbacks.count()
+                return render_to_response('admin_more_info/more_feedbacks.html', {  
+                                                                   'feedbacks':feedbacks,
+                                                                   'app_id':app_id,
+                                                                  },
+                                              context_instance=RequestContext(request))
+            else :
+                screens = FeedbackContext.objects.filter(feedback__app__pk = app_id, feedback__category = 'suggestion').values('screen_name').annotate(scount=Count('screen_name')).order_by('scount').reverse()
+                return render_to_response('admin_more_info/more_screens.html', {  
+                                                                       'screens':screens,
+                                                                       'app_id':app_id,
+                                                                      },
+                                                      context_instance=RequestContext(request))
+                
+        else :
+            print "afsadfsdaf"
+            return render_to_response('admin_more_info/more_screens.html', {  
+                                                                       'screens':screens,
+                                                                       'app_id':app_id,
+                                                                      },
+                                                      context_instance=RequestContext(request))
+            
+    except Exception, e:
+            print str(e)
  
 
         
@@ -339,12 +395,108 @@ def view_advanced(request):
             
 
 def view_insight(request):
-    if request.method == 'GET' :
-        result = Var.get_default_result()
-        #return HttpResponse(result)
-        
-        return render_to_response('insight.html', { },
-                                  context_instance=RequestContext(request))
+    try:
+         app_id = ''
+         destination_activity = ''
+         graph_num = ''
+         request_type = ''
+         if request.method == 'GET' :
+            try :
+                app_id = request.GET[Var.APP_ID]
+                destination_activity = request.GET[Var.DESTINATION_ACTIVITY]
+                #보여줘야 할 그래프의 갯수
+                graph_num = request.GET[Var.DESTINATION_ACTIVITY]
+                #그려줄 노드의 개
+                node_num = 0
+                
+                print request_type + "sdfasfasdf"
+                node_num = request.GET['node_num']
+            except Exception, e:
+                #node num이 없는 경우 default 4로 지정
+                node_num = 4
+                app_id= 'noon_date'
+                #request_type = ''
+                
+            if request.GET.has_key('request_type'):
+                request_type = request.GET['request_type']
+            else :
+                request_type = ''
+            
+            screen_key = app_id + "_" + destination_activity       
+            
+            graph_attr = {}
+            graph_list = []
+            graph = []
+            dic = {"activity_name":"","visit_num":0}
+            #data_collect_flag = False
+            # 애초에 데이터가 없으면 return
+            ''' 
+            if r.exists(screen_key) == False:
+                return
+            '''
+            #해당 스크린에 대한 data가 존재한다면
+            print "req    " + request_type
+            if request_type == 'activity_flow': 
+                for i in graph_num :
+                    screen_key = app_id + "_" + destination_activity
+                    dic['activity_name'] = destination_activity
+                    dic['visit_num'] = 0
+                    graph.append(dic)
+                    
+                    for j in node_num :
+                        #해당 화면이 더이상 없을때는 해당 그래프에 노드를 추가시키는 작업을 중지
+                        if r.exists(screen_key) == False:
+                            #data_collect_flag = True
+                            break
+                        activity_list = r.zrange(screen_key, 0, -1, withscores = True)
+                        reverse_activity_list = activity_list.reverse() 
+                        #큰것부터 차례로 뽑아야함
+                        #처음 그래프를 가져올때는 무조건 
+                        #list에 대이터가 없는 경우 예외처리
+                        if j == 0:
+                            #screen_key는 존재하나 data가 없는 경우
+                            if (len(reverse_activity_list) - 1) >= i:
+                                dic['activity_name'] = reverse_activity_list[i][0]
+                                dic['visit_num'] = reverse_activity_list[i][1]
+                            else :
+                                break
+                        #두번째 이상부터는 무조건 처음 데이터를 가져와야됨 그게 가장 많이 지나간 경로이므로
+                        else :
+                            dic['activity_name'] = reverse_activity_list[0][0]
+                            dic['visit_num'] = reverse_activity_list[0][1]    
+                        
+                        #현재 액티비티가 리스트에 존재하지 않는다면
+                        if dic['activity_name'] in graph_attr == False:
+                            graph_attr[dic['activity_name']] = len(graph_attr)
+                        
+                        graph.append(dic)
+                        screen_key = app_id + "_" + dic['activity_name']
+                    #graph에 데이터가 없다면 추가않함
+                    if len(graph) != 0:
+                       graph_list.append(graph)
+                       
+                #client를 위한  json 데이터 생성
+                nodeDataArray = []
+                keys = graph_attr.keys()
+                #activity name -> key
+                for key in keys:
+                    nodeData = {"key" : graph_attr[key], "category":"Source", "text" : key}
+                    nodeDataArray.append(nodeData)
+                            
+                return HttpResponse(json.dump(graph_list), mimetype="application/json") 
+            
+            elif request_type == 'flow_activity' :
+                if request.GET.has_key('destination_activity') :
+                    destination_activity=request.GET['destination_activity']
+                    result = Var.get_default_result(destination_activity)
+                    print result
+                    return HttpResponse(result)
+                    
+            
+            return render_to_response('insight.html', { },
+                                      context_instance=RequestContext(request))
+    except Exception, e:
+            print str(e)
         
         
 def view_destination_activity_flow(request):

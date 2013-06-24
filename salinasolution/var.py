@@ -7,55 +7,90 @@ Created on 2013. 3. 7.
 '''
 
 
-def get_default_result():
-    str = """
-{ "nodeDataArray": [
+def get_default_result(destination_activity):
+    str = ''
+    if destination_activity == "com.noondate.pay":
+        str =  """{ "nodeDataArray": [
 
-    { "key": 1, "text": "B" },
-    { "key": 2, "text": "C" },
-    { "key": 3, "text": "D" },
-    { "key": 4, "text": "E" },
-    { "key": 5, "text": "F" },
-    { "key": 6,  "text": "G!" },
-    { "key": 7, "text": "H!" },
-    { "key": 8, "text": "H+" },
 
-    { "key": 9, "text": "I" },
-    { "key": 10, "text": "J" },
-    { "key": 11, "text": "L" },
-    { "key": 12, "text": "M" },
-    { "key": 13, "text": "N" },
-    { "key": 14, "text": "O" },
-    { "key": 15,  "text": "P!" },
-    { "key": 16, "text": "Q!" }
+    { "key": 11, "text": "com.noondate.Pay" },
+    { "key": 12, "text": "com.noondate.myinterest" },
+    { "key": 13, "text": "com.noondate.myprofile" },
+    { "key": 14, "text": "com.noondate.lovecard" },
+    { "key": 15,  "text": "com.noondate.cardlist" },
+    { "key": 16, "text": "com.noondate.buycandy" }
 
 
   ],
   "linkDataArray": [
 
-    { "from":  0, "to": 1 },
-    { "from":  1, "to": 2 },
-    { "from":  2, "to": 3 },
-    { "from":  3, "to": 4 },
-    { "from":  4, "to": 16 },
+  
 
-    { "from":  5, "to": 6 },
-    { "from":  6, "to": 7 },
-    { "from":  7, "to": 8, "text":"100" },
-    { "from":  8, "to": 16 },
+    { "from":  11, "to": 12, text:"14" },
+    { "from":  12, "to": 16, text : "20" },
+
+    { "from":  13, "to": 14,, text : "30" },
+    { "from":  14, "to": 15, text : "40" },
+    { "from":  15, "to": 16, text : "50"}
+  ]
+}
+    """
+    elif destination_activity == "com.noondate.lastmyinterest":
+        str = """{ "nodeDataArray": [
+
+    
+
+    { "key": 0, "text": "com.noondate.Pay" },
+    { "key": 9, "text": "com.noondate.myinterest" },
+    { "key": 10, "text": "com.noondate.myprofile" },
+    { "key": 11, "text": "com.noondate.cardlist" },
+    { "key": 15, "text": "com.noondate.buycandy" },
+    { "key": 16, "text": "com.noondate.buycandy" } 
+
+
+  ],
+  "linkDataArray": [
+
 
   { "from":  0, "to": 9},
     { "from":  9, "to": 10 },
     { "from":  10, "to": 11 },
-    { "from":  11, "to": 12 },
-    { "from":  12, "to": 16 },
+    { "from":  11, "to": 16 },
+ 
 
-    { "from":  13, "to": 14 },
-    { "from":  14, "to": 15 },
     { "from":  15, "to": 16 }
   ]
 }
     """
+    else :
+        
+        str = """{ "nodeDataArray": [
+
+    
+
+    { "key": 0, "text": "com.noondate.Pay" },
+    { "key": 9, "text": "com.noondate.myinterest" },
+    { "key": 10, "text": "com.noondate.myprofile" },
+    { "key": 11, "text": "com.noondate.cardlist" },
+    { "key": 15, "text": "com.noondate.buycandy" },
+    { "key": 16, "text": "com.noondate.buycandy" } 
+
+
+  ],
+  "linkDataArray": [
+
+
+  { "from":  0, "to": 9},
+    { "from":  9, "to": 10 },
+    { "from":  10, "to": 11 },
+    { "from":  11, "to": 16 },
+ 
+
+    { "from":  15, "to": 16 }
+  ]
+}
+    """
+        
     return str
 
 
